@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>戈登肉鋪</title> 
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+        <link href="assets/css/styles.css" rel="stylesheet" />
+    </head>
+    <body id="page-top">
+        
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top"style="background-color: #E0B041;">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.html">戈登肉鋪</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="index.html">首頁</a>
+                        </li>
+                        
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                商品分類
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="hanio.html">日本A5和牛專賣區</a></li>
+                                <li><a class="dropdown-item" href="#">嚴選1855&CAB</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">piyan專區</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">關於我們</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">客服中心</a>
+                        </li>
+                    </ul>
+                    
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="login.html">註冊/登入</a>
+                        </li>
+                        <!--登入後顯示-->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                使用者名稱
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="member.html">個人資料</a></li>
+                                <li><a class="dropdown-item" href="record.html">訂單記錄</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">登出</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="dropdown">
+                        <button class="btn btn-cart btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-shopping-cart text-dark fa-2x"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" style="min-width: 300px" aria-labelledby="dropdownMenuButton">
+                            <div class="p-3">
+                                <table class="table table-sm ">
+                                    <h6>已選擇商品</h6>
+                                    <tbody>
+                                        <tr>
+                                            <td class="align-middle text-center">
+                                                <a href="#removeModal" data-price="1999" data-title="不求人" data-toggle="modal"
+                                                    data-target="#removeModal"><i class="far fa-trash-alt "></i></a>
+                                            </td>
+                                            <td class="align-middle">日本A5和牛牛排</td>
+                                            <td class="align-middle">1份</td>
+                                            <td class="align-middle text-right">$877</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="align-middle text-center">
+                                                <a href="#removeModal" data-price="999" data-title="一級偽裝帽" data-toggle="modal"
+                                                    data-target="#removeModal"><i class="far fa-trash-alt "></i></a>
+                                            </td>
+                                            <td class="align-middle">生食級干貝</td>
+                                            <td class="align-middle">2份</td>
+                                            <td class="align-middle text-right">$999</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p>小計：xxx元</p>
+                                <a href="pay.html" class="btn btn-block btn-primary btn-sm text-white">確認結帳</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    </form>
+
+                    
+                </div>
+            </div>
+        </nav>
+        <div class="placeholder"></div>
+    
+        <div class="container">
+            <h3 class="title">產品細節| <small>日本A5和牛</small></h3>
+            <div class="row">
+              <div class="col-lg-6">
+                <img src="assets/img/1.jpg" class="img-fluid" alt="Product Image" width="80%">
+              </div>
+              <div class="col-lg-6">
+                <h2>和牛頂級饗宴，日本A5牛排</h2>
+                <p>Description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam hendrerit tellus at ullamcorper bibendum. Donec eget dignissim urna.</p>
+                <p>建議售價</p>
+                <p>NT$ 975</p>
+                <p>供貨狀況：尚有庫存</p>
+                <p>規格</p>
+                <p>250g+5%(8.8oz)</p>
+                <form>
+                    <div class="form-group">
+                      <label for="number">數量</label>
+                      <input type="text" class="form-control" id="number" placeholder="">
+                      <p></p>
+                    </div>
+                    <button class="btn btn-outline-dark">加入購物車</button>
+                  </form>
+                
+              </div>
+            </div>
+          </div>
+
+        <footer class="footer">
+            <div class="container">
+                <span>© 2023 戈登肉鋪. All rights reserved.</span>
+            </div>
+        </footer>
+        
+          
+        
+    </body>
+    
+        
+</html>
