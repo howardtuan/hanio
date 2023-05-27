@@ -30,3 +30,6 @@ def record_view(request):
 
 def signup_view(request):
     return render(request, 'signup.html', locals())
+
+def cart_view(request):
+    return render(request, 'cart.html', locals())

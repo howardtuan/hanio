@@ -73,8 +73,6 @@
                         <i class="fas fa-shopping-cart text-dark fa-2x"></i>
                     </button>
                     </a>
-                    </div>
-                    
                     <form class="d-flex">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     </form>
@@ -84,32 +82,128 @@
             </div>
         </nav>
         <div class="placeholder"></div>
-        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img src="assets/img/banner.png" class="d-block w-100" alt="...">
-              </div>
-              <div class="carousel-item">
-                <img src="assets/img/banner.png" class="d-block w-100" alt="...">
-              </div>
-              <div class="carousel-item">
-                <img src="assets/img/banner.png" class="d-block w-100" alt="...">
-              </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-        <div class="bg-body-tertiary p-5 rounded">
-            <h1>這邊應該是塞公告之類的</h1>
-            <p class="lead">但我不知道塞啥 所以排版還沒想出來 不過這也不急</p>
-            
-        </div>
+        <div class="container mt-5">
+            <h1>購物車</h1>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>商品</th>
+                  <th>價格</th>
+                  <th>數量</th>
+                  <th>小計</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>商品1</td>
+                  <td>$10</td>
+                  <td>
+                    <input type="number" class="form-control quantity-input" value="1" min="1" step="1">
+                  </td>
+                  <td class="subtotal">$10</td>
+                  <td>
+                    <button class="btn btn-danger btn-remove">移除</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>商品2</td>
+                  <td>$20</td>
+                  <td>
+                    <input type="number" class="form-control quantity-input" value="1" min="1" step="1">
+                  </td>
+                  <td class="subtotal">$20</td>
+                  <td>
+                    <button class="btn btn-danger btn-remove">移除</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>商品3</td>
+                  <td>$15</td>
+                  <td>
+                    <input type="number" class="form-control quantity-input" value="1" min="1" step="1">
+                  </td>
+                  <td class="subtotal">$15</td>
+                  <td>
+                    <button class="btn btn-danger btn-remove">移除</button>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="3" class="text-right"><strong>總計</strong></td>
+                  <td id="total"><strong>$0</strong></td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+            <a href="pay.html"><button class="btn btn-primary">結帳</button></a>
+          </div>
+        
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        
+          <script>
+            $(document).ready(function () {
+              // 移除按鈕點擊事件處理函式
+              $('.btn-remove').on('click', function () {
+                var row = $(this).closest('tr');
+        
+                // 獲取移除商品的價格和數量
+                var price = parseFloat(row.find('td:eq(1)').text().replace('$', ''));
+                var quantity = parseInt(row.find('.quantity-input').val());
+        
+                // 計算移除商品的小計值
+                var subtotal = price * quantity;
+        
+                // 從總計中減去移除商品的小計值
+                var total = parseFloat($('#total').text().replace('$', ''));
+                total -= subtotal;
+        
+                // 更新總計欄位
+                $('#total').text('$' + total.toFixed(0));
+        
+                // 移除商品的行
+                row.remove();
+        
+                // 更新總計
+                updateTotal();
+              });
+        
+              // 數量輸入框更改事件處理函式
+              $('.quantity-input').on('change', function () {
+                var row = $(this).closest('tr');
+        
+                // 獲取商品的價格和數量
+                var price = parseFloat(row.find('td:eq(1)').text().replace('$', ''));
+                var quantity = parseInt($(this).val());
+        
+                // 計算並更新小計
+                var subtotal = price * quantity;
+                row.find('.subtotal').text('$' + subtotal.toFixed(0));
+        
+                // 更新總計
+                updateTotal();
+              });
+        
+              // 更新總計函式
+              function updateTotal() {
+                var total = 0;
+        
+                // 遍歷所有商品行，計算總計
+                $('.subtotal').each(function () {
+                  total += parseFloat($(this).text().replace('$', ''));
+                });
+        
+                // 更新總計欄位
+                $('#total').text('$' + total.toFixed(0));
+              }
+        
+              // 初始化總計
+              updateTotal();
+            });
+          </script>
 
         <footer class="footer">
             <div class="container">
@@ -117,7 +211,8 @@
             </div>
         </footer>
         
-          
+        
+      
         
     </body>
     
