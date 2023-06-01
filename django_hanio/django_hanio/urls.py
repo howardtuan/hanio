@@ -9,11 +9,11 @@ urlpatterns = [
     path('contact/', views.contact_view),
     path('detail/', views.detail_view),
     path('hanio/', views.hanio_view),
-    path('login/', views.login_view),
+    path('login/', views.login_view,name='login/'),
     path('member/', views.member_view),
     path('pay/', views.pay_view),
     path('record/', views.record_view),
-    path('signup/', views.signup_view),
+    path('signup/', views.signup_view,name='signup/'),
     path('cart/', views.cart_view),
     
 ]

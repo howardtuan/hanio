@@ -93,15 +93,16 @@
                   <img src="{% static 'img/logo (1).jpg'%}" alt="Logo" width="100">
                   <h2>登入</h2>
                 </div>
-                <form>
-                  <div class="form-group">
-                    <label for="account">帳號</label>
-                    <input type="text" class="form-control" id="account" placeholder="輸入您的帳號">
-                  </div>
-                  <div class="form-group">
-                    <label for="password">密碼</label>
-                    <input type="password" class="form-control" id="password" placeholder="輸入您的密碼">
-                  </div>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="account">帳號</label>
+                        <input type="text" class="form-control" id="account" name="account" placeholder="輸入您的帳號">
+                      </div>
+                      <div class="form-group">
+                        <label for="password">密碼</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="輸入您的密碼">
+                      </div>
                   
                   <p>還沒有帳號？<a href="../signup/">點我註冊</a></p>
                   <button type="submit" class="btn btn-outline-secondary">Submit</button>
@@ -109,11 +110,35 @@
               </div>
             </div>
           </div>
+          {% if messages %}
+                {% for message in messages %}
+                    <div class="modal" tabindex="-1" id="myModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">訊息</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>{{ message }}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">確認</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
         
           <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
           <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
           <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-        
+          <script>
+            $(document).ready(function() {
+                $('#myModal').modal('show');
+            });
+        </script>
         
 
 

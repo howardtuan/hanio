@@ -6,18 +6,15 @@ from django import forms
 now = timezone.now
 
 class member(models.Model):
-    MID = models.CharField('會員編號', max_length=1000, primary_key=True)
+    MID = models.AutoField('會員編號', primary_key=True)
     MName = models.CharField('會員姓名', max_length=20, null=False)
     MPhone = models.CharField('會員電話', max_length=50, null=False)
     MPW = models.CharField('會員密碼', max_length=20, null=False)
     MAccount = models.CharField('會員帳號', max_length=50, null=False)
     MEmail = models.CharField('會員信箱', max_length=100, null=False)
-    MAddr = models.CharField('會員地址', max_length=100, null=False)
+    MAddr = models.CharField('會員地址', max_length=100, null=True)
     MVISA = models.CharField('會員信用卡號', max_length=100, null=True)
-    MCK = models.CharField('信用卡到期日', max_length=100, null=False)
-
-    # def __str__(self) -> str:
-    #     return self.MID
+    MCK = models.CharField('信用卡到期日', max_length=100, null=True)
 
 
 class order(models.Model):
