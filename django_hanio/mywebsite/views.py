@@ -40,7 +40,7 @@ def pork_view(request):
     return render(request, 'for_pork.html', locals())
 
 def seafood_view(request):
-    Category = product.objects.filter( PCategory = 'seefood' )
+    Category = product.objects.filter( PCategory = 'seafood' )
     return render(request, 'for_seafood.html', locals())
 
 def login_view(request):
@@ -127,21 +127,24 @@ def signup_view(request):
     return render(request, 'signup.html')
 
 def add_cart(request):
-    get_id = '001'
+    get_id = 1
     get_pid = request.POST.get('pid', '')
     get_pnum = request.POST.get('number', '')
-    c = cart.objects.get( MID = get_id, PID = get_pid )
-    if c :
+    try:   
+        c = cart.objects.get( MID = get_id, PID = get_pid )
         num = c.NUM + int(get_pnum)
         c.NUM = num
         c.save()
-    else :
+    except:
         cart.objects.create( MID = get_id, PID = get_pid, NUM = get_pnum )
+    finally:
+        pass
+    
 
     return HttpResponseRedirect('/index/')  #可更新
 
 def cart_view(request):
-    get_id = '001'
+    get_id = 1
     # get_id = request.POST.get('mid', '')
     cart_items = cart.objects.filter( MID = get_id )
     cart_products = []
@@ -156,7 +159,7 @@ def cart_view(request):
 
 def cart_update(request):
     #這邊也要取得mid
-    get_mid = '001'
+    get_mid = 1
     get_pid = request.POST.get('pid', '')
     get_pnum = request.POST.get('num', '')
     cart_item = cart.objects.get( PID = get_pid, MID = get_mid )
@@ -166,7 +169,7 @@ def cart_update(request):
 
 def cart_delete(request):
     #這邊也要取得mid
-    get_mid = '001'
+    get_mid = 1
     get_pid = request.POST.get('pid', '')
     cart_item = cart.objects.get( PID = get_pid, MID = get_mid )
     cart_item.delete()

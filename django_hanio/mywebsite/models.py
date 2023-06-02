@@ -59,16 +59,7 @@ class product(models.Model):
 
 
 class cart(models.Model):
-    CID = models.AutoField(primary_key=True, unique=True)
+    CID = models.AutoField(primary_key=True)
     MID = models.CharField('會員編號', max_length=1000)
     PID = models.CharField('產品編號', max_length=1000 )
     NUM = models.IntegerField('數量')
-
-    def save(self, *args, **kwargs):
-        if not self.CID:
-            max_id = cart.objects.all().aggregate(largest=models.Max('id'))['largest']
-            if max_id is not None:
-                self.CID = str(max_id + 1).zfill(4)  # 用0填充至4位数
-            else:
-                self.CID = '0001'
-        super().save(*args, **kwargs)
