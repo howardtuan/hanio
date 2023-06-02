@@ -40,7 +40,8 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="../hanio/">日本A5和牛專賣區</a></li>
-                                <li><a class="dropdown-item" href="#">嚴選1855&CAB</a></li>
+                                <li><a class="dropdown-item" href="../pork/">戈登嚴選豬肉</a></li>
+                                <li><a class="dropdown-item" href="../seafood/">戈登經典海鮮</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="#">piyan專區</a></li>
                             </ul>
@@ -89,24 +90,30 @@
             <h3 class="title">產品細節| <small>日本A5和牛</small></h3>
             <div class="row">
               <div class="col-lg-6">
-                
-                <img src="{% static 'img/1.jpg'%}" class="img-fluid" alt="Product Image" width="80%">
+                {% if p.PPhoto %}
+                <img src="{{p.PPhoto.url}}" class="img-fluid" alt="{{ p.PName }}" width="80%">
+                {% else %}
+                  <p>No photo available</p>
+                {% endif %}
+
               </div>
               <div class="col-lg-6">
-                <h2>和牛頂級饗宴，日本A5牛排</h2>
-                <p>Description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam hendrerit tellus at ullamcorper bibendum. Donec eget dignissim urna.</p>
+                <h2>{{p.PName}}</h2>
+                <p>{{p.PDetail}}</p>
                 <p>建議售價</p>
-                <p>NT$ 975</p>
-                <p>供貨狀況：尚有庫存</p>
+                <p>NT$ {{p.PPrice}}</p>
+                <p>供貨狀況：{{status}}</p>
                 <p>規格</p>
-                <p>250g+5%(8.8oz)</p>
-                <form>
+                <p>{{p.Pspec}}g+5%(8.8oz)</p>
+                <form action="/add/" method = "POST">{% csrf_token %}
                     <div class="form-group">
                       <label for="number">數量</label>
-                      <input type="text" class="form-control" id="number" placeholder="">
+                      <input type="hidden" name="pid" value="{{p.PID}}">
+                      <input type="number" name = "number" class="form-control quantity-input" placeholder="0" min="1" step="1">
+                      {% comment %} <input type="text" name = "number" class="form-control" id="number" placeholder=""> {% endcomment %}
                       <p></p>
                     </div>
-                    <button class="btn btn-outline-dark">加入購物車</button>
+                    <input type="submit" value="加入購物車" class="btn btn-outline-dark">
                   </form>
                 
               </div>

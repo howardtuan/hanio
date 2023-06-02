@@ -16,6 +16,9 @@ class member(models.Model):
     MVISA = models.CharField('會員信用卡號', max_length=100, null=True)
     MCK = models.CharField('信用卡到期日', max_length=100, null=True)
 
+    # def __str__(self) -> str:
+    #     return self.MID
+
 
 class order(models.Model):
     PAYMENT_METHOD_CHOICES = [
@@ -49,13 +52,23 @@ class product(models.Model):
     PPrice = models.IntegerField('產品價錢')
     PName = models.CharField('產品名稱', max_length=100)
     PDetail = models.CharField('產品內容', max_length=10000)
+    Pspec = models.IntegerField('產品規格',default=0)
     PStatus = models.CharField('產品狀態', max_length=13, choices=PRODUCT_STATUS_CHOICES, default='IN_STOCK')
     PPhoto = models.ImageField('產品圖片', upload_to='product_images/', blank=True, null=True)
     PCategory = models.CharField('產品分類', max_length=20) #也可以用選項
 
 
 class cart(models.Model):
-    CID = models.CharField('購物車編號', max_length=1000, primary_key=True )
+    CID = models.AutoField(primary_key=True, unique=True)
     MID = models.CharField('會員編號', max_length=1000)
     PID = models.CharField('產品編號', max_length=1000 )
     NUM = models.IntegerField('數量')
+
+    def save(self, *args, **kwargs):
+        if not self.CID:
+            max_id = cart.objects.all().aggregate(largest=models.Max('id'))['largest']
+            if max_id is not None:
+                self.CID = str(max_id + 1).zfill(4)  # 用0填充至4位数
+            else:
+                self.CID = '0001'
+        super().save(*args, **kwargs)
