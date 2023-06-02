@@ -1,0 +1,11 @@
+.footer {
+  background-color: #f8f9fa; /* 背景色 */
+  padding: 20px 0;
+  text-align: center;
+}
+.product {
+  padding: 15px;
+}
+.navbar.fixed-top + .placeholder {
+  height: 56px; /* 根据导航栏的高度设置占位元素的高度 */
+}
