@@ -4,7 +4,7 @@ from mywebsite.models import *
 from django.contrib import messages
 
 from django.contrib.sessions.backends.db import SessionStore
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
 # Create your views here.
 def index_view(request):
     return render(request, 'index.html', locals())
@@ -59,12 +59,12 @@ def login_view(request):
         else:
             # 登入成功，將用戶名稱存入 Session
             request.session['MAccount'] = MAccount
+            request.session.save()
             return redirect('/index')
     
     return render(request, 'login.html')
 
 
-@login_required(login_url='/login/')
 def member_view(request):
     MAccount = request.session.get('MAccount')
     if not MAccount:
@@ -94,6 +94,10 @@ def member_view(request):
 
 
 def pay_view(request):
+    MAccount = request.session.get('MAccount')
+    if not MAccount:
+        messages.error(request, "請先登入")
+        return redirect('/login')
     return render(request, 'pay.html', locals())
 
 def record_view(request):
@@ -127,6 +131,10 @@ def signup_view(request):
     return render(request, 'signup.html')
 
 def add_cart(request):
+    MAccount = request.session.get('MAccount')
+    if not MAccount:
+        messages.error(request, "請先登入")
+        return redirect('/login')
     get_id = 1
     get_pid = request.POST.get('pid', '')
     get_pnum = request.POST.get('number', '')
@@ -144,6 +152,10 @@ def add_cart(request):
     return HttpResponseRedirect('/index/')  #可更新
 
 def cart_view(request):
+    MAccount = request.session.get('MAccount')
+    if not MAccount:
+        messages.error(request, "請先登入")
+        return redirect('/login')
     get_id = 1
     # get_id = request.POST.get('mid', '')
     cart_items = cart.objects.filter( MID = get_id )
@@ -158,6 +170,10 @@ def cart_view(request):
     return render(request, 'cart.html', locals())
 
 def cart_update(request):
+    MAccount = request.session.get('MAccount')
+    if not MAccount:
+        messages.error(request, "請先登入")
+        return redirect('/login')
     #這邊也要取得mid
     get_mid = 1
     get_pid = request.POST.get('pid', '')
@@ -168,9 +184,20 @@ def cart_update(request):
     return HttpResponseRedirect('/cart/')
 
 def cart_delete(request):
+    MAccount = request.session.get('MAccount')
+    if not MAccount:
+        messages.error(request, "請先登入")
+        return redirect('/login')
     #這邊也要取得mid
     get_mid = 1
     get_pid = request.POST.get('pid', '')
     cart_item = cart.objects.get( PID = get_pid, MID = get_mid )
     cart_item.delete()
     return HttpResponseRedirect('/cart/')
+
+def logout_view(request):
+    try:
+        del request.session['MAccount']
+    except KeyError:
+        pass
+    return redirect('/login')
