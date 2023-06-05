@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from mywebsite.models import *
-
+import random
 from django.contrib import messages
 
 from django.contrib.sessions.backends.db import SessionStore
@@ -17,7 +17,7 @@ def contact_view(request):
 
 def detail_view(request):
     get_id = request.POST.get('pid', '')
-    status = '缺貨中'
+    status = '上架'
     p = product.objects.get( PID = get_id )
     if p.PStatus == '上架' :
         status = '尚有庫存'
@@ -98,8 +98,40 @@ def pay_view(request):
     if not MAccount:
         messages.error(request, "請先登入")
         return redirect('/login')
+    get_id = member.objects.get(MAccount=MAccount).MID
+    # get_id = request.POST.get('mid', '')
+    cart_items = cart.objects.filter( MID = get_id )
+    cart_products = []
+    total_price=0
+    total_num=0
+    for item in cart_items:
+        pid = item.PID
+        p = product.objects.get( PID = pid )
+        number = item.NUM
+        sub = p.PPrice * number
+        total_price+=sub
+        total_num+=number
+        cart_products.append((item, p, sub))
     return render(request, 'pay.html', locals())
-
+def checkout_process(request):
+    #匯入購物車到order
+    #清空購物車
+    
+    # MAccount = request.session.get('MAccount')
+    # get_id = member.objects.get(MAccount=MAccount).MID
+    # cart_items = cart.objects.filter( MID = get_id )
+    # order_items = order.objects.filter( MID = get_id )
+    # rand_orderID=random.randint(100000, 999999)
+    # total_price=0
+    # total_num=0
+    # for item in cart_items:
+    #     pid = item.PID
+    #     p = product.objects.get( PID = pid )
+    #     number = item.NUM
+    #     sub = p.PPrice * number
+    #     total_price+=sub
+    #     total_num+=number
+    return render(request, 'record.html', locals())
 def record_view(request):
     return render(request, 'record.html', locals())
 
@@ -135,9 +167,11 @@ def add_cart(request):
     if not MAccount:
         messages.error(request, "請先登入")
         return redirect('/login')
-    get_id = 1
+    get_id = member.objects.get(MAccount=MAccount).MID
+    print('ur id:',get_id)
     get_pid = request.POST.get('pid', '')
     get_pnum = request.POST.get('number', '')
+    print('get_pnum',get_pnum)
     try:   
         c = cart.objects.get( MID = get_id, PID = get_pid )
         num = c.NUM + int(get_pnum)
@@ -156,7 +190,7 @@ def cart_view(request):
     if not MAccount:
         messages.error(request, "請先登入")
         return redirect('/login')
-    get_id = 1
+    get_id = member.objects.get(MAccount=MAccount).MID
     # get_id = request.POST.get('mid', '')
     cart_items = cart.objects.filter( MID = get_id )
     cart_products = []
@@ -175,7 +209,7 @@ def cart_update(request):
         messages.error(request, "請先登入")
         return redirect('/login')
     #這邊也要取得mid
-    get_mid = 1
+    get_mid = member.objects.get(MAccount=MAccount).MID
     get_pid = request.POST.get('pid', '')
     get_pnum = request.POST.get('num', '')
     cart_item = cart.objects.get( PID = get_pid, MID = get_mid )
@@ -189,7 +223,7 @@ def cart_delete(request):
         messages.error(request, "請先登入")
         return redirect('/login')
     #這邊也要取得mid
-    get_mid = 1
+    get_mid = member.objects.get(MAccount=MAccount).MID
     get_pid = request.POST.get('pid', '')
     cart_item = cart.objects.get( PID = get_pid, MID = get_mid )
     cart_item.delete()
