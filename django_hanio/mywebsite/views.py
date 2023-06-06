@@ -2,10 +2,13 @@ from django.shortcuts import render, redirect, HttpResponseRedirect
 from mywebsite.models import *
 import random
 from django.contrib import messages
-
+from django.db.models import Max
 from django.contrib.sessions.backends.db import SessionStore
 from django.contrib.auth import authenticate, login
+from datetime import datetime
 # Create your views here.
+
+now = datetime.now()
 def index_view(request):
     return render(request, 'index.html', locals())
 
@@ -113,25 +116,55 @@ def pay_view(request):
         total_num+=number
         cart_products.append((item, p, sub))
     return render(request, 'pay.html', locals())
+
+
 def checkout_process(request):
-    #匯入購物車到order
-    #清空購物車
+    if request.method == 'POST':
+        address = request.POST.get('address') 
+        payment_method = request.POST.get('paymentMethod')
+        if payment_method == 'credit':
+            payment = 'COD'
+        elif payment_method == 'debit':
+            payment = 'CC'
+        elif payment_method == 'paypal':
+            payment = 'CVS'
+
+    max_oid = order.objects.aggregate(Max('OID'))['OID__max']
     
-    # MAccount = request.session.get('MAccount')
-    # get_id = member.objects.get(MAccount=MAccount).MID
-    # cart_items = cart.objects.filter( MID = get_id )
-    # order_items = order.objects.filter( MID = get_id )
-    # rand_orderID=random.randint(100000, 999999)
-    # total_price=0
-    # total_num=0
-    # for item in cart_items:
-    #     pid = item.PID
-    #     p = product.objects.get( PID = pid )
-    #     number = item.NUM
-    #     sub = p.PPrice * number
-    #     total_price+=sub
-    #     total_num+=number
+    # 為了避免第一筆資料時 max_oid 為 None 的情況，需要進行檢查
+    if max_oid is not None:
+        new_oid = int(max_oid) + 1
+    else:
+        new_oid = 1
+    MAccount = request.session.get('MAccount')
+    if not MAccount:
+        messages.error(request, "請先登入")
+        return redirect('/login')
+    get_id = member.objects.get(MAccount=MAccount).MID
+    cart_items = cart.objects.filter(MID=get_id)
+    for cart_item in cart_items:
+        pid = cart_item.PID
+        pnum = cart_item.NUM
+        order.objects.create(
+                OID=new_oid,
+                MID=get_id,
+                PID=pid
+        )
+        order_detail.objects.create(
+                OID=new_oid,
+                MID=get_id,
+                PID=pid,
+                PNUM = pnum,
+                ODate = now,
+                OAddr = address,
+                OStatus = 'NOT_SHIPPED',
+                OPayment = payment
+        )
+
+    cart.objects.filter( MID = get_id ).delete()
     return render(request, 'record.html', locals())
+
+
 def record_view(request):
     return render(request, 'record.html', locals())
 

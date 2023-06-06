@@ -21,6 +21,15 @@ class member(models.Model):
 
 
 class order(models.Model):
+    okid = models.AutoField(primary_key=True)
+    OID = models.CharField('訂單編號', max_length=1000)
+    MID = models.CharField('會員編號', max_length=1000)
+    PID = models.CharField('產品編號', max_length=1000)
+
+
+
+
+class order_detail(models.Model):
     PAYMENT_METHOD_CHOICES = [
         ('COD', '貨到付款'),
         ('CC', '刷卡'),
@@ -32,10 +41,12 @@ class order(models.Model):
         ('SHIPPED', '已出貨'),
         ('ARRIVED', '已抵達'),
     ]
-    OID = models.CharField('訂單編號', max_length=1000, primary_key=True)
+    ODID = models.AutoField('訂單明細編號', max_length=1000, primary_key=True)
+    OID = models.CharField('訂單編號', max_length=1000)
     MID = models.CharField('會員編號', max_length=1000)
     PID = models.CharField('產品編號', max_length=1000)
     PNUM = models.IntegerField('數量')
+    # OMail = models.CharField('訂單者信箱', max_length=1000)
     ODate = models.DateField('訂單日期', auto_now_add=True)
     OAddr = models.CharField('配送地址', max_length=100)
     OStatus = models.CharField('訂單狀態',max_length=12, choices=ORDER_STATUS_CHOICES, default='NOT_SHIPPED')
@@ -53,6 +64,7 @@ class product(models.Model):
     PName = models.CharField('產品名稱', max_length=100)
     PDetail = models.CharField('產品內容', max_length=10000)
     Pspec = models.IntegerField('產品規格',default=0)
+    Pnum = models.IntegerField('產品數量',default=0)
     PStatus = models.CharField('產品狀態', max_length=13, choices=PRODUCT_STATUS_CHOICES, default='IN_STOCK')
     PPhoto = models.ImageField('產品圖片', upload_to='product_images/', blank=True, null=True)
     PCategory = models.CharField('產品分類', max_length=20) #也可以用選項

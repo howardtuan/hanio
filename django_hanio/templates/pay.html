@@ -102,19 +102,23 @@
                   <span class="badge bg-primary rounded-pill">{{total_num}}</span>
                 </h4>
                 <ul class="list-group mb-3">
+                  {% comment %} <form action="/checkout_process/" method = "POST">{% csrf_token %}> {% endcomment %}
                   {% for cart_item, product, subtotal in cart_products %}
                   <li class="list-group-item d-flex justify-content-between lh-sm">
                     <div>
                     
                       <h6 class="my-0">{{ product.PName }}</h6>
+                      <input type="hidden" name="field_id[]" value="{{ product.PID }}">
+                      <input type="hidden" name="field_pnum[]" value="{{ cart_item.NUM }}">
                       <small class="text-body-secondary">要再去宜蘭吃一次火鍋嗎 還是吃老湯鍋</small>
                     </div>
                     <span class="text-body-secondary">${{ subtotal }}</span>
                     
+                  
                   </li>
                   {% endfor %}
-
-
+                  
+                  
                   <!--以下是原本的結帳購物車內容-->
                   <!-- <li class="list-group-item d-flex justify-content-between lh-sm">
                     <div>
@@ -183,7 +187,7 @@
         
                     <div class="col-12">
                       <label for="email" class="form-label">Email <span class="text-body-secondary">(Optional)</span></label>
-                      <input type="email" class="form-control" id="email" placeholder="you@example.com">
+                      <input type="email" class="form-control" id="email" name = "email" placeholder="you@example.com">
                       <div class="invalid-feedback">
                         Please enter a valid email address for shipping updates.
                       </div>
@@ -191,7 +195,7 @@
         
                     <div class="col-12">
                       <label for="address" class="form-label">Address</label>
-                      <input type="text" class="form-control" id="address" placeholder="1234 Main St" required="">
+                      <input type="text" class="form-control" id="address" name = "address" placeholder="1234 Main St" required="">
                       <div class="invalid-feedback">
                         Please enter your shipping address.
                       </div>
@@ -251,15 +255,15 @@
         
                   <div class="my-3">
                     <div class="form-check">
-                      <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked="" required="">
+                      <input id="credit" name="paymentMethod" type="radio" class="form-check-input" value="credit" checked required>
                       <label class="form-check-label" for="credit">Credit card</label>
                     </div>
                     <div class="form-check">
-                      <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required="">
+                      <input id="debit" name="paymentMethod" type="radio" class="form-check-input"  value="debit" required>
                       <label class="form-check-label" for="debit">Debit card</label>
                     </div>
                     <div class="form-check">
-                      <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required="">
+                      <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" value="paypal" required>
                       <label class="form-check-label" for="paypal">PayPal</label>
                     </div>
                   </div>
@@ -300,7 +304,7 @@
                   </div>
         
                   <hr class="my-4">
-        
+                  
                   <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
                 </form>
               </div>
