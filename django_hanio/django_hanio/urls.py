@@ -25,5 +25,10 @@ urlpatterns = [
     path('add/', views.add_cart),
     path('logout/', views.logout_view, name='logout'),
     path('checkout_process/', views.checkout_process),
+    path('dashboard/', views.dashboard_view),
+    path('edit_view/', views.edit_view),
+    path('edit/', views.edit),
+    path('m_e_view/', views.member_e_view),
+    path('mem_edit/', views.mem_edit),
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
