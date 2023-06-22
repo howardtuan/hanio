@@ -30,5 +30,8 @@ urlpatterns = [
     path('edit/', views.edit),
     path('m_e_view/', views.member_e_view),
     path('mem_edit/', views.mem_edit),
+    path('orders_view/', views.orders_view),
+    path('or_e_view/', views.or_e_view),
+    path('or_edit/', views.or_edit),
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

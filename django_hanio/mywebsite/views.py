@@ -17,6 +17,13 @@ def dashboard_view(request):
     mem = member.objects.all()
     return render(request, 'dashboard.html', locals())
 
+def orders_view(request):
+    ord = order_detail.objects.all()
+
+    return render(request, 'orders_page.html', locals())
+
+
+
 def about_view(request):
     return render(request, 'about.html', locals())
 
@@ -37,6 +44,24 @@ def detail_view(request):
         status = '尚無庫存'    
     # context = {'product_DB': p, 'status': status}
     return render(request, 'detail.html', locals())
+
+def or_e_view(request):
+    get_odid = request.POST.get('odid', '')
+    ord = order_detail.objects.get( ODID = get_odid )
+
+    return render(request, 'order_edit.html', locals())
+
+
+def or_edit(request):
+    get_odid = request.POST.get('odid', '')
+    selected_option = request.POST.get('status', '')
+    get_address = request.POST.get('address', '')
+    ord = order_detail.objects.get( ODID = get_odid )
+    ord.OStatus = selected_option
+    ord.OAddr = get_address
+    ord.save()
+
+    return redirect('/orders_view/')
 
 def edit_view(request):
     get_id = request.POST.get('pid', '')
