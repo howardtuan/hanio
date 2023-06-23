@@ -76,84 +76,69 @@
         </div>
     </nav>
     <div class="placeholder" id = "products"></div>
-       <div>
-            <h2>產品管理</h2>
-            {% comment %} <form>
-                <label for="product-name">商品名稱：</label>
-                <input type="text" id="product-name" name="product-name" required>
-            
-                <label for="product-quantity">商品數量：</label>
-                <input type="number" id="product-quantity" name="product-quantity" required>
-            
-                <!-- 添加其他欄位 -->
-                <label for="product-price">商品價格：</label>
-                <input type="number" id="product-price" name="product-price" required>
-            
-                <label for="product-detail">商品內容：</label>
-                <textarea id="product-detail" name="product-detail" required></textarea>
-            
-                <label for="product-spec">商品規格：</label>
-                <input type="number" id="product-spec" name="product-spec" required>
-            
-                <label for="product-photo">商品圖片：</label>
-                <input type="file" id="product-photo" name="product-photo">
-            
-                <label for="product-category">商品分類：</label>
-                <input type="text" id="product-category" name="product-category" required>
-            
-                <button type="submit">新增商品</button>
-            </form> {% endcomment %}
-            <table class="table">
-                <thead>
-                  <tr>
-                    <th>商品名稱</th>
-                    <th>商品數量</th>
-                    <th>商品價格</th>
-                    <th>商品狀態</th>
-                    <th>商品規格</th>
-                    <th>商品圖片</th>
-                    <th>商品分類</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for detail in d %}
-                  <tr>
-                    <form action="/edit_view/" method = "POST">{% csrf_token %}
-                        <td>{{ detail.PName }}</td>
-                        <td>{{ detail.Pnum }}</td>
-                        <td>{{ detail.PPrice }}</td>
-                        <td>
-                            {% if detail.PStatus == 'IN_STOCK' %}上架{% endif %}
-                            {% if detail.PStatus == 'OUT_OF_STOCK' %}下架{% endif %}
-                            {% if detail.PStatus == 'UNAVAILABLE' %}缺貨{% endif %}
-                        </td>
-                        <td>{{ detail.Pspec }}</td>
-                        <td>
-                            {% if detail.PPhoto %}
-                              已上圖
-                            {% else %}
-                              暫無
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if detail.PCategory == 'beef' %}日本A5和專賣區{% endif %}
-                            {% if detail.PCategory == 'pork' %}戈登嚴選豬肉{% endif %}
-                            {% if detail.PCategory == 'seafood' %}戈登經典海鮮{% endif %}
-                        </td>
-                        <input type="hidden" name="pid" value="{{detail.PID}}">
-                        <td>
-                            <input type="submit" value="修改詳情" class="btn btn-outline-dark">
-                        </td>
-                    </form>
-                  </tr>
-                  {% endfor %}
-              </table>
-            <br>
-            <BR>
-            <hr>
-            </div>
-        <div id = "member">
+    <div>
+      <h2>產品管理</h2>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th>商品名稱</th>
+              <th>商品數量</th>
+              <th>商品價格</th>
+              <th>商品狀態</th>
+              <th>商品規格</th>
+              <th>商品圖片</th>
+              <th>商品分類</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for detail in d %}
+            <tr>
+              <form action="/edit_view/" method="POST">
+                {% csrf_token %}
+                <td>{{ detail.PName }}</td>
+                <td>{{ detail.Pnum }}</td>
+                <td>{{ detail.PPrice }}</td>
+                <td>
+                  {% if detail.PStatus == 'IN_STOCK' %}上架{% endif %}
+                  {% if detail.PStatus == 'OUT_OF_STOCK' %}下架{% endif %}
+                  {% if detail.PStatus == 'UNAVAILABLE' %}缺貨{% endif %}
+                </td>
+                <td>{{ detail.Pspec }}</td>
+                <td>
+                  {% if detail.PPhoto %}
+                  已上圖
+                  {% else %}
+                  暫無
+                  {% endif %}
+                </td>
+                <td>
+                  {% if detail.PCategory == 'beef' %}
+                    <span class="category special-cell">日本A5和專賣區</span>
+                  {% elif detail.PCategory == 'pork' %}
+                    <span class="category">戈登嚴選豬肉</span>
+                  {% elif detail.PCategory == 'seafood' %}
+                    <span class="category">戈登經典海鮮</span>
+                  {% endif %}
+                </td>
+                <input type="hidden" name="pid" value="{{detail.PID}}">
+                <td>
+                  <button type="submit" class="btn btn-outline-dark">修改詳情</button>
+                </td>
+              </form>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      
+      <br>
+      <br>
+      <hr>
+    </div>
+    
+          <div id = "member">
             <h2>用戶管理</h2>
             <table class="table">
                 <thead>
