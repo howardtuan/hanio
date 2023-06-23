@@ -116,20 +116,33 @@ def login_view(request):
     if request.method == "POST":
         MAccount = request.POST.get("account")
         MPW = request.POST.get("password")
-
         try:
-            user = member.objects.get(MAccount=MAccount)
-        except member.DoesNotExist:
-            messages.error(request, "帳號不存在")
-            return render(request, 'login.html')
+            super = Manager.objects.get( username = MAccount )
+        except Manager.DoesNotExist:
+            try:
+                user = member.objects.get(MAccount=MAccount)
+            except member.DoesNotExist:
+                messages.error(request, "帳號不存在")
+                return render(request, 'login.html')
 
-        if user.MPW != MPW:
+            if user.MPW != MPW:
+                messages.error(request, "帳號或密碼錯誤")
+            else:
+                # 登入成功，將用戶名稱存入 Session
+                request.session['MAccount'] = MAccount
+                request.session.save()
+                return redirect('/index')
+
+        if super.password != MPW:
             messages.error(request, "帳號或密碼錯誤")
         else:
             # 登入成功，將用戶名稱存入 Session
-            request.session['MAccount'] = MAccount
+            request.session['SAccount'] = MAccount
             request.session.save()
-            return redirect('/index')
+            return redirect('/dashboard/')
+        
+
+       
     
     return render(request, 'login.html')
 
