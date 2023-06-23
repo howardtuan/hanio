@@ -12,6 +12,18 @@ now = datetime.now()
 def index_view(request):
     return render(request, 'index.html', locals())
 
+def dashboard_view(request):
+    d = product.objects.all()
+    mem = member.objects.all()
+    return render(request, 'dashboard.html', locals())
+
+def orders_view(request):
+    ord = order_detail.objects.all()
+
+    return render(request, 'orders_page.html', locals())
+
+
+
 def about_view(request):
     return render(request, 'about.html', locals())
 
@@ -33,6 +45,60 @@ def detail_view(request):
     # context = {'product_DB': p, 'status': status}
     return render(request, 'detail.html', locals())
 
+def or_e_view(request):
+    get_odid = request.POST.get('odid', '')
+    ord = order_detail.objects.get( ODID = get_odid )
+
+    return render(request, 'order_edit.html', locals())
+
+
+def or_edit(request):
+    get_odid = request.POST.get('odid', '')
+    selected_option = request.POST.get('status', '')
+    get_address = request.POST.get('address', '')
+    ord = order_detail.objects.get( ODID = get_odid )
+    ord.OStatus = selected_option
+    ord.OAddr = get_address
+    ord.save()
+
+    return redirect('/orders_view/')
+
+def edit_view(request):
+    get_id = request.POST.get('pid', '')
+    p = product.objects.get( PID = get_id )
+    cate = p.PCategory
+    if cate == 'beef' :
+        category = '日本A5和專賣區'
+    elif cate == 'pork' :
+        category = '戈登嚴選豬肉'
+    elif cate == 'seafood' :
+        category = '戈登經典海鮮'
+    return render(request, 'product_edit.html', locals())
+
+def edit(request):
+    get_id = request.POST.get('pid', '')
+    products = product.objects.get( PID = get_id )
+    photo = products.PPhoto
+    get_name = request.POST.get('product-name', '')
+    get_quantity = request.POST.get('product-quantity', '')
+    get_price = request.POST.get('product-price', '0')
+    get_detail = request.POST.get('product-detail', '')
+    get_spec = request.POST.get('product-spec', '')
+    get_status = request.POST.get('product-status', '')
+    get_photo = request.FILES.get('product-photo', photo)  # 若欄位為檔案上傳，使用FILES.get()
+    get_category = request.POST.get('product-category', '')
+    products.PName = get_name
+    products.Pnum = get_quantity
+    products.PPrice = get_price
+    products.PDetail = get_detail
+    products.Pspec = get_spec
+    products.PStatus = get_status
+    products.PPhoto = get_photo
+    products.PCategory = get_category
+    products.save()
+
+    return redirect('/dashboard/')
+
 def hanio_view(request):
     Category = product.objects.filter( PCategory = 'beef' )
     # i = product.objects.get( PID = 2 )
@@ -50,24 +116,63 @@ def login_view(request):
     if request.method == "POST":
         MAccount = request.POST.get("account")
         MPW = request.POST.get("password")
-
         try:
-            user = member.objects.get(MAccount=MAccount)
-        except member.DoesNotExist:
-            messages.error(request, "帳號不存在")
-            return render(request, 'login.html')
+            super = Manager.objects.get( username = MAccount )
+        except Manager.DoesNotExist:
+            try:
+                user = member.objects.get(MAccount=MAccount)
+            except member.DoesNotExist:
+                messages.error(request, "帳號不存在")
+                return render(request, 'login.html')
 
-        if user.MPW != MPW:
+            if user.MPW != MPW:
+                messages.error(request, "帳號或密碼錯誤")
+            else:
+                # 登入成功，將用戶名稱存入 Session
+                request.session['MAccount'] = MAccount
+                request.session.save()
+                return redirect('/index')
+
+        if super.password != MPW:
             messages.error(request, "帳號或密碼錯誤")
         else:
             # 登入成功，將用戶名稱存入 Session
-            request.session['MAccount'] = MAccount
+            request.session['SAccount'] = MAccount
             request.session.save()
-            return redirect('/index')
+            return redirect('/dashboard/')
+        
+
+       
     
     return render(request, 'login.html')
 
+def member_e_view(request):
+    get_id = request.POST.get('mid', '')
+    mem = member.objects.get( MID = get_id )
+    return render(request, 'member_edit.html', locals())
 
+def mem_edit(request):
+    get_id = request.POST.get('mid', '')
+    mem = member.objects.get( MID = get_id )
+    get_account = request.POST.get('account', '')
+    get_password = request.POST.get('password', '')
+    get_phone = request.POST.get('phone', '')
+    get_name = request.POST.get('name', '')
+    get_mail = request.POST.get('mail', '')
+    get_address = request.POST.get('address', '')
+    get_visa = request.POST.get('visa', '')
+    get_mck = request.POST.get('mck', '')
+    mem.MAccount = get_account
+    mem.MPW = get_password
+    mem.MPhone = get_phone
+    mem.MName = get_name
+    mem.MEmail = get_mail
+    mem.MAddr = get_address
+    mem.MVISA = get_visa
+    mem.MCK = get_mck
+    mem.save()
+
+    return redirect('/dashboard/')
 def member_view(request):
     MAccount = request.session.get('MAccount')
     if not MAccount:

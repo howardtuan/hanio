@@ -41,7 +41,7 @@ class order_detail(models.Model):
         ('SHIPPED', '已出貨'),
         ('ARRIVED', '已抵達'),
     ]
-    ODID = models.AutoField('訂單明細編號', max_length=1000, primary_key=True)
+    ODID = models.AutoField('訂單明細編號', primary_key=True)
     OID = models.CharField('訂單編號', max_length=1000)
     MID = models.CharField('會員編號', max_length=1000)
     PID = models.CharField('產品編號', max_length=1000)
@@ -75,3 +75,10 @@ class cart(models.Model):
     MID = models.CharField('會員編號', max_length=1000)
     PID = models.CharField('產品編號', max_length=1000 )
     NUM = models.IntegerField('數量')
+
+class Manager(models.Model):
+    managerID = models.AutoField(primary_key=True)
+    username = models.CharField('使用者名稱', max_length=100, unique=True)
+    password = models.CharField('密碼', max_length=100)
+    name = models.CharField('姓名', max_length=100)
+    created_at = models.DateTimeField('建立時間', auto_now_add=True)
