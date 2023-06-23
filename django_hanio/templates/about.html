@@ -18,6 +18,12 @@
             crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
             crossorigin="anonymous"></script>
+            <style>
+                .carousel-inner img {
+    height: 400px; /* 你可以根据自己的需要来调整这个值 */
+    object-fit:contain; /* 这将确保图片保持它的长宽比，但是填充整个容器 */
+}
+            </style>
     </head>
     <body id="page-top">
         
@@ -87,8 +93,43 @@
             </div>
         </nav>
         <div class="placeholder"></div>
-        
-
+        <div class="placeholder"></div>
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" style="background-color: #cacaca;">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="{% static 'img/banner3.png'%}" class="d-block w-100" alt="..." >
+              </div>
+              <div class="carousel-item">
+                <img src="{% static 'img/banner4.png'%}" class="d-block w-100" alt="..." >
+              </div>
+              <div class="carousel-item">
+                <img src="{% static 'img/banner5.png'%}" class="d-block w-100" alt="...">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev" >
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next" >
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <section class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2 class="display-4 text-center">戈登肉鋪</h2>
+                        <p class="lead">當您想到細緻的手工技術、優質的產品和卓越的客戶服務時，我們希望您會想到我們——戈登肉鋪。</p>
+                        <p>我們的肉品來源自全球各地最優質的農場和牧場，每一塊肉都經過精心選擇和嚴格檢查，確保能符合我們的高品質標準。我們以推廣持續、合理和人道的農業實踐為己任，並全力支持那些與我們有共同價值觀的農場和牧場。</p>
+                        <p>我們的肉品均由我們的專業肉品處理師手工處理，他們將其精湛的技藝用於每一塊肉，確保每一塊肉都達到了我們的高品質標準。從剪裁到包裝，我們的肉品都充滿著專業的熱忱和細緻的手工技術。</p>
+                        <p>此外，我們相信，絕佳的產品必須配以卓越的客戶服務。無論您是在我們的實體店面，還是在我們的在線商店購物，我們都承諾為您提供熱情、親切和專業的服務。我們的目標是讓您的每次購物經驗都滿意。</p>
+                        <p>這就是戈登肉鋪——專業、質量、服務和可持續性的完美結合。無論您是尋找日常食材，還是尋找特殊場合的精緻肉品，我們都樂於為您提供最優質的選擇。</p>
+                        <p class="font-weight-bold">戈登肉鋪，為您提供超越期待的優質肉品和服務。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
         <footer class="footer">
             <div class="container">
                 <span>© 2023 戈登肉鋪. All rights reserved.</span>
