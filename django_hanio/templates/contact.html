@@ -29,11 +29,12 @@
                 }
             </style>
     </head>
-    <body id="page-top">
+    <body id="page-top" style="display: flex; flex-direction: column; min-height: 100vh;">
+
         
-        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top"style="background-color: #E0B041;">
+        <nav class="navbar navbar-default navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container-fluid">
-                <a class="navbar-brand" href="../index/">戈登肉鋪</a>
+                <a class="navbar-brand" href="../index/" style="color: white;">戈登肉鋪</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -42,19 +43,17 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="../index/">首頁</a>
                         </li>
-                        
-                        
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 商品分類
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="../hanio/">日本高級牛肉專賣區</a></li>
-                            <li><a class="dropdown-item" href="../pork/">戈登嚴選豬肉</a></li>
-                            <li><a class="dropdown-item" href="../seafood/">戈登經典海鮮</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">piyan專區</a></li>
-                        </ul>
+                                <li><a class="dropdown-item" href="../hanio/">戈登頂級牛肉</a></li>
+                                <li><a class="dropdown-item" href="../pork/">戈登嚴選豬肉</a></li>
+                                <li><a class="dropdown-item" href="../seafood/">戈登經典海鮮</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">piyan專區</a></li>
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="../about/">關於我們</a>
@@ -63,41 +62,38 @@
                             <a class="nav-link" href="../contact/">客服中心</a>
                         </li>
                     </ul>
-                    
                     <ul class="navbar-nav">
                         {% if request.session.MAccount %}
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    {{ request.session.MAccount }}
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="../member/">個人資料</a></li>
-                                    <li><a class="dropdown-item" href="../record/">訂單記錄</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="{% url 'logout' %}">登出</a></li>
-                                </ul>
-                            </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ request.session.MAccount }}
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="../member/">個人資料</a></li>
+                                <li><a class="dropdown-item" href="../record/">訂單記錄</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'logout' %}">登出</a></li>
+                            </ul>
+                        </li>
                         {% else %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="../login/">註冊/登入</a>
-                            </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../login/">註冊/登入</a>
+                        </li>
                         {% endif %}
                     </ul>
-                    <a href="../cart/"> <button class="btn btn-cart btn-sm" type="button" >
-                      <i class="fas fa-shopping-cart text-dark fa-2x"></i>
-                    </button>
+                    <a href="../cart/">
+                        <button class="btn btn-cart btn-sm" type="button">
+                            <i class="fas fa-shopping-cart text-dark fa-2x"></i>
+                        </button>
                     </a>
-                    
                     <form class="d-flex">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     </form>
-    
-                    
                 </div>
             </div>
         </nav>
         <div class="placeholder"></div>
-        <div class="container mt-5">
+        <div class="container mt-5 content" style="flex: 1;">
             <!-- 使用 Bootstrap Grid System 调整表单大小和位置 -->
             <div class="row">
                 <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
@@ -138,7 +134,7 @@
             </div> <!-- 在此处结束包装div -->
         </div>
         </div>
-        <div class="placeholder"></div>
+        </div>
         <footer class="footer">
             <div class="container">
                 <span>© 2023 戈登肉鋪. All rights reserved.</span>
