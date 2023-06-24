@@ -99,15 +99,18 @@ def edit(request):
 
 def hanio_view(request):
     Category = product.objects.filter( PCategory = 'beef' )
+    count = Category.count()
     # i = product.objects.get( PID = 2 )
     return render(request, 'hanio.html', locals())
 
 def pork_view(request):
     Category = product.objects.filter( PCategory = 'pork' )
+    count = Category.count()
     return render(request, 'for_pork.html', locals())
 
 def seafood_view(request):
     Category = product.objects.filter( PCategory = 'seafood' )
+    count = Category.count()
     return render(request, 'for_seafood.html', locals())
 
 def login_view(request):

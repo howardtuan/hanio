@@ -50,71 +50,67 @@
       </style>
     <body id="page-top">
         
-        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top"style="background-color: #E0B041;">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="../index/">戈登肉鋪</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="../index/">首頁</a>
-                        </li>
-                        
-                        
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                商品分類
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="../hanio/">日本高級牛肉專賣區</a></li>
+      <nav class="navbar navbar-default navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../index/" style="color: white;">戈登肉鋪</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="../index/">首頁</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            商品分類
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="../hanio/">戈登頂級牛肉</a></li>
                             <li><a class="dropdown-item" href="../pork/">戈登嚴選豬肉</a></li>
                             <li><a class="dropdown-item" href="../seafood/">戈登經典海鮮</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#">piyan專區</a></li>
                         </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../about/">關於我們</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../contact/">客服中心</a>
-                        </li>
-                    </ul>
-                    
-                    <ul class="navbar-nav">
-                        {% if request.session.MAccount %}
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    {{ request.session.MAccount }}
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="../member/">個人資料</a></li>
-                                    <li><a class="dropdown-item" href="../record/">訂單記錄</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="{% url 'logout' %}">登出</a></li>
-                                </ul>
-                            </li>
-                        {% else %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="../login/">註冊/登入</a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                    <a href="../cart/"> <button class="btn btn-cart btn-sm" type="button" >
-                      <i class="fas fa-shopping-cart text-dark fa-2x"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../about/">關於我們</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../contact/">客服中心</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    {% if request.session.MAccount %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ request.session.MAccount }}
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="../member/">個人資料</a></li>
+                            <li><a class="dropdown-item" href="../record/">訂單記錄</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">登出</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="../login/">註冊/登入</a>
+                    </li>
+                    {% endif %}
+                </ul>
+                <a href="../cart/">
+                    <button class="btn btn-cart btn-sm" type="button">
+                        <i class="fas fa-shopping-cart text-dark fa-2x"></i>
                     </button>
-                    </a>
-                    
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    </form>
-    
-                    
-                </div>
+                </a>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                </form>
             </div>
-        </nav>
+        </div>
+    </nav>
+    
         <div class="placeholder"></div>
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
@@ -146,7 +142,10 @@
           }
           
           .card-img-top {
-            border-radius: 0; /* 移除圖片的圓角 */
+            border-radius: 0;
+            width: 100%;
+            height: 280px; /* 設定圖片高度為您希望的長方形高度 */
+            object-fit: cover;
           }
           
           .card-text {
@@ -313,7 +312,7 @@
             </div>
           </div>
         </section>
-        
+        <div class="placeholder"></div>
         
         <style>
           .map-iframe {
@@ -358,7 +357,7 @@
                             <path d="M4 0a2 2 0 0 0-2 2v1.133l-.941.502A2 2 0 0 0 0 5.4V14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5.4a2 2 0 0 0-1.059-1.765L14 3.133V2a2 2 0 0 0-2-2H4Zm10 4.267.47.25A1 1 0 0 1 15 5.4v.817l-1 .6v-2.55Zm-1 3.15-3.75 2.25L8 8.917l-1.25.75L3 7.417V2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v5.417Zm-11-.6-1-.6V5.4a1 1 0 0 1 .53-.882L2 4.267v2.55Zm13 .566v5.734l-4.778-2.867L15 7.383Zm-.035 6.88A1 1 0 0 1 14 15H2a1 1 0 0 1-.965-.738L8 10.083l6.965 4.18ZM1 13.116V7.383l4.778 2.867L1 13.117Z"/>
                           </svg></div>
                         <h3 class="h4 mb-2">E-MAIL</h3>
-                        <p class="text-muted mb-0">王長青的mail</p>
+                        <p class="text-muted mb-0">jacky9171@gmail.com</p>
                     </div>
                 </div>
             </div>

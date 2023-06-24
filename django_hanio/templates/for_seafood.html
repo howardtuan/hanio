@@ -19,11 +19,12 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
         crossorigin="anonymous"></script>
 </head>
-    <body id="page-top">
+    <body id="page-top" style="display: flex; flex-direction: column; min-height: 100vh;">
+
         
-      <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top"style="background-color: #E0B041;">
+      <nav class="navbar navbar-default navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="../index/">戈登肉鋪</a>
+            <a class="navbar-brand" href="../index/" style="color: white;">戈登肉鋪</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -32,14 +33,12 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="../index/">首頁</a>
                     </li>
-                    
-                    
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             商品分類
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="../hanio/">日本高級牛肉專賣區</a></li>
+                            <li><a class="dropdown-item" href="../hanio/">戈登頂級牛肉</a></li>
                             <li><a class="dropdown-item" href="../pork/">戈登嚴選豬肉</a></li>
                             <li><a class="dropdown-item" href="../seafood/">戈登經典海鮮</a></li>
                             <li><hr class="dropdown-divider"></li>
@@ -53,88 +52,132 @@
                         <a class="nav-link" href="../contact/">客服中心</a>
                     </li>
                 </ul>
-                
                 <ul class="navbar-nav">
-                  {% if request.session.MAccount %}
-                      <li class="nav-item dropdown">
-                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                              {{ request.session.MAccount }}
-                          </a>
-                          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                              <li><a class="dropdown-item" href="../member/">個人資料</a></li>
-                              <li><a class="dropdown-item" href="../record/">訂單記錄</a></li>
-                              <li><hr class="dropdown-divider"></li>
-                              <li><a class="dropdown-item" href="{% url 'logout' %}">登出</a></li>
-                          </ul>
-                      </li>
-                  {% else %}
-                      <li class="nav-item">
-                          <a class="nav-link" href="../login/">註冊/登入</a>
-                      </li>
-                  {% endif %}
-              </ul>
-                <a href="../cart/"> <button class="btn btn-cart btn-sm" type="button" >
-                  <i class="fas fa-shopping-cart text-dark fa-2x"></i>
-                </button>
+                    {% if request.session.MAccount %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ request.session.MAccount }}
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="../member/">個人資料</a></li>
+                            <li><a class="dropdown-item" href="../record/">訂單記錄</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">登出</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="../login/">註冊/登入</a>
+                    </li>
+                    {% endif %}
+                </ul>
+                <a href="../cart/">
+                    <button class="btn btn-cart btn-sm" type="button">
+                        <i class="fas fa-shopping-cart text-dark fa-2x"></i>
+                    </button>
                 </a>
-                
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 </form>
-
-                
             </div>
         </div>
     </nav>
-        <div class="placeholder"></div>
-        <div class="container">
-            <h3 class="title">| 戈登經典海鮮專賣區</h3>
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
-              {% comment %} <div class="col product">
-                <div class="card">
-                  <img src="{% static 'img/1.jpg'%}" class="card-img-top" alt="Product 1">
-                  <div class="card-body">
-                    <h5 class="card-title">Product 1</h5>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    <div class="text-center"><a href="../detail/" class="btn btn-outline-secondary">查看>></a></div>
-                    
-                  </div>
-                </div>
-              </div> {% endcomment %}
-              {% for i in Category %}
-              <div class="col product">
-                <div class="card">
-
-                  {% if i.PPhoto %}
-                  <img src="{{i.PPhoto.url}}" class="card-img-top" alt="{{ i.PName }}">
-                  {% else %}
-                  <p>No photo available</p>
-                  {% endif %}
-
-                  <div class="card-body">
-                    <h5 class="card-title">{{ i.PName }}</h5>
-                    <p class="card-text">{{ i.PDetail }}</p>
-                    <form action="/detail/" method = "POST">{% csrf_token %}>
-                      <input type="hidden" name="pid" value="{{i.PID}}">
-                      <input type="submit" value="查看" class="btn btn-outline-dark">
-                    </form>
-                  </div>
+    
+    <style>
+      .card {
+        border-radius: 0;
+        border: none;
+      }
+    
+      .card-img-top {
+        border-radius: 0; /* 移除圖片的圓角 */
+        width: 100%; /* 設定圖片寬度為100% */
+        height: auto; /* 設定圖片高度為自動調整 */
+        object-fit: cover; /* 填滿圖片框 */
+      }
+    
+      .card-text {
+        text-align: center;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        font-size: 20px;
+        font-weight: bold;
+      }
+      .card-text-detail {
+        text-align: center;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        font-size: 20px;
+        color: gray;
+      }
+      .small-card {
+        transform: scale(0.8); /* 調整此數值以更改縮小的大小 */
+      }
+    
+      /* 自訂間距 */
+      .custom-col {
+        margin-left: -20px; /* 調整間距大小 */
+        margin-right: -20px; /* 調整間距大小 */
+      }
+      .card-img-top {
+        border-radius: 0;
+        width: 100%;
+        height: 280px; /* 設定圖片高度為您希望的長方形高度 */
+        object-fit: cover;
+      }
+    </style>
+    <div class="placeholder"></div>
+    <div class="container content" style="flex: 1;">
+      <div class="placeholder"></div>
+      <h3 class="title" style=" margin-left: 50px;margin-top: 20px; margin-bottom: -30px;  display: flex;align-items: center;">戈登經典海鮮&nbsp;&nbsp;<small style="color:gray; font-size:15px;">共{{count}}件商品</small></h3>
+        <div class="row justify-content-center">
+          <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 custom-col">
+            {% comment %} <div class="col product">
+              <div class="card">
+                <img src="{% static 'img/1.jpg'%}" class="card-img-top" alt="Product 1">
+                <div class="card-body">
+                  <h5 class="card-title">Product 1</h5>
+                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <div class="text-center"><a href="../detail/" class="btn btn-outline-secondary">查看>></a></div>
+                  
                 </div>
               </div>
-              {% endfor %}
-              <!-- 添加更多產品 -->
-        
-              <!-- 下一行的產品 -->
-        
-              <!-- 更多行的產品 -->
+            </div> {% endcomment %}
+            {% for i in Category %}
+            <div class="col product" style="margin-bottom: -100px;">
+              <div class="card small-card">
+                {% if i.PPhoto %}
+                <img src="{{i.PPhoto.url}}" class="card-img-top" alt="{{ i.PName }}">
+                {% else %}
+                <p>No photo available</p>
+                {% endif %}
+                <div class="card-body d-flex justify-content-center">
+                  <form action="/detail/" method="POST">{% csrf_token %}
+                    <input type="hidden" name="pid" value="{{i.PID}}">
+                    <input type="submit" value="{{ i.PName }}" class="card-title btn btn-outline-dark text-center" style="border: none; font-size: 20px; background-color: inherit; color: inherit; border-color: inherit;">
+                    <p class="card-text-detail">{{ i.PDetail }}</p>
+                  </form>
+                </div>
+              </div>
             </div>
+            {% endfor %}
+            <!-- 添加更多產品 -->
+      
+            <!-- 下一行的產品 -->
+      
+            <!-- 更多行的產品 -->
           </div>
+        </div>
+    </div>
+    
 
-        <footer class="footer">
-            <div class="container">
-                <span>© 2023 戈登肉鋪. All rights reserved.</span>
-            </div>
-        </footer>
+    <footer class="footer" style="margin-top: 50px;">
+        <div class="container">
+            <span>© 2023 戈登肉鋪. All rights reserved.</span>
+        </div>
+    </footer>
         
           
         
