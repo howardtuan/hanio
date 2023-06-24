@@ -21,103 +21,198 @@
     </head>
     <body id="page-top">
         
-        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top"style="background-color: #E0B041;">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="../index/">戈登肉鋪</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="../index/">首頁</a>
-                        </li>
-                        
-                        
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                商品分類
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="../hanio/">日本A5和牛專賣區</a></li>
-                                <li><a class="dropdown-item" href="../pork/">戈登嚴選豬肉</a></li>
-                                <li><a class="dropdown-item" href="../seafood/">戈登經典海鮮</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">piyan專區</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../about/">關於我們</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../contact/">客服中心</a>
-                        </li>
-                    </ul>
-                    
-                    <ul class="navbar-nav">
-                        {% if request.session.MAccount %}
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    {{ request.session.MAccount }}
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="../member/">個人資料</a></li>
-                                    <li><a class="dropdown-item" href="../record/">訂單記錄</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="{% url 'logout' %}">登出</a></li>
-                                </ul>
-                            </li>
-                        {% else %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="../login/">註冊/登入</a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                    <a href="../cart/"> <button class="btn btn-cart btn-sm" type="button" >
-                      <i class="fas fa-shopping-cart text-dark fa-2x"></i>
+      <nav class="navbar navbar-default navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../index/" style="color: white;">戈登肉鋪</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="../index/">首頁</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            商品分類
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="../hanio/">戈登頂級牛肉</a></li>
+                            <li><a class="dropdown-item" href="../pork/">戈登嚴選豬肉</a></li>
+                            <li><a class="dropdown-item" href="../seafood/">戈登經典海鮮</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">piyan專區</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../about/">關於我們</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../contact/">客服中心</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    {% if request.session.MAccount %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ request.session.MAccount }}
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="../member/">個人資料</a></li>
+                            <li><a class="dropdown-item" href="../record/">訂單記錄</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">登出</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="../login/">註冊/登入</a>
+                    </li>
+                    {% endif %}
+                </ul>
+                <a href="../cart/">
+                    <button class="btn btn-cart btn-sm" type="button">
+                        <i class="fas fa-shopping-cart text-dark fa-2x"></i>
                     </button>
-                    </a>
-                    
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    </form>
-    
-                    
-                </div>
+                </a>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                </form>
             </div>
-        </nav>
+        </div>
+    </nav>
+    
         <div class="placeholder"></div>
     
         <div class="container">
-            <h3 class="title">產品細節| <small>日本A5和牛</small></h3>
+            <h4 class="title" style=" margin-top: 20px; display: flex;align-items: center;">產品細節<small style="color:gray; font-size:15px;">{{p.PName}}</small></h4>
             <div class="row">
               <div class="col-lg-6">
                 {% if p.PPhoto %}
-                <img src="{{p.PPhoto.url}}" class="img-fluid" alt="{{ p.PName }}" width="80%">
+                <img src="{{ p.PPhoto.url }}" alt="{{ p.PName }}" style="width: 100%; height: 450px; object-fit: cover;">
                 {% else %}
                   <p>No photo available</p>
                 {% endif %}
 
               </div>
-              <div class="col-lg-6">
-                <h2>{{p.PName}}</h2>
+              <div class="col-lg-6" style="margin-top:15px ;">
+                <h5>{{p.PName}}</h5>
                 <p>{{p.PDetail}}</p>
-                <p>建議售價</p>
-                <p>NT$ {{p.PPrice}}</p>
-                <p>供貨狀況：{{status}}</p>
-                <p>規格</p>
-                <p>{{p.Pspec}}g+5%(8.8oz)</p>
+                <p>建議售價 &nbsp; $ {{p.PPrice}}元</p>
+                <p>供貨狀況：<span class="badge bg-success">{{status}}</span></p>
+                <p>包裝規格：{{p.Pspec}}g+5%(8.8oz)</p>
+                <div class="col-md-6"> <!-- 調整欄位寬度 -->
                 <form action="/add/" method = "POST">{% csrf_token %}
                     <div class="form-group">
+                        
                       <label for="number">數量</label>
                       <input type="hidden" name="pid" value="{{p.PID}}">
-                      <input type="number" name = "number" class="form-control quantity-input" value="1" min="1" step="1">
+                      <div class="row align-items-center">
+                      <div class="col">
+                      <input type="number" name = "number" class="form-control quantity-input " value="1" min="1" step="1">
+                        </div>
                       {% comment %} <input type="text" name = "number" class="form-control" id="number" placeholder=""> {% endcomment %}
                       <p></p>
+                      <div class="col">
+                      <input type="submit" value="加入購物車" class="btn btn-outline-dark"  style="width: 100%;">
+                      </div>
+                </div>
                     </div>
-                    <input type="submit" value="加入購物車" class="btn btn-outline-dark">
+                    
                 </form>
-                
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <style>
+            .decorated-title {
+            text-align: center;
+            font-size: 25px;
+            font-weight: bold;
+            color: #333;
+            position: relative;
+            }
+        
+            .decorated-title::before,
+            .decorated-title::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 2px;
+            background-color: #333;
+            }
+        
+            .decorated-title::before {
+            left: 0;
+            transform: translateY(-50%);
+            }
+        
+            .decorated-title::after {
+            right: 0;
+            transform: translateY(-50%);
+            }
+            .card {
+              border-radius: 0;
+              border: none;
+            }
+            
+            .card-img-top {
+              border-radius: 0;
+              width: 100%;
+              height: 280px; /* 設定圖片高度為您希望的長方形高度 */
+              object-fit: cover;
+            }
+            
+            .card-text {
+              text-align: center;
+              align-items: center;
+              display: flex;
+              justify-content: center;
+              font-size: 20px;
+              font-weight: bold;
+            }
+            
+            .small-card {
+              transform: scale(0.8); /* 調整此數值以更改縮小的大小 */
+            }
+            
+            /* 自訂間距 */
+            .custom-col {
+              margin-left: -10px; /* 調整間距大小 */
+              margin-right: -10px; /* 調整間距大小 */
+            }
+          </style>
+          
+          <div class="container">
+            <h1 class="text-center decorated-title" style="margin-top: 30px;">您可能會喜歡</h1>
+            <div class="row justify-content-center">
+              <div class="col-md-4 custom-col">
+                <div class="card small-card">
+                  <img class="card-img-top" src="{% static 'img/1.jpg'%}" alt="Card image cap">
+                  <div class="card-body">
+                    <p class="card-text">好吃的牛</p>
+                  </div>
+                </div>
+              </div>
+            
+              <div class="col-md-4 custom-col">
+                <div class="card small-card">
+                  <img class="card-img-top" src="{% static 'img/2.jpg'%}" alt="Card image cap">
+                  <div class="card-body">
+                    <p class="card-text">好吃的牛</p>
+                  </div>
+                </div>
+              </div>
+            
+              <div class="col-md-4 custom-col">
+                <div class="card small-card">
+                  <img class="card-img-top" src="{% static 'img/3.jpg'%}" alt="Card image cap">
+                  <div class="card-body">
+                    <p class="card-text">好吃的牛</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
