@@ -22,11 +22,10 @@
     <style>
         .decorated-title {
           text-align: center;
-          font-size: 30px;
+          font-size: 25px;
           font-weight: bold;
           color: #333;
           position: relative;
-          margin-bottom: 30px;
         }
       
         .decorated-title::before,
@@ -140,129 +139,194 @@
             </button>
         </div>
         <div class="placeholder"></div>
-        <div class="container">
-            <h1 class="text-center decorated-title">牛肉－銷量排名</h1>
-            <div class="row justify-content-center">
-              <div class="col-md-4">
-                <div class="card">
-                  <img class="card-img-top" src="{% static 'img/1.jpg'%}" alt="Card image cap">
-                  <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="col-md-4">
-                <div class="card">
-                  <img class="card-img-top" src="{% static 'img/2.jpg'%}" alt="Card image cap">
-                  <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="col-md-4">
-                <div class="card">
-                  <img class="card-img-top" src="{% static 'img/3.jpg'%}" alt="Card image cap">
-                  <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </div>
-        <div class="placeholder"></div>
-        <div class="container">
-            <h1 class="text-center decorated-title">豬肉－銷量排名</h1>
-            <div class="row justify-content-center">
-              <div class="col-md-4">
-                <div class="card">
-                  <img class="card-img-top" src="{% static 'img/1.jpg'%}" alt="Card image cap">
-                  <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="col-md-4">
-                <div class="card">
-                  <img class="card-img-top" src="{% static 'img/2.jpg'%}" alt="Card image cap">
-                  <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="col-md-4">
-                <div class="card">
-                  <img class="card-img-top" src="{% static 'img/3.jpg'%}" alt="Card image cap">
-                  <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </div>
-        <div class="placeholder"></div>
-        <div class="container">
-            <h1 class="text-center decorated-title">海鮮－銷量排名</h1>
-            <div class="row justify-content-center">
-              <div class="col-md-4">
-                <div class="card">
-                  <img class="card-img-top" src="{% static 'img/1.jpg'%}" alt="Card image cap">
-                  <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="col-md-4">
-                <div class="card">
-                  <img class="card-img-top" src="{% static 'img/2.jpg'%}" alt="Card image cap">
-                  <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="col-md-4">
-                <div class="card">
-                  <img class="card-img-top" src="{% static 'img/3.jpg'%}" alt="Card image cap">
-                  <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </div>
         <style>
-            #product {
-              /* background-image: url("your-image-path.jpg"); */
-              background-color: rgb(248,249,250);
-              background-size: cover;
-              background-position: center;
-            }
+          .card {
+            border-radius: 0;
+            border: none;
+          }
+          
+          .card-img-top {
+            border-radius: 0; /* 移除圖片的圓角 */
+          }
+          
+          .card-text {
+            text-align: center;
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+          }
+          
+          .small-card {
+            transform: scale(0.8); /* 調整此數值以更改縮小的大小 */
+          }
+          
+          /* 自訂間距 */
+          .custom-col {
+            margin-left: -10px; /* 調整間距大小 */
+            margin-right: -10px; /* 調整間距大小 */
+          }
         </style>
+        
+        <div class="container">
+          <h1 class="text-center decorated-title">戈登精選牛肉</h1>
+          <div class="row justify-content-center">
+            <div class="col-md-4 custom-col">
+              <div class="card small-card">
+                <img class="card-img-top" src="{% static 'img/1.jpg'%}" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">好吃的牛</p>
+                </div>
+              </div>
+            </div>
+          
+            <div class="col-md-4 custom-col">
+              <div class="card small-card">
+                <img class="card-img-top" src="{% static 'img/2.jpg'%}" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">好吃的牛</p>
+                </div>
+              </div>
+            </div>
+          
+            <div class="col-md-4 custom-col">
+              <div class="card small-card">
+                <img class="card-img-top" src="{% static 'img/3.jpg'%}" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">好吃的牛</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="container">
+          <h1 class="text-center decorated-title">戈登精選豬肉</h1>
+          <div class="row justify-content-center">
+            <div class="col-md-4 custom-col">
+              <div class="card small-card">
+                <img class="card-img-top" src="{% static 'img/23.jpg'%}" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">好吃的豬</p>
+                </div>
+              </div>
+            </div>
+          
+            <div class="col-md-4 custom-col">
+              <div class="card small-card">
+                <img class="card-img-top" src="{% static 'img/24.jpg'%}" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">好吃的豬</p>
+                </div>
+              </div>
+            </div>
+          
+            <div class="col-md-4 custom-col">
+              <div class="card small-card">
+                <img class="card-img-top" src="{% static 'img/25.jpg'%}" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">好吃的豬</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="container">
+          <h1 class="text-center decorated-title">戈登精選海鮮</h1>
+          <div class="row justify-content-center">
+            <div class="col-md-4 custom-col">
+              <div class="card small-card">
+                <img class="card-img-top" src="{% static 'img/26.jpg'%}" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">好吃的臭海鮮</p>
+                </div>
+              </div>
+            </div>
+          
+            <div class="col-md-4 custom-col">
+              <div class="card small-card">
+                <img class="card-img-top" src="{% static 'img/27.jpg'%}" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">好吃的臭海鮮</p>
+                </div>
+              </div>
+            </div>
+          
+            <div class="col-md-4 custom-col">
+              <div class="card small-card">
+                <img class="card-img-top" src="{% static 'img/28.jpg'%}" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">好吃的臭海鮮</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <style>
+          #product {
+            position: relative;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        
+          #product::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("{% static 'img/banner_about.jpg'%}");
+            background-size: cover;
+            background-position: center;
+            filter: blur(3px); /* 調整此數值以更改模糊程度 */
+            z-index: -1;
+          }
+        
+          #product .container {
+            position: relative;
+            z-index: 1;
+          }
+        
+          #product .col-lg-8 {
+            text-align: center;
+            color: #fff;
+          }
+        </style>
+        
         <div class="placeholder"></div>  
         <section class="page-section" id="product">
-        <div class="container px-4 px-lg-5">
+          <div class="container px-4 px-lg-5">
             <div class="placeholder"></div>  
             <div class="row gx-4 gx-lg-5 justify-content-center">
-            <div class="col-lg-8 text-center">
+              <div class="col-lg-8">
                 <h2 class="mt-0">關於我們｜About Us</h2>
                 <hr class="divider">
                 <p class="t-size mb-4">我們的專業肉品處理師手工加工每一塊肉品，確保達到高品質標準。從剪裁到包裝，我們注重細緻的手工技術。</p>
                 <p class="t-size mb-4">我們重視卓越的客戶服務。不論是實體店面還是在線商店，我們承諾提供熱情、親切和專業的服務。我們致力於讓每次購物經驗都令您滿意。</p>
+              </div>
             </div>
-            </div>
-        </div>
+          </div>
         </section>
+        
+        
+        <style>
+          .map-iframe {
+            filter: grayscale(0%);
+          }
+        </style>
+        
         <div class="container-fluid p-0">
-            <div class="row">
-                <div class="col-12">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.6181934416823!2d121.30048157582124!3d25.01308647782997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346819dcda7c29ad%3A0xac0ec0716fb2c6b5!2z5oiI55m76IKJ6IiWKOiXneaWh-W6lynvvZ7ogonoiJbooYzlrrbvvI7lpb3ogonlnKjmiIjnmbs!5e0!3m2!1szh-TW!2stw!4v1687364417507!5m2!1szh-TW!2stw" width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
+          <div class="row">
+            <div class="col-12">
+              <iframe class="map-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.6181934416823!2d121.30048157582124!3d25.01308647782997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346819dcda7c29ad%3A0xac0ec0716fb2c6b5!2z5oiI55m76IKJ6IiWKOiXneaWh-W6lynvvZ7ogonoiJbooYzlrrbvvI7lpb3ogonlnKjmiIjnmbs!5e0!3m2!1szh-TW!2stw!4v1687364417507!5m2!1szh-TW!2stw" width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="filter: grayscale(0%);"></iframe>
             </div>
+          </div>
         </div>
         <div class="placeholder"></div>  
         <div class="container px-4 px-lg-5" style="height: 300px;">
