@@ -22,6 +22,8 @@ def orders_view(request):
 
     return render(request, 'orders_page.html', locals())
 
+
+
 def about_view(request):
     return render(request, 'about.html', locals())
 
@@ -135,7 +137,7 @@ def login_view(request):
             messages.error(request, "帳號或密碼錯誤")
         else:
             # 登入成功，將用戶名稱存入 Session
-            request.session['MAccount'] = MAccount
+            request.session['SAccount'] = MAccount
             request.session.save()
             return redirect('/dashboard/')
         
@@ -218,8 +220,6 @@ def pay_view(request):
         total_price+=sub
         total_num+=number
         cart_products.append((item, p, sub))
-
-    
     return render(request, 'pay.html', locals())
 
 
@@ -265,9 +265,6 @@ def checkout_process(request):
                 OStatus = 'NOT_SHIPPED',
                 OPayment = payment
         )
-        cp = product.objects.get( PID = pid )
-        cp.Pnum = cp.Pnum - pnum
-        cp.save()
 
     cart.objects.filter( MID = get_id ).delete()
     return render(request, 'record.html', locals())
