@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login
 from datetime import datetime
 from django.db.models import Sum
 # Create your views here.
-
+#購物車要改icon
 now = datetime.now()
 def index_view(request):
     # 使用 annotate() 和 values() 方法對相同 pid 的 pnum 欄位進行加總
