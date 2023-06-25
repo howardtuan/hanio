@@ -167,100 +167,60 @@
             margin-right: -10px; /* 調整間距大小 */
           }
         </style>
-        
         <div class="container">
           <h1 class="text-center decorated-title">戈登精選牛肉</h1>
           <div class="row justify-content-center">
-            <div class="col-md-4 custom-col">
-              <div class="card small-card">
-                <img class="card-img-top" src="{% static 'img/1.jpg'%}" alt="Card image cap">
-                <div class="card-body">
-                  <p class="card-text">好吃的牛</p>
+            {% for product in bproducts %}
+              <div class="col-md-4 custom-col">
+                <div class="card small-card">
+                  <img class="card-img-top" src="{{product.PPhoto.url}}" alt="Card image cap">
+                  <form action="/detail/" method="POST">{% csrf_token %}
+                    <input type="hidden" name="pid" value="{{product.PID}}">
+                    <div class="card-body">
+                      <input type="submit" value="{{ product.PName }}" class="card-title btn btn-outline-dark text-center" style="border: none; font-size: 20px; background-color: inherit; color: inherit; border-color: inherit;">
+                    </div>
+                  </form>
                 </div>
-              </div>
-            </div>
-          
-            <div class="col-md-4 custom-col">
-              <div class="card small-card">
-                <img class="card-img-top" src="{% static 'img/2.jpg'%}" alt="Card image cap">
-                <div class="card-body">
-                  <p class="card-text">好吃的牛</p>
-                </div>
-              </div>
-            </div>
-          
-            <div class="col-md-4 custom-col">
-              <div class="card small-card">
-                <img class="card-img-top" src="{% static 'img/3.jpg'%}" alt="Card image cap">
-                <div class="card-body">
-                  <p class="card-text">好吃的牛</p>
-                </div>
-              </div>
-            </div>
+              </div>              
+            {% endfor %}   
           </div>
         </div>
         
         <div class="container">
           <h1 class="text-center decorated-title">戈登精選豬肉</h1>
           <div class="row justify-content-center">
-            <div class="col-md-4 custom-col">
-              <div class="card small-card">
-                <img class="card-img-top" src="{% static 'img/23.jpg'%}" alt="Card image cap">
-                <div class="card-body">
-                  <p class="card-text">好吃的豬</p>
+            {% for product in pproducts %}
+              <div class="col-md-4 custom-col">
+                <div class="card small-card">
+                  <img class="card-img-top" src="{{product.PPhoto.url}}" alt="Card image cap">
+                  <form action="/detail/" method="POST">{% csrf_token %}
+                    <input type="hidden" name="pid" value="{{product.PID}}">
+                    <div class="card-body">
+                      <input type="submit" value="{{ product.PName }}" class="card-title btn btn-outline-dark text-center" style="border: none; font-size: 20px; background-color: inherit; color: inherit; border-color: inherit;">
+                    </div>
+                  </form>
                 </div>
-              </div>
-            </div>
-          
-            <div class="col-md-4 custom-col">
-              <div class="card small-card">
-                <img class="card-img-top" src="{% static 'img/24.jpg'%}" alt="Card image cap">
-                <div class="card-body">
-                  <p class="card-text">好吃的豬</p>
-                </div>
-              </div>
-            </div>
-          
-            <div class="col-md-4 custom-col">
-              <div class="card small-card">
-                <img class="card-img-top" src="{% static 'img/25.jpg'%}" alt="Card image cap">
-                <div class="card-body">
-                  <p class="card-text">好吃的豬</p>
-                </div>
-              </div>
-            </div>
+              </div>              
+            {% endfor %} 
           </div>
         </div>
         
         <div class="container">
           <h1 class="text-center decorated-title">戈登精選海鮮</h1>
           <div class="row justify-content-center">
-            <div class="col-md-4 custom-col">
-              <div class="card small-card">
-                <img class="card-img-top" src="{% static 'img/26.jpg'%}" alt="Card image cap">
-                <div class="card-body">
-                  <p class="card-text">好吃的臭海鮮</p>
+            {% for product in sproducts %}
+              <div class="col-md-4 custom-col">
+                <div class="card small-card">
+                  <img class="card-img-top" src="{{product.PPhoto.url}}" alt="Card image cap">
+                  <form action="/detail/" method="POST">{% csrf_token %}
+                    <input type="hidden" name="pid" value="{{product.PID}}">
+                    <div class="card-body">
+                      <input type="submit" value="{{ product.PName }}" class="card-title btn btn-outline-dark text-center" style="border: none; font-size: 20px; background-color: inherit; color: inherit; border-color: inherit;">
+                    </div>
+                  </form>
                 </div>
-              </div>
-            </div>
-          
-            <div class="col-md-4 custom-col">
-              <div class="card small-card">
-                <img class="card-img-top" src="{% static 'img/27.jpg'%}" alt="Card image cap">
-                <div class="card-body">
-                  <p class="card-text">好吃的臭海鮮</p>
-                </div>
-              </div>
-            </div>
-          
-            <div class="col-md-4 custom-col">
-              <div class="card small-card">
-                <img class="card-img-top" src="{% static 'img/28.jpg'%}" alt="Card image cap">
-                <div class="card-body">
-                  <p class="card-text">好吃的臭海鮮</p>
-                </div>
-              </div>
-            </div>
+              </div>              
+            {% endfor %} 
           </div>
         </div>
       
