@@ -6,10 +6,44 @@ from django.db.models import Max
 from django.contrib.sessions.backends.db import SessionStore
 from django.contrib.auth import authenticate, login
 from datetime import datetime
+from django.db.models import Sum
 # Create your views here.
 
 now = datetime.now()
 def index_view(request):
+    # 使用 annotate() 和 values() 方法對相同 pid 的 pnum 欄位進行加總
+    beef_pids = product.objects.filter(PCategory="beef").values_list('PID', flat=True)
+    totals = (
+        order_detail.objects.filter(PID__in=beef_pids)
+        .values('PID')
+        .annotate(total_pnum=Sum('PNUM'))
+        .order_by('-total_pnum')[:3]
+    )
+    btop_three_pids = [total['PID'] for total in totals]
+    print(btop_three_pids)
+    bproducts = product.objects.filter(PID__in=btop_three_pids)
+
+    pork_pids = product.objects.filter(PCategory="pork").values_list('PID', flat=True)
+    totals = (
+        order_detail.objects.filter(PID__in=pork_pids)
+        .values('PID')
+        .annotate(total_pnum=Sum('PNUM'))
+        .order_by('-total_pnum')[:3]
+    )
+    ptop_three_pids = [total['PID'] for total in totals]
+    print(ptop_three_pids)
+    pproducts = product.objects.filter(PID__in=ptop_three_pids)
+
+    sea_pids = product.objects.filter(PCategory="seafood").values_list('PID', flat=True)
+    totals = (
+        order_detail.objects.filter(PID__in=sea_pids)
+        .values('PID')
+        .annotate(total_pnum=Sum('PNUM'))
+        .order_by('-total_pnum')[:3]
+    )
+    stop_three_pids = [total['PID'] for total in totals]
+    print(stop_three_pids)
+    sproducts = product.objects.filter(PID__in=stop_three_pids)
     return render(request, 'index.html', locals())
 
 def dashboard_view(request):
