@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
+from random import sample
 from mywebsite.models import *
 import random
 from django.contrib import messages
@@ -7,6 +8,7 @@ from django.contrib.sessions.backends.db import SessionStore
 from django.contrib.auth import authenticate, login
 from datetime import datetime
 from django.db.models import Sum
+from collections import defaultdict
 # Create your views here.
 
 now = datetime.now()
@@ -75,6 +77,14 @@ def detail_view(request):
     if p.PStatus == '缺貨' :
         status = '尚無庫存'    
     # context = {'product_DB': p, 'status': status}
+    all_pids = product.objects.values_list('PID', flat=True)
+
+    # 從所有 PID 中隨機選取三個
+    random_pids = sample(list(all_pids), 3)
+
+    # 根據選取的 PID 取得對應的 Product 資料
+    random_products = product.objects.filter(PID__in=random_pids)
+
     return render(request, 'detail.html', locals())
 
 def or_e_view(request):
@@ -175,10 +185,6 @@ def login_view(request):
             request.session['MAccount'] = MAccount
             request.session.save()
             return redirect('/dashboard/')
-        
-
-       
-    
     return render(request, 'login.html')
 
 def member_e_view(request):
@@ -206,8 +212,8 @@ def mem_edit(request):
     mem.MVISA = get_visa
     mem.MCK = get_mck
     mem.save()
-
     return redirect('/dashboard/')
+
 def member_view(request):
     MAccount = request.session.get('MAccount')
     if not MAccount:
@@ -250,8 +256,34 @@ def member_view(request):
         except member.DoesNotExist:
             messages.error(request, "用戶不存在")
             return redirect('/member')
+    mem = member.objects.get( MAccount = MAccount )
+    mid = mem.MID
+    ors = order_detail.objects.filter(MID=mid)
+    grouped_data = {}
+    for orderdetail in ors:
+        odate = orderdetail.ODate
+        if odate in grouped_data:
+            grouped_data[odate].append(orderdetail)
+        else:
+            grouped_data[odate] = [orderdetail]
 
-    return render(request, 'member.html', {'user_info': user_info})
+    result = []
+    for odate, orders in grouped_data.items():
+        data = {'odate': odate, 'products': []}
+        for orr in orders:
+            pid = orr.PID
+            pnum = orr.PNUM
+            products = product.objects.get(PID=pid)
+            pname = products.PName
+            pprice = products.PPrice
+            total_price = pnum * pprice
+            data['products'].append({'pname': pname, 'pnum': pnum, 'total_price': total_price})
+        result.append(data)
+
+    print(result)
+
+
+    return render(request, 'member.html', locals())
 
 def memberbaseinfo_view(request):
     MAccount = request.session.get('MAccount')
@@ -299,7 +331,6 @@ def memberbaseinfo_view(request):
         except member.DoesNotExist:
             messages.error(request, "用戶不存在")
             return redirect('/member')
-
     return render(request, 'memberbaseinfo.html', {'user_info': user_info})
 
 
@@ -328,6 +359,14 @@ def pay_view(request):
 
 
 def checkout_process(request):
+    max_oid = order.objects.aggregate(Max('OID'))['OID__max']
+
+# 為了避免第一筆資料時 max_oid 為 None 的情況，需要進行檢查
+    if max_oid is not None:
+        new_oid = int(max_oid) + 1
+    else:
+        new_oid = 1
+
     if request.method == 'POST':
         address = request.POST.get('address') 
         payment_method = request.POST.get('paymentMethod')
@@ -338,17 +377,11 @@ def checkout_process(request):
         elif payment_method == 'paypal':
             payment = 'CVS'
 
-    max_oid = order.objects.aggregate(Max('OID'))['OID__max']
-    
-    # 為了避免第一筆資料時 max_oid 為 None 的情況，需要進行檢查
-    if max_oid is not None:
-        new_oid = int(max_oid) + 1
-    else:
-        new_oid = 1
     MAccount = request.session.get('MAccount')
     if not MAccount:
         messages.error(request, "請先登入")
         return redirect('/login')
+
     get_id = member.objects.get(MAccount=MAccount).MID
     cart_items = cart.objects.filter(MID=get_id)
     for cart_item in cart_items:
@@ -363,18 +396,19 @@ def checkout_process(request):
                 OID=new_oid,
                 MID=get_id,
                 PID=pid,
-                PNUM = pnum,
-                ODate = now,
-                OAddr = address,
-                OStatus = 'NOT_SHIPPED',
-                OPayment = payment
+                PNUM=pnum,
+                ODate=now,
+                OAddr=address,
+                OStatus='NOT_SHIPPED',
+                OPayment=payment
         )
-        cp = product.objects.get( PID = pid )
+        cp = product.objects.get(PID=pid)
         cp.Pnum = cp.Pnum - pnum
         cp.save()
 
-    cart.objects.filter( MID = get_id ).delete()
-    return render(request, 'record.html', locals())
+    cart.objects.filter(MID=get_id).delete()
+    return redirect('/contact')
+
 
 
 def record_view(request):
@@ -480,3 +514,9 @@ def logout_view(request):
     except KeyError:
         pass
     return redirect('/login')
+
+def search_products(request):
+    keyword = request.POST.get('searchbox', '')
+    products = product.objects.filter(PName__icontains=keyword)
+    count = products.count()
+    return render(request, 'search.html', locals())
