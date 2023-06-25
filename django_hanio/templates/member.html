@@ -91,55 +91,55 @@
         <p></p>
         
         <div class="container content" style="flex: 1;">
-            <div style="border: 1px solid; border-radius: 10px;padding: 50px; text-align: center;" >
+            <div style="border: 1px solid; border-radius: 10px;padding: 50px;" >
             <div id="viewInfo">
             <h3>會員基本資料</h3>
-            
+            <hr>
             <form method="post">
                 {% csrf_token %}
-                <div class="row mb-3">
+                <div class="row mb-3 justify-content-center">
                     <label for="inputaccount" class="col-sm-2 col-form-label">姓名</label>
                     <div class="col-sm-5">
                         <input type="text" class="form-control" id="inputaccount" value="{{user_info.MName}}" readonly>
                     </div>
                 </div>
-                <div class="row mb-3">
+                <div class="row mb-3 justify-content-center">
                     <label for="inputaccount" class="col-sm-2 col-form-label">電話</label>
                     <div class="col-sm-5">
                         <input type="text" class="form-control" id="inputaccount" value="{{user_info.MPhone }}" readonly>
                     </div>
                 </div>
-                <div class="row mb-3">
+                <div class="row mb-3 justify-content-center">
                     <label for="inputaccount" class="col-sm-2 col-form-label">帳號</label>
                     <div class="col-sm-5">
                         <input type="text" class="form-control" id="inputaccount" value="{{user_info.MAccount }}" readonly>
                     </div>
                 </div>
-                <div class="row mb-3">
+                <div class="row mb-3 justify-content-center">
                     <label for="inputaccount" class="col-sm-2 col-form-label">密碼</label>
                     <div class="col-sm-5">
                         <input type="password" class="form-control" id="inputaccount" value="{{user_info.MPW }}" readonly>
                     </div>
                 </div>
-                <div class="row mb-3">
+                <div class="row mb-3 justify-content-center">
                     <label for="inputaccount" class="col-sm-2 col-form-label">信箱</label>
                     <div class="col-sm-5">
                         <input type="text" class="form-control" id="inputaccount" value="{{user_info.MEmail }}" readonly>
                     </div>
                 </div>
-                <div class="row mb-3">
+                <div class="row mb-3 justify-content-center">
                     <label for="inputaccount" class="col-sm-2 col-form-label">地址</label>
                     <div class="col-sm-5">
                         <input type="text" class="form-control" id="inputaccount" value="{{user_info.MAddr }}" readonly>
                     </div>
                 </div>
-                <div class="row mb-3">
+                <div class="row mb-3 justify-content-center">
                     <label for="inputaccount" class="col-sm-2 col-form-label">信用卡卡號</label>
                     <div class="col-sm-5">
                         <input type="text" class="form-control" id="inputaccount" value="{{user_info.MVISA }}" readonly>
                     </div>
                 </div>
-                <div class="row mb-3">
+                <div class="row mb-3 justify-content-center">
                     <label for="inputaccount" class="col-sm-2 col-form-label">信用卡到期日</label>
                     <div class="col-sm-5">
                         <input type="text" class="form-control" id="inputaccount" value="{{user_info.MCK }}" readonly>
@@ -148,6 +148,9 @@
                 <div style="text-align: center;">
                 <button id="editButton" type="button" class="btn btn-primary" >修改密碼</button>
                 <a href="/memberbaseinfo"><button id="editbaseButton" type="button" class="btn btn-primary" >修改基本資料</button></a></div>
+                <div class="placeholder"></div>
+                <h3>購買紀錄</h3>
+                <hr>
             </form>
         </div>
             <div id="editInfo" style="display: none;">
@@ -172,7 +175,9 @@
                     <button  type="button" class="btn btn-warning" id="cancel1" >取消</button></div>
                 </form>
             </div>
+
         </div>
+
     </div>
     </div>
         <footer class="footer">
