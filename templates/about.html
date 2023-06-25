@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>戈登肉鋪</title> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    {% load static %}
+    <link href="{% static 'css/styles.css'%}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+        crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+    <style>
+        .carousel-inner img {
+            height: 400px;
+            object-fit: contain;
+        }
+    </style>
+    <style>
+        .parallax {
+            background-image: url("{% static 'img/banner_about2.jpg'%}");
+            height: 100%;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .textblock {
+            text-align: center;
+            background-color: rgba(133, 133, 133, 0.5);
+            width: 30%;
+            padding: 20px;
+        }
+
+        body, html {
+            height: 80%;
+        }
+
+        @media only screen and (max-device-width: 1366px) {
+            .parallax {
+                background-attachment: scroll;
+            }
+        }
+        .center-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+        .lead{
+            font-size: larger;
+            font-weight: bolder;
+        }
+        .contenttext{
+            font-size: large;
+        }
+        .lead, .contenttext {
+        font-family: "微軟正黑體", Arial, sans-serif;
+    }
+    </style>
+
+</head>
+    <body id="page-top">
+        
+        <nav class="navbar navbar-default navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="../index/" style="color: white;">戈登肉鋪</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="../index/">首頁</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                商品分類
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="../hanio/">戈登頂級牛肉</a></li>
+                                <li><a class="dropdown-item" href="../pork/">戈登嚴選豬肉</a></li>
+                                <li><a class="dropdown-item" href="../seafood/">戈登經典海鮮</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">piyan專區</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../about/">關於我們</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../contact/">客服中心</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        {% if request.session.MAccount %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ request.session.MAccount }}
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="../member/">個人資料</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'logout' %}">登出</a></li>
+                            </ul>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="../login/">註冊/登入</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                    <a href="../cart/">
+                        <button class="btn btn-cart btn-sm" type="button">
+                            <i class="fas fa-shopping-cart text-dark fa-2x"></i>
+                        </button>
+                    </a>
+                    <form action="/search/" ass="d-flex" method="POST">{% csrf_token %}
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name = "searchbox">
+                    </form>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="placeholder"></div>
+        <div class="placeholder"></div>
+        <div class="parallax">
+            <div class="textblock">
+                <h2 class="display-4 text-center" style="font-weight: bolder;">ABOUT US</h2>
+            </div>
+        </div>
+
+        <section class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="d-flex justify-content-center">
+                            <img src="../static/img/start.jpg" alt="" style="width: 100%;">
+                        </div>
+                        <div class="d-flex justify-content-center" style="margin-bottom: 5%;">
+                            <img src="../static/img/banner3.png" alt="" style="width: 80%;">
+                        </div>
+                        <p class="lead">當您想到細緻的手工技術、優質的產品和卓越的客戶服務時，我們希望您會想到我們——戈登肉鋪。</p>
+                        <p class="contenttext">我們的肉品來源自全球各地最優質的農場和牧場，每一塊肉都經過精心選擇和嚴格檢查，確保能符合我們的高品質標準。我們以推廣持續、合理和人道的農業實踐為己任，並全力支持那些與我們有共同價值觀的農場和牧場。</p>
+                        <p class="contenttext">我們的肉品均由我們的專業肉品處理師手工處理，他們將其精湛的技藝用於每一塊肉，確保每一塊肉都達到了我們的高品質標準。從剪裁到包裝，我們的肉品都充滿著專業的熱忱和細緻的手工技術。</p>
+                        <p class="contenttext">此外，我們相信，絕佳的產品必須配以卓越的客戶服務。無論您是在我們的實體店面，還是在我們的在線商店購物，我們都承諾為您提供熱情、親切和專業的服務。我們的目標是讓您的每次購物經驗都滿意。</p>
+                        <p class="contenttext">這就是戈登肉鋪——專業、質量、服務和可持續性的完美結合。無論您是尋找日常食材，還是尋找特殊場合的精緻肉品，我們都樂於為您提供最優質的選擇。</p>
+                        <p class="contenttext">戈登肉鋪，為您提供超越期待的優質肉品和服務。</p>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div class="d-flex justify-content-center">
+                            <img src="../static/img/quality.jpg" alt="" style="width: 100%;">
+                        </div>
+                        <p class="lead">嚴選品質，給您安心！</p>
+                        <p class="contenttext">戈登肉舖，堅持高標準，保證肉品品質。我們的承諾如下：</p>
+                        <p class="contenttext">經過海鮮檢驗合格：新鮮海鮮，品質有保障。</p>
+                        <p class="contenttext">絕無瘦肉精：我們拒絕使用任何有害添加物。</p>
+                        <p class="contenttext">純天然肉品：不含重組肉，保留原始風味。</p>
+                        <p class="contenttext">讓您品嚐美味肉品的同時，放心無憂。感謝您對戈登肉舖的支持，期待為您提供最佳選擇！有任何問題，歡迎聯繫我們的團隊。</p>
+                        <div class="d-flex justify-content-center">
+                            <img src="../static/img/banner5.png" alt="" style="width: 80%;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <footer class="footer">
+            <div class="container">
+                <span>© 2023 戈登肉鋪. All rights reserved.</span>
+            </div>
+        </footer>
+        
+          
+        
+    </body>
+    
+        
+</html>
