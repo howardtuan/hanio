@@ -213,7 +213,8 @@ def member_view(request):
     if not MAccount:
         messages.error(request, "請先登入")
         return redirect('/login')
-        
+    
+    user_info = {}
     if request.method == "POST":
         password = request.POST.get("password")
         confirm_password = request.POST.get("confirm_password")
@@ -232,8 +233,74 @@ def member_view(request):
             user.save()  # 保存用戶對象
             messages.success(request, "修改成功")
             return redirect('/member')
+    else:
+        try:
+            user = member.objects.get(MAccount=MAccount)
+            user_info = {
+                'MAccount': user.MAccount,
+                'MName': user.MName,
+                'MPhone': user.MPhone,
+                'MPW': user.MPW,
+                'MEmail': user.MEmail,
+                'MAddr': user.MAddr,
+                'MVISA': user.MVISA,
+                'MCK': user.MCK,
+                # ... 其他信息
+            }
+        except member.DoesNotExist:
+            messages.error(request, "用戶不存在")
+            return redirect('/member')
 
-    return render(request, 'member.html', {'MAccount': MAccount})
+    return render(request, 'member.html', {'user_info': user_info})
+
+def memberbaseinfo_view(request):
+    MAccount = request.session.get('MAccount')
+    if not MAccount:
+        messages.error(request, "請先登入")
+        return redirect('/login')
+
+    user_info = {}
+
+    try:
+        user = member.objects.get(MAccount=MAccount)
+    except member.DoesNotExist:
+        messages.error(request, "用戶不存在")
+        return redirect('/member')
+    if request.method == "POST":
+        MName = request.POST.get("MName")
+        MPhone = request.POST.get("MPhone")
+        MEmail = request.POST.get("MEmail")
+        MAddr = request.POST.get("MAddr")
+        MVISA = request.POST.get("MVISA")
+        MCK = request.POST.get("MCK")           
+        user.MName = MName  
+        user.MPhone = MPhone
+        user.MEmail = MEmail
+        user.MAddr = MAddr
+        user.MVISA = MVISA
+        user.MCK = MCK
+        user.save()  # 保存用戶對象
+        messages.success(request, "修改成功")
+        return redirect('/member')
+    else:
+        try:
+            user = member.objects.get(MAccount=MAccount)
+            user_info = {
+                'MAccount': user.MAccount,
+                'MName': user.MName,
+                'MPhone': user.MPhone,
+                'MPW': user.MPW,
+                'MEmail': user.MEmail,
+                'MAddr': user.MAddr,
+                'MVISA': user.MVISA,
+                'MCK': user.MCK,
+                # ... 其他信息
+            }
+        except member.DoesNotExist:
+            messages.error(request, "用戶不存在")
+            return redirect('/member')
+
+    return render(request, 'memberbaseinfo.html', {'user_info': user_info})
 
 
 def pay_view(request):

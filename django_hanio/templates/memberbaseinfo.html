@@ -18,8 +18,14 @@
             crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
             crossorigin="anonymous"></script>
+            <style>
+                h3{
+                    text-align: center;
+                }
+            </style>
     </head>
     <body id="page-top" style="display: flex; flex-direction: column; min-height: 100vh;">
+
         
         <nav class="navbar navbar-default navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container-fluid">
@@ -82,64 +88,56 @@
         </nav>
         
         <div class="placeholder"></div>
-        
+        <p></p>
         <div class="container content" style="flex: 1;">
-            <div class="row justify-content-center">
-              <div class="col-md-6">
-                <div class="text-center mb-4">
-                    
-                  <img src="{% static 'img/logo (1).jpg'%}" alt="Logo" width="100">
-                  <h2>登入</h2>
-                </div>
-                <form method="post">{% csrf_token %}
-                    <div class="form-group">
-                        <label for="account">帳號</label>
-                        <input type="text" class="form-control" id="account" name="account" placeholder="輸入您的帳號">
-                      </div>
-                      <div class="form-group">
-                        <label for="password">密碼</label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="輸入您的密碼">
-                      </div>
-                  
-                  <p>還沒有帳號？<a href="../signup/">點我註冊</a></p>
-                  <button type="submit" class="btn btn-outline-secondary">Submit</button>
-                </form>
-              </div>
-            </div>
-          </div>
-          {% if messages %}
-                {% for message in messages %}
-                    <div class="modal" tabindex="-1" id="myModal">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">訊息</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>{{ message }}</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">確認</button>
-                                </div>
-                            </div>
+            <div id="editbaseInfo">
+                <h3>修改基本資料</h3>
+                <form method="post">
+                    {% csrf_token %}
+                    <!-- 這裡是你要修改的欄位 -->
+                    <div class="row mb-3">
+                        <label for="inputaccount" class="col-sm-2 col-form-label">姓名</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputaccount" value="{{user_info.MName}}" name="MName">
                         </div>
                     </div>
-                {% endfor %}
-            {% endif %}
-        
-          <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-          <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-          <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-          <script>
-            $(document).ready(function() {
-                $('#myModal').modal('show');
-            });
-        </script>
-        
-
-
-
+                    <div class="row mb-3">
+                        <label for="inputaccount" class="col-sm-2 col-form-label">電話</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputaccount" value="{{user_info.MPhone }}" name="MPhone">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputaccount" class="col-sm-2 col-form-label">信箱</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputaccount" value="{{user_info.MEmail }}" name="MEmail">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputaccount" class="col-sm-2 col-form-label">地址</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputaccount" value="{{user_info.MAddr }}" name="MAddr">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputaccount" class="col-sm-2 col-form-label">信用卡卡號</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputaccount" value="{{user_info.MVISA }}" name="MVISA">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputaccount" class="col-sm-2 col-form-label">信用卡到期日</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputaccount" value="{{user_info.MCK }}" name="MCK">
+                        </div>
+                    </div>
+                    <div style="text-align: center;">
+                    <button type="submit" class="btn btn-warning">確認修改</button>
+                    <a href="/member"><button type="button" class="btn btn-warning">取消</button></a></div>
+                </form>
+            </div>
+        </div>
+    </div>
         <footer class="footer">
             <div class="container">
                 <span>© 2023 戈登肉鋪. All rights reserved.</span>
@@ -147,7 +145,28 @@
         </footer>
         
           
-        
+        {% if messages %}
+        {% for message in messages %}
+            <div class="modal" tabindex="-1" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">訊息</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>{{ message }}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">確認</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <script>
+    </script>
     </body>
     
         

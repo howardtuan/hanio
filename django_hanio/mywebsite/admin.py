@@ -11,7 +11,7 @@ class OrderAdmin(admin.ModelAdmin):
     ordering = ('okid',)
 
 class OrderDetailAdmin(admin.ModelAdmin):
-    list_display =('ODID', 'PID', 'OID', 'PNUM')
+    list_display =('ODID', 'PID', 'OID', 'PNUM','ODate')
     ordering = ('ODID',)
 
 

@@ -88,7 +88,6 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="../member/">個人資料</a></li>
-                            <li><a class="dropdown-item" href="../record/">訂單記錄</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="{% url 'logout' %}">登出</a></li>
                         </ul>
@@ -176,7 +175,7 @@
                   <img class="card-img-top" src="{{product.PPhoto.url}}" alt="Card image cap">
                   <form action="/detail/" method="POST">{% csrf_token %}
                     <input type="hidden" name="pid" value="{{product.PID}}">
-                    <div class="card-body">
+                    <div class="card-body text-center">
                       <input type="submit" value="{{ product.PName }}" class="card-title btn btn-outline-dark text-center" style="border: none; font-size: 20px; background-color: inherit; color: inherit; border-color: inherit;">
                     </div>
                   </form>
@@ -195,7 +194,7 @@
                   <img class="card-img-top" src="{{product.PPhoto.url}}" alt="Card image cap">
                   <form action="/detail/" method="POST">{% csrf_token %}
                     <input type="hidden" name="pid" value="{{product.PID}}">
-                    <div class="card-body">
+                    <div class="card-body text-center">
                       <input type="submit" value="{{ product.PName }}" class="card-title btn btn-outline-dark text-center" style="border: none; font-size: 20px; background-color: inherit; color: inherit; border-color: inherit;">
                     </div>
                   </form>
@@ -214,7 +213,7 @@
                   <img class="card-img-top" src="{{product.PPhoto.url}}" alt="Card image cap">
                   <form action="/detail/" method="POST">{% csrf_token %}
                     <input type="hidden" name="pid" value="{{product.PID}}">
-                    <div class="card-body">
+                    <div class="card-body text-center">
                       <input type="submit" value="{{ product.PName }}" class="card-title btn btn-outline-dark text-center" style="border: none; font-size: 20px; background-color: inherit; color: inherit; border-color: inherit;">
                     </div>
                   </form>

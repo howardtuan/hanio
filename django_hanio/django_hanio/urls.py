@@ -16,6 +16,7 @@ urlpatterns = [
     path('seafood/', views.seafood_view),
     path('login/', views.login_view),
     path('member/', views.member_view),
+    path('memberbaseinfo/', views.memberbaseinfo_view),
     path('pay/', views.pay_view),
     path('record/', views.record_view),
     path('signup/', views.signup_view),
