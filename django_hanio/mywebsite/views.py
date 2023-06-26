@@ -496,6 +496,8 @@ def cart_update(request):
     get_pid = request.POST.get('pid', '')
     get_pnum = request.POST.get('num', '')
     cart_item = cart.objects.get( PID = get_pid, MID = get_mid )
+    print('id',get_pid)
+    print('數量',get_pnum)
     cart_item.NUM = get_pnum
     cart_item.save()
     return HttpResponseRedirect('/cart/')
