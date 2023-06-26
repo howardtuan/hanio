@@ -50,10 +50,10 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav">
-                    {% if request.session.MAccount %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ request.session.MAccount }}
+                  {% if request.Name %}
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ request.Name }} {% if request.is_manager %}(管理员){% endif %}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="../member/">個人資料</a></li>

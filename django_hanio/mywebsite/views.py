@@ -165,29 +165,29 @@ def login_view(request):
         MAccount = request.POST.get("account")
         MPW = request.POST.get("password")
         try:
-            super = Manager.objects.get( username = MAccount )
-        except Manager.DoesNotExist:
-            try:
-                user = member.objects.get(MAccount=MAccount)
-            except member.DoesNotExist:
-                messages.error(request, "帳號不存在")
-                return render(request, 'login.html')
-
-            if user.MPW != MPW:
+            manager = Manager.objects.get(username=MAccount)  # 使用 manager 代替 super
+            if manager.password != MPW:
                 messages.error(request, "帳號或密碼錯誤")
+                return render(request, 'login.html')
             else:
                 # 登入成功，將用戶名稱存入 Session
                 request.session['MAccount'] = MAccount
                 request.session.save()
-                return redirect('/index')
-
-        if super.password != MPW:
-            messages.error(request, "帳號或密碼錯誤")
-        else:
-            # 登入成功，將用戶名稱存入 Session
-            request.session['MAccount'] = MAccount
-            request.session.save()
-            return redirect('/dashboard/')
+                return redirect('/dashboard/')
+        except Manager.DoesNotExist:
+            try:
+                user = member.objects.get(MAccount=MAccount)
+                if user.MPW != MPW:
+                    messages.error(request, "帳號或密碼錯誤")
+                    return render(request, 'login.html')
+                else:
+                    # 登入成功，將用戶名稱存入 Session
+                    request.session['MAccount'] = MAccount
+                    request.session.save()
+                    return redirect('/index')
+            except member.DoesNotExist:
+                messages.error(request, "帳號不存在")
+                return render(request, 'login.html')
     return render(request, 'login.html')
 
 def member_e_view(request):
@@ -439,7 +439,8 @@ def signup_view(request):
             )
             new_member.save()
             messages.success(request, "帳號創建成功")
-            # 我們不再導向到登入頁面，而是留在註冊頁面
+            return redirect('/login')
+
 
     # 對於 GET 請求，或者其他的請求方法，我們只顯示表單
     return render(request, 'signup.html')

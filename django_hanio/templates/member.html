@@ -55,10 +55,10 @@
                         </li>
                     </ul>
                     <ul class="navbar-nav">
-                        {% if request.session.MAccount %}
+                        {% if request.Name %}
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle active"aria-current="page" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                {{ request.session.MAccount }}
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              {{ request.Name }} {% if request.is_manager %}(管理员){% endif %}
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="../member/">個人資料</a></li>
@@ -76,11 +76,10 @@
                         <button class="btn btn-cart btn-sm text-white" type="button">
                             <i class="fas fa-shopping-cart fa-2x"></i>
                         </button>
-                        
                     </a>
-                    <!-- <form action="/search/" ass="d-flex" method="POST">{% csrf_token %}
+                    <form action="/search/" ass="d-flex" method="POST">{% csrf_token %}
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name = "searchbox">
-                    </form> -->
+                    </form> 
                 </div>
             </div>
         </nav>
@@ -175,7 +174,7 @@
         </div>
             <div id="editInfo" style="display: none;">
                 <h3>修改密碼</h3>
-                <form method="post" action="/member/">
+                <form method="post" action="/member/" id="passform">
                     {% csrf_token %}
                     <!-- 這裡是你要修改的欄位 -->
                     <div class="row mb-3">
@@ -241,7 +240,7 @@
                 document.getElementById('editInfo').style.display = 'none';
             });
             // Form submit event
-            $("form").submit(function (e) {
+            $("#passform").submit(function (e) {
                 var password = $("#inputPassword").val();
                 var confirmPassword = $("#inputPassword2").val();
     
