@@ -22,7 +22,7 @@ class member(models.Model):
 
 class order(models.Model):
     okid = models.AutoField(primary_key=True)
-    OID = models.CharField('訂單編號', max_length=1000)
+    OID = models.IntegerField('訂單編號')
     MID = models.CharField('會員編號', max_length=1000)
     PID = models.CharField('產品編號', max_length=1000)
 
@@ -42,7 +42,7 @@ class order_detail(models.Model):
         ('ARRIVED', '已抵達'),
     ]
     ODID = models.AutoField('訂單明細編號', primary_key=True)
-    OID = models.CharField('訂單編號', max_length=1000)
+    OID = models.IntegerField('訂單編號')
     MID = models.CharField('會員編號', max_length=1000)
     PID = models.CharField('產品編號', max_length=1000)
     PNUM = models.IntegerField('數量')

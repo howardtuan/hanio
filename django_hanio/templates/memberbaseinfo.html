@@ -36,7 +36,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="../index/">首頁</a>
+                            <a class="nav-link" href="../index/">首頁</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -60,7 +60,7 @@
                     <ul class="navbar-nav">
                         {% if request.session.MAccount %}
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle active"aria-current="page" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 {{ request.session.MAccount }}
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -76,8 +76,8 @@
                         {% endif %}
                     </ul>
                     <a href="../cart/">
-                        <button class="btn btn-cart btn-sm" type="button">
-                            <i class="fas fa-shopping-cart text-dark fa-2x"></i>
+                        <button class="btn btn-cart btn-sm text-white" type="button">
+                            <i class="fas fa-shopping-cart fa-2x"></i>
                         </button>
                     </a>
                     <form action="/search/" ass="d-flex" method="POST">{% csrf_token %}

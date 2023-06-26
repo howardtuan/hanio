@@ -29,9 +29,6 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="../index/">首頁</a>
-                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 商品分類
@@ -65,13 +62,13 @@
                         </li>
                         {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="../login/">註冊/登入</a>
+                            <a class="nav-link active" aria-current="page" href="../login/">註冊/登入</a>
                         </li>
                         {% endif %}
                     </ul>
                     <a href="../cart/">
-                        <button class="btn btn-cart btn-sm" type="button">
-                            <i class="fas fa-shopping-cart text-dark fa-2x"></i>
+                        <button class="btn btn-cart btn-sm text-white" type="button">
+                            <i class="fas fa-shopping-cart fa-2x"></i>
                         </button>
                     </a>
                     <form action="/search/" ass="d-flex" method="POST">{% csrf_token %}
@@ -80,9 +77,8 @@
                 </div>
             </div>
         </nav>
-        
-        <div class="placeholder"></div>
-        
+
+        {% comment %}
         <div class="container content" style="flex: 1;">
             <div class="row justify-content-center">
               <div class="col-md-6">
@@ -107,6 +103,168 @@
               </div>
             </div>
           </div>
+          {% endcomment %}
+
+          <style>
+            html,
+            body {
+                height: 100vh;
+                margin: 0;
+                padding: 0;
+            }
+            /*會員登入表單*/
+            .signup .form,
+            .login_in .form {
+                width: 400px;
+                color: white;
+            }
+
+            .signup .form h2,
+            .login_in .form h2 {
+                margin-bottom: 20px;
+                padding-bottom: 20px;
+                border-bottom: 1px solid #fff;
+            }
+
+            .signup .form .group .login_in .form .group {
+                margin-bottom: 20px;
+            }
+
+            .signup .form .GoSignUp_OR_GoLogin,
+            .login_in .form .GoSignUp_OR_GoLogin {
+                padding-top: 10px;
+                border-top: 1px solid #fff;
+                margin-top: 20px;
+
+            }
+
+
+            .signup .form .GoSignUp_OR_GoLogin a:link,
+            .login_in .form .GoSignUp_OR_GoLogin a:link {
+                text-decoration: none;
+                color: rgb(56, 163, 179);
+            }
+
+            .signup .form .GoSignUp_OR_GoLogin a:visited,
+            .login_in .form .GoSignUp_OR_GoLogin a:visited {
+                text-decoration: none;
+                color: rgb(56, 163, 179);
+            }
+
+            .signup .form .GoSignUp_OR_GoLogin a:hover,
+            .login_in .form .GoSignUp_OR_GoLogin a:hover {
+                text-decoration: underline;
+                color: rgb(56, 163, 179);
+            }
+
+            .signup .form label,
+            .login_in .form label {
+                line-height: 2;
+            }
+
+            .signup .form .id2,
+            .login_in .form .id2 {
+                width: 100%;
+                border: 1px solid #aaa;
+                line-height: 2;
+                border-radius: 5px;
+                font-size: 16px;
+            }
+
+            .signup .form .btn-group,
+            .login_in .form .btn-group {
+                font-size: 0;
+                margin-top: 50px;
+            }
+
+            .signup .form .btn_in,
+            .login_in .form .btn_in {
+                font-size: 20px;
+                border-radius: 5px;
+                border: none;
+                background-color: #acaca9;
+                width: 190px;
+                padding: 10px 0;
+                color: #fff;
+                cursor: pointer;
+            }
+
+            .signup .form .btn_in:hover,
+            .login_in .form .btn_in:hover {
+                background-color: #878785;
+            }
+
+            .signup .form .btn_in+.btn_in,
+            .login_in .form .btn_in+.btn_in {
+                margin-left: 20px;
+            }
+
+            .login_body {
+                background-image: url("{% static 'img/login.jpg' %}");
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-position: center;
+                background-size: cover;
+                height: 100vh; /* 設定高度為螢幕高度 */
+            }
+
+            .login_fakebody {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .login_in {
+                margin-top: 5%;
+                width: 600px;
+                height: 500px;
+                background-color: rgba(0, 0, 0, .5);
+                border-radius: 10px;
+                border: 10px solid #fff;
+                box-shadow: 0 0 60px #000;
+                backdrop-filter: blur(5px);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+
+          </style>
+        <section class="topset login_fakebody login_body">
+
+
+            <div class="login_in">
+    
+                <form method="post" class="form">{% csrf_token %}
+                    <h2>會員登入</h2>
+                    <div class="group">
+                        <label for="account">帳號</label>
+                        <input type="text" class="form-control" id="account" name="account" placeholder="輸入您的帳號">
+
+                    </div>
+                    <div class="group">
+                        <label for="password">密碼</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="輸入您的密碼">
+                    </div>
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-outline-secondary btn_in">登入</button>
+                        <button type="button" class="btn btn-outline-secondary btn_in" onclick="history.back()">返回</button>
+                        <!--
+                            button寫法如下
+                            <button class="btn_in">登入</button>
+                        -->
+                    </div>
+                    <div class="group GoSignUp_OR_GoLogin">
+                        還沒註冊帳號嗎？<a href="../signup/">點我註冊</a> 
+                    </div>
+                </form>
+                
+            </div>
+            
+    
+    
+    
+        </section>
           {% if messages %}
                 {% for message in messages %}
                     <div class="modal" tabindex="-1" id="myModal">

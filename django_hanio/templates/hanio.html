@@ -29,15 +29,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="../index/">首頁</a>
-                    </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle active" aria-current="page" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             商品分類
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="../hanio/">戈登頂級牛肉</a></li>
+                            <li><a class="dropdown-item active" aria-current="page" href="../hanio/">戈登頂級牛肉</a></li>
                             <li><a class="dropdown-item" href="../pork/">戈登嚴選豬肉</a></li>
                             <li><a class="dropdown-item" href="../seafood/">戈登經典海鮮</a></li>
                             <li><hr class="dropdown-divider"></li>
@@ -70,9 +67,10 @@
                     {% endif %}
                 </ul>
                 <a href="../cart/">
-                    <button class="btn btn-cart btn-sm" type="button">
-                        <i class="fas fa-shopping-cart text-dark fa-2x"></i>
-                    </button>
+                  <button class="btn btn-cart btn-sm text-white" type="button">
+                    <i class="fas fa-shopping-cart fa-2x"></i>
+                </button>
+            
                 </a>
                 <form action="/search/" ass="d-flex" method="POST">{% csrf_token %}
                   <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name = "searchbox">
@@ -83,6 +81,7 @@
     
     
     <style>
+      
       .card {
         border-radius: 0;
         border: none;
@@ -145,7 +144,7 @@
               </div>
             </div> {% endcomment %}
             {% for i in Category %}
-            <div class="col product" style="margin-bottom: -100px;">
+            <div class="col product" style="margin-bottom: -50px;">
               <div class="card small-card">
                 {% if i.PPhoto %}
                 <img src="{{i.PPhoto.url}}" class="card-img-top" alt="{{ i.PName }}">

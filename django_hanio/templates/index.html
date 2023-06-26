@@ -58,9 +58,6 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="../index/">首頁</a>
-                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             商品分類
@@ -99,9 +96,9 @@
                     {% endif %}
                 </ul>
                 <a href="../cart/">
-                    <button class="btn btn-cart btn-sm" type="button">
-                        <i class="fas fa-shopping-cart text-dark fa-2x"></i>
-                    </button>
+                    <button class="btn btn-cart btn-sm text-white" type="button">
+                    <i class="fas fa-shopping-cart fa-2x"></i>
+                </button>
                 </a>
                 <form action="/search/" ass="d-flex" method="POST">{% csrf_token %}
                   <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name = "searchbox">
