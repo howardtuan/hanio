@@ -56,7 +56,7 @@
             }
         </style>
 </head>
-<body id="page-top" style="display: flex; flex-direction: column; min-height: 100vh;">    
+<body id="page-top">    
     <nav class="navbar navbar-default navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="../index/" style="color: white;">戈登肉鋪</a>
@@ -99,7 +99,7 @@
     </nav>
         <div class="placeholder"></div>
         <p></p>
-        <div class="container">
+        <div class="container" style="flex: 1;">
             <h3>會員資料一覽</h3>
             <form action="/mem_edit/" method = "POST">{% csrf_token %}
                 <div class="row mb-3">

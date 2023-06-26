@@ -407,7 +407,7 @@ def checkout_process(request):
         cp.save()
 
     cart.objects.filter(MID=get_id).delete()
-    return redirect('/contact')
+    return redirect('/member')
 
 
 
