@@ -74,9 +74,9 @@
                         <i class="fas fa-shopping-cart text-dark fa-2x"></i>
                     </button>
                 </a>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                </form>
+                <form action="/search/" ass="d-flex" method="POST">{% csrf_token %}
+                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name = "searchbox">
+              </form>
             </div>
         </div>
     </nav>
@@ -187,32 +187,19 @@
           <div class="container">
             <h1 class="text-center decorated-title" style="margin-top: 30px;">您可能會喜歡</h1>
             <div class="row justify-content-center">
+              {% for product in random_products%}
               <div class="col-md-4 custom-col">
                 <div class="card small-card">
-                  <img class="card-img-top" src="{% static 'img/1.jpg'%}" alt="Card image cap">
-                  <div class="card-body">
-                    <p class="card-text">好吃的牛</p>
-                  </div>
+                  <img class="card-img-top" src="{{product.PPhoto.url}}" alt="Card image cap">
+                  <form action="/detail/" method="POST">{% csrf_token %}
+                    <input type="hidden" name="pid" value="{{product.PID}}">
+                    <div class="card-body text-center">
+                      <input type="submit" value="{{ product.PName }}" class="card-title btn btn-outline-dark text-center" style="border: none; font-size: 20px; background-color: inherit; color: inherit; border-color: inherit;">
+                    </div>
+                  </form>
                 </div>
-              </div>
-            
-              <div class="col-md-4 custom-col">
-                <div class="card small-card">
-                  <img class="card-img-top" src="{% static 'img/2.jpg'%}" alt="Card image cap">
-                  <div class="card-body">
-                    <p class="card-text">好吃的牛</p>
-                  </div>
-                </div>
-              </div>
-            
-              <div class="col-md-4 custom-col">
-                <div class="card small-card">
-                  <img class="card-img-top" src="{% static 'img/3.jpg'%}" alt="Card image cap">
-                  <div class="card-body">
-                    <p class="card-text">好吃的牛</p>
-                  </div>
-                </div>
-              </div>
+              </div>              
+            {% endfor %}                      
             </div>
           </div>
 

@@ -74,9 +74,9 @@
                         <i class="fas fa-shopping-cart text-dark fa-2x"></i>
                     </button>
                 </a>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                </form>
+                <form action="/search/" ass="d-flex" method="POST">{% csrf_token %}
+                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name = "searchbox">
+              </form>
             </div>
         </div>
     </nav>
@@ -156,7 +156,7 @@
                   <form action="/detail/" method="POST">{% csrf_token %}
                     <input type="hidden" name="pid" value="{{i.PID}}">
                     <input type="submit" value="{{ i.PName }}" class="card-title btn btn-outline-dark text-center" style="border: none; font-size: 20px; background-color: inherit; color: inherit; border-color: inherit;">
-                    <p class="card-text-detail">{{ i.PDetail }}</p>
+                    
                   </form>
                 </div>
               </div>
