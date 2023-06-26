@@ -114,15 +114,15 @@
         <div class="container" style="flex: 1;">
           <main>
             <div class="py-5 text-center">
-            <img src="{% static 'img/logo (1).jpg'%}" alt="Logo" width="100">
-              <h2>Checkout form</h2>
-              <p class="lead">Below is an example form built entirely with Bootstrap’s form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
+            <img src="{% static 'img/logo (1).png'%}" alt="Logo" width="100">
+              <h2>訂單確認</h2>
+              <p class="lead">請根據以下步驟填寫基本資料，為保障雙方權益請確認填寫的資料</p>
             </div>
         
             <div class="row g-5">
               <div class="col-md-6 col-lg-6 order-md-last">
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
-                  <span class="text-primary">Your cart</span>
+                  <span class="text-primary">購物內容</span>
                   <span class="badge bg-primary rounded-pill">{{total_num}}</span>
                 </h4>
                 <ul class="list-group mb-3">
@@ -134,7 +134,7 @@
                       <h6 class="my-0">{{ product.PName }}</h6>
                       <input type="hidden" name="field_id[]" value="{{ product.PID }}">
                       <input type="hidden" name="field_pnum[]" value="{{ cart_item.NUM }}">
-                      <small class="text-body-secondary">要再去宜蘭吃一次火鍋嗎 還是吃老湯鍋</small>
+                      <small class="text-body-secondary">{{product.PDetail}}</small>
                     </div>
                     <span class="text-body-secondary">${{ subtotal }}</span>
                     
@@ -150,47 +150,47 @@
                 <form class="card p-2">
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Promo code">
-                    <button type="submit" class="btn btn-secondary">Redeem</button>
+                    <button type="submit" class="btn btn-secondary">折扣碼</button>
                   </div>
                 </form>
               </div>
               <div class="col-md-6 col-lg-6">
-                <h4 class="mb-3">Billing address</h4>
+                <h4 class="mb-3">配送資料</h4>
                 <form class="needs-validation" novalidate="" action="/checkout_process/" method = "POST">{% csrf_token %}
                   <div class="row g-3">
                     
         
                     <div class="col-12">
-                      <label for="username" class="form-label">Username</label>
-                      <div class="input-group has-validation">
-                        <span class="input-group-text">@</span>
-                        <input type="text" class="form-control" id="username" placeholder="Username" required="">
-                      <div class="invalid-feedback">
-                          Your username is required.
+                      <label for="username" class="form-label">收貨人名稱</label>
+                        <div class="input-group has-validation">
+                          <span class="input-group-text">@</span>
+                          <input type="text" class="form-control" id="username" placeholder="Username" required>
+                          <div class="invalid-feedback">
+                            該項目為必填欄位
+                          </div>
                         </div>
-                      </div>
                     </div>
         
                     <div class="col-12">
-                      <label for="email" class="form-label">Email <span class="text-body-secondary">(Optional)</span></label>
+                      <label for="email" class="form-label">信箱 <span class="text-body-secondary"></span></label>
                       <input type="email" class="form-control" id="email" name = "email" placeholder="you@example.com">
                       <div class="invalid-feedback">
-                        Please enter a valid email address for shipping updates.
+                        *必填
                       </div>
                     </div>
         
                     <div class="col-12">
-                      <label for="address" class="form-label">Address</label>
+                      <label for="address" class="form-label">地址</label>
                       <input type="text" class="form-control" id="address" name = "address" placeholder="1234 Main St" required="">
                       <div class="invalid-feedback">
-                        Please enter your shipping address.
+                        *必填
                       </div>
                     </div>
                   </div>
         
                   <hr class="my-4">
         
-                  <div class="form-check">
+                  {% comment %} <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="same-address">
                     <label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>
                   </div>
@@ -198,41 +198,41 @@
                   <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="save-info">
                     <label class="form-check-label" for="save-info">Save this information for next time</label>
-                  </div>
+                  </div> {% endcomment %}
         
                   <hr class="my-4">
         
-                  <h4 class="mb-3">Payment</h4>
+                  <h4 class="mb-3">付款方式</h4>
         
                   <div class="my-3">
                     <div class="form-check">
                       <input id="credit" name="paymentMethod" type="radio" class="form-check-input" value="credit" checked required>
-                      <label class="form-check-label" for="credit">Credit card</label>
+                      <label class="form-check-label" for="credit">貨到付款</label>
                     </div>
                     <div class="form-check">
                       <input id="debit" name="paymentMethod" type="radio" class="form-check-input"  value="debit" required>
-                      <label class="form-check-label" for="debit">Debit card</label>
+                      <label class="form-check-label" for="debit">刷卡</label>
                     </div>
                     <div class="form-check">
                       <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" value="paypal" required>
-                      <label class="form-check-label" for="paypal">PayPal</label>
+                      <label class="form-check-label" for="paypal">超商</label>
                     </div>
                   </div>
         
                   <div class="row gy-3">        
                     <div class="col-md-3">
-                      <label for="cc-expiration" class="form-label">Expiration</label>
+                      <label for="cc-expiration" class="form-label">到期日</label>
                       <input type="text" class="form-control" id="cc-expiration" placeholder="" required="">
                       <div class="invalid-feedback">
-                        Expiration date required
+                        *必填
                       </div>
                     </div>
         
                     <div class="col-md-3">
-                      <label for="cc-cvv" class="form-label">CVV</label>
+                      <label for="cc-cvv" class="form-label">驗證碼</label>
                       <input type="text" class="form-control" id="cc-cvv" placeholder="" required="">
                       <div class="invalid-feedback">
-                        Security code required
+                        *必填
                       </div>
                     </div>
                   </div>
