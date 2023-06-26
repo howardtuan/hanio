@@ -96,20 +96,19 @@
               {% for cart_item, product, subtotal in cart_products %}
               <tr>
                 <form action="/update/" method="POST">{% csrf_token %}
-                  <td><img src="{{ product.PPhoto.url }}" alt="圖片" width="100px"></td>
+                  <td>
+                    <img src="{{ product.PPhoto.url }}" alt="圖片" width="100px">
+                  </td>
                   <td align="left" valign="middle">{{ product.PName }}</td>
                   <td align="left" valign="middle">{{ product.PPrice }}</td>
                   <td align="left" valign="middle">
                     <input type="number" name="num" class="form-control quantity-input" value="{{cart_item.NUM}}" min="1" step="1">
                   </td>
                   <td class="subtotal" align="left" valign="middle">${{ subtotal }}</td>
-                  
                   <input type="hidden" name="pid" value="{{product.PID}}">
-                
-                
                   <input type="submit" value="修改" class="btn btn-outline-dark fixQQ" style="display:none;">
-                  
                 </form>
+                
                 <form action="/delete/" method="POST">{% csrf_token %}
                   <td align="left" valign="middle">
                   <input type="hidden" name="pid" value="{{product.PID}}">
@@ -140,66 +139,74 @@
         
           <script>
             $(document).ready(function () {
-              // 移除按鈕點擊事件處理函式
-              $('.btn-remove').on('click', function () {
-                var row = $(this).closest('tr');
-        
-                // 獲取移除商品的價格和數量
-                var price = parseFloat(row.find('td:eq(1)').text().replace('$', ''));
-                var quantity = parseInt(row.find('.quantity-input').val());
-        
-                // 計算移除商品的小計值
-                var subtotal = price * quantity;
-        
-                // 從總計中減去移除商品的小計值
-                var total = parseFloat($('#total').text().replace('$', ''));
-                total -= subtotal;
-        
-                // 更新總計欄位
-                $('#total').text('$' + total.toFixed(0));
-        
-                // 移除商品的行
-                row.remove();
-        
-                // 更新總計
-                updateTotal();
-              });
-        
-              // 數量輸入框更改事件處理函式
-              $('.quantity-input').on('change', function () {
-                var row = $(this).closest('tr');
+  // 移除按鈕點擊事件處理函式
+  $('.btn-outline-danger').on('click', function () {
+    var row = $(this).closest('tr');
 
-                // 獲取商品的價格和數量
-                var price = parseFloat(row.find('td:eq(1)').text().replace('$', ''));
-                var quantity = parseInt($(this).val());
+    // 獲取移除商品的價格和數量
+    var price = parseFloat(row.find('td:eq(2)').text().replace('$', ''));
+    var quantity = parseInt(row.find('.quantity-input').val());
 
-                // 計算並更新小計
-                var subtotal = price * quantity;
-                row.find('.subtotal').text('$' + subtotal.toFixed(0));
+    // 計算移除商品的小計值
+    var subtotal = price * quantity;
 
-                // 觸發修改按鈕的點擊事件
-                row.find('.fixQQ').click();
+    // 從總計中減去移除商品的小計值
+    var total = parseFloat($('#total').text().replace('$', ''));
+    total -= subtotal;
 
-                // 更新總計
-                updateTotal();
-              });
-        
-              // 更新總計函式
-              function updateTotal() {
-                var total = 0;
-        
-                // 遍歷所有商品行，計算總計
-                $('.subtotal').each(function () {
-                  total += parseFloat($(this).text().replace('$', ''));
-                });
-        
-                // 更新總計欄位
-                $('#total').text('$' + total.toFixed(0));
-              }
-        
-              // 初始化總計
-              updateTotal();
-            });
+    // 更新總計欄位
+    $('#total').text('$' + total.toFixed(0));
+
+    // 移除商品的行
+    row.remove();
+
+    // 更新總計
+    updateTotal();
+  });
+
+  // 數量輸入框更改事件處理函式
+  $('.quantity-input').on('change', function () {
+    var row = $(this).closest('tr');
+
+    // 獲取商品的價格和數量
+    var price = parseFloat(row.find('td:eq(2)').text().replace('$', ''));
+    var quantity = parseInt($(this).val());
+
+    // 計算並更新小計
+    var subtotal = price * quantity;
+    row.find('.subtotal').text('$' + subtotal.toFixed(0));
+
+    // 觸發修改按鈕的點擊事件
+    row.find('.fixQQ').click();
+
+    // 更新總計
+    updateTotal();
+  });
+
+  // 修改按鈕點擊事件處理函式
+  $('.fixQQ').on('click', function () {
+    var form = $(this).closest('form');
+    form.submit();
+  });
+
+  // 更新總計函式
+  function updateTotal() {
+    var total = 0;
+
+    // 遍歷所有商品行，計算總計
+    $('.subtotal').each(function () {
+      total += parseFloat($(this).text().replace('$', ''));
+    });
+
+    // 更新總計欄位
+    $('#total').text('$' + total.toFixed(0));
+  }
+
+  // 初始化總計
+  updateTotal();
+});
+
+
           </script>
         <div style="flex: 1; "></div>
         <footer class="footer mt-auto">
