@@ -31,6 +31,8 @@ urlpatterns = [
     path('checkout_process/', views.checkout_process),
     path('dashboard/', views.dashboard_view),
     path('edit_view/', views.edit_view),
+    path('addp_view/', views.addp_view),
+    path('addproduct/', views.add_p_cart),
     path('edit/', views.edit),
     path('m_e_view/', views.member_e_view),
     path('mem_edit/', views.mem_edit),
@@ -43,4 +45,4 @@ urlpatterns = [
     path('detail/', views.detail_view),
 
     
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

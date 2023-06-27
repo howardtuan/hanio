@@ -59,7 +59,7 @@ class product(models.Model):
         ('OUT_OF_STOCK', '下架'),
         ('UNAVAILABLE', '缺貨'),
     ]
-    PID = models.CharField('產品編號', max_length=1000, primary_key=True)
+    PID = models.AutoField('產品編號', primary_key=True)
     PPrice = models.IntegerField('產品價錢')
     PName = models.CharField('產品名稱', max_length=100)
     PDetail = models.CharField('產品內容', max_length=10000)

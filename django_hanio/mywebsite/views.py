@@ -109,12 +109,38 @@ def edit_view(request):
     p = product.objects.get( PID = get_id )
     cate = p.PCategory
     if cate == 'beef' :
-        category = '日本A5和專賣區'
+        category = '日本A5和牛專賣區'
     elif cate == 'pork' :
         category = '戈登嚴選豬肉'
     elif cate == 'seafood' :
         category = '戈登經典海鮮'
     return render(request, 'product_edit.html', locals())
+
+def addp_view(request):
+    return render(request, 'product_add.html', locals())
+
+
+def add_p_cart(request):   
+    get_name = request.POST.get('product-name', '')
+    get_quantity = request.POST.get('product-quantity', '')
+    get_price = request.POST.get('product-price', '0')
+    get_detail = request.POST.get('product-detail', '')
+    get_spec = request.POST.get('product-spec', '')
+    get_status = request.POST.get('product-status', '')
+    get_photo = request.FILES.get('product-photo', '')  # 若欄位為檔案上傳，使用FILES.get()
+    get_category = request.POST.get('product-category', '')
+    product.objects.create(
+        PName = get_name,
+        Pnum = get_quantity,
+        PPrice = get_price,
+        PDetail = get_detail,
+        Pspec = get_spec,
+        PStatus = get_status,
+        PPhoto = get_photo,
+        PCategory = get_category
+        )
+    return redirect('/dashboard/')
+
 
 def edit(request):
     get_id = request.POST.get('pid', '')
