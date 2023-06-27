@@ -136,7 +136,7 @@ def add_p_cart(request):
         PDetail = get_detail,
         Pspec = get_spec,
         PStatus = get_status,
-        PPhoto = get_photo,
+        PPhoto = "product_images/1_cyBXWdt_fJ05J4e.jpg",
         PCategory = get_category
         )
     return redirect('/dashboard/')
