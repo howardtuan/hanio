@@ -11,10 +11,28 @@ from django.db.models import Sum
 from collections import defaultdict
 from django.db.models.functions import Cast
 
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
 
 # Create your views here.
 
 now = datetime.now()
+def cart_quantity_view(request):
+    MAccount = request.session.get('MAccount')
+    if not MAccount:
+        return JsonResponse({'quantity': ''})
+
+    get_id = member.objects.get(MAccount=MAccount).MID
+    cart_items = cart.objects.filter(MID=get_id)
+    quantity=0
+    for item in cart_items:
+        pid = item.PID
+        p = product.objects.get( PID = pid )
+        number = item.NUM
+        quantity+=number
+
+
+    return JsonResponse({'quantity': quantity})
 def index_view(request):
     # 使用 annotate() 和 values() 方法對相同 pid 的 pnum 欄位進行加總
     beef_pids = product.objects.filter(PCategory="beef").values_list('PID', flat=True)
@@ -511,6 +529,7 @@ def cart_delete(request):
     get_mid = member.objects.get(MAccount=MAccount).MID
     get_pid = request.POST.get('pid', '')
     cart_item = cart.objects.get( PID = get_pid, MID = get_mid )
+    print(cart_item)
     cart_item.delete()
     return HttpResponseRedirect('/cart/')
 

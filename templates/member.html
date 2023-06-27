@@ -75,11 +75,29 @@
                         </li>
                         {% endif %}
                     </ul>
-                    <a href="../cart/">
-                        <button class="btn btn-cart btn-sm text-white" type="button">
-                            <i class="fas fa-shopping-cart fa-2x"></i>
-                        </button>
-                    </a>
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+              <a href="../cart/">
+                <button class="btn btn-cart btn-sm text-white" type="button">
+                <i class="fas fa-shopping-cart fa-2x"></i>
+                <span id="cart-quantity" class="badge bg-danger"></span>
+                <script>
+                  $(document).ready(function () {
+                    // 获取购物车商品数量
+                    $.ajax({
+                      url: '/cart/quantity/',
+                      type: 'GET',
+                      success: function (data) {
+                        // 更新购物车图标上的数量
+                        $('#cart-quantity').text(data.quantity);
+                      },
+                      error: function (xhr, status, error) {
+                        console.log('Error:', error);
+                      }
+                    });
+                  });
+                </script>
+              </button>
+              </a>
                 </div>
             </div>
         </nav>

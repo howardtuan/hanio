@@ -18,6 +18,12 @@
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
         crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
 </head>
  <body id="page-top" style="display: flex; flex-direction: column; min-height: 100vh;">
 
@@ -38,8 +44,7 @@
                         <li><a class="dropdown-item" href="../hanio/">戈登頂級牛肉</a></li>
                         <li><a class="dropdown-item" href="../pork/">戈登嚴選豬肉</a></li>
                         <li><a class="dropdown-item" href="../seafood/">戈登經典海鮮</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">piyan專區</a></li>
+                        
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -69,8 +74,25 @@
             <a href="../cart/">
               <button class="btn btn-cart btn-sm text-white" type="button">
               <i class="fas fa-shopping-cart fa-2x"></i>
-          </button>
-          </a>
+              <span id="cart-quantity" class="badge bg-danger"></span>
+              <script>
+                $(document).ready(function () {
+                  // 获取购物车商品数量
+                  $.ajax({
+                    url: '/cart/quantity/',
+                    type: 'GET',
+                    success: function (data) {
+                      // 更新购物车图标上的数量
+                      $('#cart-quantity').text(data.quantity);
+                    },
+                    error: function (xhr, status, error) {
+                      console.log('Error:', error);
+                    }
+                  });
+                });
+              </script>
+            </button>
+            </a>
             <form action="/search/" ass="d-flex" method="POST">{% csrf_token %}
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name = "searchbox">
           </form>
@@ -95,7 +117,7 @@
             <tbody>
               {% for cart_item, product, subtotal in cart_products %}
               <tr>
-                <form action="/update/" method="POST">{% csrf_token %}
+                <form action="/update/" method="POST" class="update-form">{% csrf_token %}
                   <td>
                     <img src="{{ product.PPhoto.url }}" alt="圖片" width="100px">
                   </td>
@@ -105,19 +127,56 @@
                     <input type="number" name="num" class="form-control quantity-input" value="{{cart_item.NUM}}" min="1" step="1">
                   </td>
                   <td class="subtotal" align="left" valign="middle">${{ subtotal }}</td>
+                  
                   <input type="hidden" name="pid" value="{{product.PID}}">
-                  <input type="submit" value="修改" class="btn btn-outline-dark fixQQ" style="display:none;">
+                  <input type="submit" value="修改" class="btn btn-outline-dark fixQQ" style="display: none;">
+                  
                 </form>
                 
                 <form action="/delete/" method="POST">{% csrf_token %}
                   <td align="left" valign="middle">
-                  <input type="hidden" name="pid" value="{{product.PID}}">
-                  <input type="submit" value="移除" class="btn btn-outline-danger">
-                </td>
+                    <input type="hidden" name="pid" value="{{product.PID}}">
+                    <input type="submit" value="移除" class="btn btn-outline-danger">
+                  </td>
                 </form>
               </tr>
               {% endfor %}
             </tbody>
+            
+            <script>
+              $(document).ready(function () {
+                // 數量輸入框更改事件處理函式
+                $('.quantity-input').on('input', function () {
+                  var row = $(this).closest('tr');
+                  var price = parseFloat(row.find('td:eq(2)').text().replace('$', ''));
+                  var quantity = parseInt($(this).val());
+                  var subtotal = price * quantity;
+                  row.find('.subtotal').text('$' + subtotal.toFixed(0));
+            
+                  // 提交表單
+                  var form = row.find('.update-form');
+                  form.submit();
+            
+                  updateTotal();
+                });
+            
+                // 更新總計函式
+                function updateTotal() {
+                  var total = 0;
+                  $('.subtotal').each(function () {
+                    total += parseFloat($(this).text().replace('$', ''));
+                  });
+                  $('#total').text('$' + total.toFixed(0));
+                }
+            
+                // 初始化總計
+                updateTotal();
+              });
+            </script>
+            
+            
+            
+            
             <tfoot>
               <tr>
                 <td colspan="3"></td>
@@ -133,81 +192,8 @@
         
         
         
-          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        
-          <script>
-            $(document).ready(function () {
-  // 移除按鈕點擊事件處理函式
-  $('.btn-outline-danger').on('click', function () {
-    var row = $(this).closest('tr');
-
-    // 獲取移除商品的價格和數量
-    var price = parseFloat(row.find('td:eq(2)').text().replace('$', ''));
-    var quantity = parseInt(row.find('.quantity-input').val());
-
-    // 計算移除商品的小計值
-    var subtotal = price * quantity;
-
-    // 從總計中減去移除商品的小計值
-    var total = parseFloat($('#total').text().replace('$', ''));
-    total -= subtotal;
-
-    // 更新總計欄位
-    $('#total').text('$' + total.toFixed(0));
-
-    // 移除商品的行
-    row.remove();
-
-    // 更新總計
-    updateTotal();
-  });
-
-  // 數量輸入框更改事件處理函式
-  $('.quantity-input').on('change', function () {
-    var row = $(this).closest('tr');
-
-    // 獲取商品的價格和數量
-    var price = parseFloat(row.find('td:eq(2)').text().replace('$', ''));
-    var quantity = parseInt($(this).val());
-
-    // 計算並更新小計
-    var subtotal = price * quantity;
-    row.find('.subtotal').text('$' + subtotal.toFixed(0));
-
-    // 觸發修改按鈕的點擊事件
-    row.find('.fixQQ').click();
-
-    // 更新總計
-    updateTotal();
-  });
-
-  // 修改按鈕點擊事件處理函式
-  $('.fixQQ').on('click', function () {
-    var form = $(this).closest('form');
-    form.submit();
-  });
-
-  // 更新總計函式
-  function updateTotal() {
-    var total = 0;
-
-    // 遍歷所有商品行，計算總計
-    $('.subtotal').each(function () {
-      total += parseFloat($(this).text().replace('$', ''));
-    });
-
-    // 更新總計欄位
-    $('#total').text('$' + total.toFixed(0));
-  }
-
-  // 初始化總計
-  updateTotal();
-});
-
-
-          </script>
+                  
+          
         <div style="flex: 1; "></div>
         <footer class="footer mt-auto">
             <div class="container">

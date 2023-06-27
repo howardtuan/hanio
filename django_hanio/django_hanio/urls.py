@@ -35,5 +35,7 @@ urlpatterns = [
     path('or_e_view/', views.or_e_view),
     path('or_edit/', views.or_edit),
     path('search/', views.search_products),
+    path('cart/quantity/', views.cart_quantity_view, name='cart_quantity'),
+
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

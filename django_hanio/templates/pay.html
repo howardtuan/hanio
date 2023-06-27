@@ -68,8 +68,7 @@
                             <li><a class="dropdown-item" href="../hanio/">戈登頂級牛肉</a></li>
                             <li><a class="dropdown-item" href="../pork/">戈登嚴選豬肉</a></li>
                             <li><a class="dropdown-item" href="../seafood/">戈登經典海鮮</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">piyan專區</a></li>
+                            
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -97,9 +96,27 @@
                     </li>
                     {% endif %}
                 </ul>
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                 <a href="../cart/">
-                    <button class="btn btn-cart btn-sm text-white" type="button">
-                    <i class="fas fa-shopping-cart fa-2x"></i>
+                  <button class="btn btn-cart btn-sm text-white" type="button">
+                  <i class="fas fa-shopping-cart fa-2x"></i>
+                  <span id="cart-quantity" class="badge bg-danger"></span>
+                  <script>
+                    $(document).ready(function () {
+                      // 获取购物车商品数量
+                      $.ajax({
+                        url: '/cart/quantity/',
+                        type: 'GET',
+                        success: function (data) {
+                          // 更新购物车图标上的数量
+                          $('#cart-quantity').text(data.quantity);
+                        },
+                        error: function (xhr, status, error) {
+                          console.log('Error:', error);
+                        }
+                      });
+                    });
+                  </script>
                 </button>
                 </a>
                 <form action="/search/" ass="d-flex" method="POST">{% csrf_token %}
@@ -163,7 +180,7 @@
                     <div class="col-12">
                       <label for="username" class="form-label">收貨人名稱</label>
                         <div class="input-group has-validation">
-                          <span class="input-group-text">@</span>
+                          <!-- <span class="input-group-text">@</span> -->
                           <input type="text" class="form-control" id="username" placeholder="Username" required>
                           <div class="invalid-feedback">
                             該項目為必填欄位
@@ -181,7 +198,7 @@
         
                     <div class="col-12">
                       <label for="address" class="form-label">地址</label>
-                      <input type="text" class="form-control" id="address" name = "address" placeholder="1234 Main St" required="">
+                      <input type="text" class="form-control" id="address" name = "address" placeholder="1234 Main St" required>
                       <div class="invalid-feedback">
                         *必填
                       </div>
