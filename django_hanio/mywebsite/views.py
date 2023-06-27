@@ -10,7 +10,7 @@ from datetime import datetime
 from django.db.models import Sum
 from collections import defaultdict
 from django.db.models.functions import Cast
-
+from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 
@@ -85,28 +85,6 @@ def about_view(request):
 def contact_view(request):
     return render(request, 'contact.html', locals())
 
-def detail_view(request):
-    get_id = request.POST.get('pid', '')
-    status = '上架'
-    p = product.objects.get( PID = get_id )
-    if p.PStatus == '上架' :
-        status = '尚有庫存'
-
-    if p.PStatus == '下架' :
-        status = '缺貨中'
-
-    if p.PStatus == '缺貨' :
-        status = '尚無庫存'    
-    # context = {'product_DB': p, 'status': status}
-    all_pids = product.objects.values_list('PID', flat=True)
-
-    # 從所有 PID 中隨機選取三個
-    random_pids = sample(list(all_pids), 3)
-
-    # 根據選取的 PID 取得對應的 Product 資料
-    random_products = product.objects.filter(PID__in=random_pids)
-
-    return render(request, 'detail.html', locals())
 
 def or_e_view(request):
     get_odid = request.POST.get('odid', '')
@@ -458,10 +436,54 @@ def signup_view(request):
             new_member.save()
             messages.success(request, "帳號創建成功")
             return redirect('/login')
-
-
     # 對於 GET 請求，或者其他的請求方法，我們只顯示表單
     return render(request, 'signup.html')
+
+
+def detail_view(request, pid=None):
+    if request.method == 'POST':
+        get_id = request.POST.get('pid', '')
+    else:
+        get_id = pid
+    
+    status = '上架'
+    try:
+        p = product.objects.get(PID=get_id)
+        if p.PStatus == '上架':
+            status = '尚有庫存'
+        elif p.PStatus == '下架':
+            status = '缺貨中'
+        elif p.PStatus == '缺貨':
+            status = '尚無庫存'
+    except product.DoesNotExist:
+        # 处理找不到产品的情况，例如显示错误信息或重定向到其他页面
+        pass
+    
+    all_pids = product.objects.values_list('PID', flat=True)
+    random_pids = sample(list(all_pids), 3)
+    random_products = product.objects.filter(PID__in=random_pids)
+    
+    return render(request, 'detail.html', locals())
+
+
+# def detail_back(request, pid):
+#     get_id = pid
+#     status = '上架'
+#     p = product.objects.get(PID=get_id)
+#     if p.PStatus == '上架':
+#         status = '尚有庫存'
+#     if p.PStatus == '下架':
+#         status = '缺貨中'
+#     if p.PStatus == '缺貨':
+#         status = '尚無庫存'
+#     # context = {'product_DB': p, 'status': status}
+#     all_pids = product.objects.values_list('PID', flat=True)
+#     # 從所有 PID 中隨機選取三個
+#     random_pids = sample(list(all_pids), 3)
+#     # 根據選取的 PID 取得對應的 Product 資料
+#     random_products = product.objects.filter(PID__in=random_pids)
+#     return render(request, 'detail.html', locals())
+
 
 def add_cart(request):
     MAccount = request.session.get('MAccount')
@@ -472,6 +494,7 @@ def add_cart(request):
     print('ur id:',get_id)
     get_pid = request.POST.get('pid', '')
     get_pnum = request.POST.get('number', '')
+    cat = request.POST.get('pcate', '')
     print('get_pnum',get_pnum)
     try:   
         c = cart.objects.get( MID = get_id, PID = get_pid )
@@ -482,9 +505,10 @@ def add_cart(request):
         cart.objects.create( MID = get_id, PID = get_pid, NUM = get_pnum )
     finally:
         pass
-    
 
-    return HttpResponseRedirect('/index/')  #可更新
+    redirect_url = reverse('detail', kwargs={'pid': get_pid})    
+    return redirect(redirect_url)
+        
 
 def cart_view(request):
     MAccount = request.session.get('MAccount')

@@ -10,7 +10,10 @@ urlpatterns = [
     path('index/', views.index_view),
     path('about/', views.about_view),
     path('contact/', views.contact_view),
-    path('detail/', views.detail_view),
+
+    # path('detailb/', views.detail_back),
+
+    # path('detailb/<str:pid>/', views.detail_back),
     path('hanio/', views.hanio_view),
     path('pork/', views.pork_view),
     path('seafood/', views.seafood_view),
@@ -36,6 +39,8 @@ urlpatterns = [
     path('or_edit/', views.or_edit),
     path('search/', views.search_products),
     path('cart/quantity/', views.cart_quantity_view, name='cart_quantity'),
+    path('<str:pid>/', views.detail_view, name='detail'),
+    path('detail/', views.detail_view),
 
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
