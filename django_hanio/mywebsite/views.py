@@ -449,11 +449,11 @@ def detail_view(request, pid=None):
     status = '上架'
     try:
         p = product.objects.get(PID=get_id)
-        if p.PStatus == '上架':
+        if p.PStatus == 'IN_STOCK':
             status = '尚有庫存'
-        elif p.PStatus == '下架':
+        elif p.PStatus == 'OUT_OF_STOCK':
             status = '缺貨中'
-        elif p.PStatus == '缺貨':
+        elif p.PStatus == 'UNAVAILABLE':
             status = '尚無庫存'
     except product.DoesNotExist:
         # 处理找不到产品的情况，例如显示错误信息或重定向到其他页面
