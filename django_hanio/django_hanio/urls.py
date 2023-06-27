@@ -34,6 +34,7 @@ urlpatterns = [
     path('addp_view/', views.addp_view),
     path('addproduct/', views.add_p_cart),
     path('edit/', views.edit),
+    path('dedelete/', views.dedelete),
     path('m_e_view/', views.member_e_view),
     path('mem_edit/', views.mem_edit),
     path('orders_view/', views.orders_view),

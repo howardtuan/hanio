@@ -158,6 +158,13 @@
                     <button type="submit" class="btn btn-outline-dark">修改詳情</button>
                   </td>
                 </form>
+                  <td>
+                    <form action="/dedelete/" method="POST">{% csrf_token %}
+                      <input type="hidden" name="pid" value="{{detail.PID}}">
+                      <button type="submit" class="btn btn-outline-dark">刪除</button>
+                    </form>
+                  </td>
+                
               </tr>
               {% endfor %}
             </tbody>

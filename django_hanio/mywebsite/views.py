@@ -119,6 +119,11 @@ def edit_view(request):
 def addp_view(request):
     return render(request, 'product_add.html', locals())
 
+def dedelete(request):  
+    pid = request.POST.get('pid', '') 
+    product_to_delete = product.objects.get(PID=pid)
+    product_to_delete.delete()
+    return redirect('/dashboard/')
 
 def add_p_cart(request):   
     get_name = request.POST.get('product-name', '')
