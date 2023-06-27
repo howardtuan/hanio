@@ -164,25 +164,36 @@
                 </div>
               </div>
             </div> {% endcomment %}
-            {% for i in Category %}
-            <div class="col product" style="margin-bottom: -115px;">
-              <div class="card small-card">
-                {% if i.PPhoto %}
-                <img src="{{i.PPhoto.url}}" class="card-img-top" alt="{{ i.PName }}">
-                {% else %}
-                <p>No photo available</p>
-                {% endif %}
-                <div class="card-body d-flex justify-content-center">
-                  <form action="/detail/" method="POST">{% csrf_token %}
-                    <input type="hidden" name="pid" value="{{i.PID}}">
-                    <input type="submit" value="{{ i.PName }}" class="card-title btn btn-outline-dark text-center" style="border: none; font-size: 20px; background-color: inherit; color: inherit; border-color: inherit;">
-                    <p class="text-center" style="font-size: 20px; color: rgb(65, 65, 65);font-weight: lighter;">$ {{ i.PPrice }}</p>
-                  
-                  </form>
+            <style>
+              .card.small-card {
+                cursor: pointer;
+              }
+              </style>   
+              {% for i in Category %}
+                <div class="col product" style="margin-bottom: -115px;">
+                  <div class="card small-card" >
+                    {% if i.PPhoto %}
+                      <img src="{{ i.PPhoto.url }}" class="card-img-top" alt="{{ i.PName }}"onclick="submitForm('{{ i.PID }}')">
+                    {% else %}
+                      <p>No photo available</p>
+                    {% endif %}
+                    <div class="card-body d-flex justify-content-center">
+                      <form id="form{{ i.PID }}" action="/detail/" method="POST">{% csrf_token %}
+                        <input type="hidden" name="pid" value="{{ i.PID }}">
+                        <input type="hidden" name="from_image" value="true">
+                        <input type="submit" value="{{ i.PName }}" class="card-title btn btn-outline-dark text-center" style="border: none; font-size: 20px; background-color: inherit; color: inherit; border-color: inherit;">
+                        <p class="text-center" style="font-size: 20px; color: rgb(65, 65, 65);font-weight: lighter; cursor: default;">$ {{ i.PPrice }}</p>
+                      </form>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            {% endfor %}
+              {% endfor %}
+              
+              <script>
+              function submitForm(pid) {
+                document.querySelector(`form input[name="pid"][value="${pid}"]`).closest("form").submit();
+              }
+              </script>
             <!-- 添加更多產品 -->
       
             <!-- 下一行的產品 -->

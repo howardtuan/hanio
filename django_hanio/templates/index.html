@@ -176,61 +176,83 @@
           margin-left: -10px; /* 調整間距大小 */
           margin-right: -10px; /* 調整間距大小 */
         }
+        .card.small-card {
+              cursor: pointer;
+        }
       </style>
+
       <div class="container">
         <h1 class="text-center decorated-title">戈登精選牛肉</h1>
         <div class="row justify-content-center">
-          {% for product in bproducts %}
-            <div class="col-md-4 custom-col">
-              <div class="card small-card">
-                <img class="card-img-top" src="{{product.PPhoto.url}}" alt="Card image cap">
-                <form action="/detail/" method="POST">{% csrf_token %}
-                  <input type="hidden" name="pid" value="{{product.PID}}">
-                  <div class="card-body text-center">
-                    <input type="submit" value="{{ product.PName }}" class="card-title btn btn-outline-dark text-center" style="border: none; font-size: 20px; background-color: inherit; color: inherit; border-color: inherit;">
-                  </div>
-                </form>
-              </div>
-            </div>              
-          {% endfor %}   
+          {% for product in bproducts%}
+              <div class="col-md-4 custom-col">
+                <div class="card small-card">
+                  <img class="card-img-top" src="{{product.PPhoto.url}}" alt="{{ product.PName }}" onclick="submitForm('{{ product.PID }}')">
+                  <form id="form{{ product.PID }}" action="/detail/" method="POST">{% csrf_token %}
+                    <input type="hidden" name="pid" value="{{product.PID}}">
+                    <input type="hidden" name="from_image" value="true">
+                    <div class="card-body text-center">
+                      <input type="submit" value="{{ product.PName }}" class="card-title btn btn-outline-dark text-center" style="border: none; font-size: 20px; background-color: inherit; color: inherit; border-color: inherit;">
+                    </div>
+                  </form>
+                </div>
+              </div>              
+            {% endfor %} 
+            <script>
+              function submitForm(pid) {
+                document.getElementById("form" + pid).submit();
+              }
+            </script>  
         </div>
       </div>
       
       <div class="container">
         <h1 class="text-center decorated-title">戈登精選豬肉</h1>
         <div class="row justify-content-center">
-          {% for product in pproducts %}
-            <div class="col-md-4 custom-col">
-              <div class="card small-card">
-                <img class="card-img-top" src="{{product.PPhoto.url}}" alt="Card image cap">
-                <form action="/detail/" method="POST">{% csrf_token %}
-                  <input type="hidden" name="pid" value="{{product.PID}}">
-                  <div class="card-body text-center">
-                    <input type="submit" value="{{ product.PName }}" class="card-title btn btn-outline-dark text-center" style="border: none; font-size: 20px; background-color: inherit; color: inherit; border-color: inherit;">
-                  </div>
-                </form>
-              </div>
-            </div>              
-          {% endfor %} 
+          {% for product in pproducts%}
+              <div class="col-md-4 custom-col">
+                <div class="card small-card">
+                  <img class="card-img-top" src="{{product.PPhoto.url}}" alt="{{ product.PName }}" onclick="submitForm('{{ product.PID }}')">
+                  <form id="form{{ product.PID }}" action="/detail/" method="POST">{% csrf_token %}
+                    <input type="hidden" name="pid" value="{{product.PID}}">
+                    <input type="hidden" name="from_image" value="true">
+                    <div class="card-body text-center">
+                      <input type="submit" value="{{ product.PName }}" class="card-title btn btn-outline-dark text-center" style="border: none; font-size: 20px; background-color: inherit; color: inherit; border-color: inherit;">
+                    </div>
+                  </form>
+                </div>
+              </div>              
+            {% endfor %} 
+            <script>
+              function submitForm(pid) {
+                document.getElementById("form" + pid).submit();
+              }
+              </script> 
         </div>
       </div>
       
       <div class="container">
         <h1 class="text-center decorated-title">戈登精選海鮮</h1>
         <div class="row justify-content-center">
-          {% for product in sproducts %}
-            <div class="col-md-4 custom-col">
-              <div class="card small-card">
-                <img class="card-img-top" src="{{product.PPhoto.url}}" alt="Card image cap">
-                <form action="/detail/" method="POST">{% csrf_token %}
-                  <input type="hidden" name="pid" value="{{product.PID}}">
-                  <div class="card-body text-center">
-                    <input type="submit" value="{{ product.PName }}" class="card-title btn btn-outline-dark text-center" style="border: none; font-size: 20px; background-color: inherit; color: inherit; border-color: inherit;">
-                  </div>
-                </form>
-              </div>
-            </div>              
-          {% endfor %} 
+          {% for product in sproducts%}
+              <div class="col-md-4 custom-col">
+                <div class="card small-card">
+                  <img class="card-img-top" src="{{product.PPhoto.url}}" alt="{{ product.PName }}" onclick="submitForm('{{ product.PID }}')">
+                  <form id="form{{ product.PID }}" action="/detail/" method="POST">{% csrf_token %}
+                    <input type="hidden" name="pid" value="{{product.PID}}">
+                    <input type="hidden" name="from_image" value="true">
+                    <div class="card-body text-center">
+                      <input type="submit" value="{{ product.PName }}" class="card-title btn btn-outline-dark text-center" style="border: none; font-size: 20px; background-color: inherit; color: inherit; border-color: inherit;">
+                    </div>
+                  </form>
+                </div>
+              </div>              
+            {% endfor %} 
+            <script>
+              function submitForm(pid) {
+                document.getElementById("form" + pid).submit();
+              }
+              </script>    
         </div>
       </div>
     
