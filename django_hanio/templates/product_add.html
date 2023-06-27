@@ -66,17 +66,17 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="../dashboard/#products">產品管理</a>
+                        <a class="nav-link" aria-current="page" href="../dashboard/#products">產品管理</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="../dashboard/#member">會員管理</a>        
+                      <a class="nav-link" aria-current="page" href="../dashboard/#member">會員管理</a>        
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../orders_view/">訂單管理</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="../addp_view/">新增產品</a>
-                  </li>
+                        <a class="nav-link active" href="../addp_view/">新增產品</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav">
                   {% if request.Name %}
@@ -103,59 +103,51 @@
         <div class="placeholder"></div>
         <div class="container">
             <br>
-            <h3 class="title"><strong>產品細節| <small>{{ category }}</small></strong></h3>
+            <h3 class="title"><strong>產品資料| <small>{{ category }}</small></strong></h3>
             <div class="row">
-              <div class="col-lg-6 text-center mt-4">
-                {% if p.PPhoto %}
-                <img src="{{p.PPhoto.url}}" class="img-fluid rounded shadow-lg" alt="{{ p.PName }}" width="80%" >
-                {% else %}
-                  <p>No photo available</p>
-                {% endif %}
-
-              </div>
               <div class="col-lg-6">
-                <form action="/edit/" method = "POST">{% csrf_token %}
+                <form action="/addproduct/" method = "POST">{% csrf_token %}
                     <div class="mb-3">
                         <h4>
                             <label for="product-name" class="form-label">商品名稱：</label>           
                         </h4>
                         <div class="col-lg-6">
-                            <input class="form-control" type="text" placeholder="Default input" aria-label="default input example" name="product-name" required value = "{{p.PName}}">
+                            <input class="form-control" type="text" placeholder="Default input" aria-label="default input example" name="product-name" required >
                         </div>
                         <h4>
                             <label for="product-detail">商品內容：</label>
                         </h4>
-                        <textarea name="product-detail"  class="form-control" row = "3" required > {{p.PDetail}} </textarea>
+                        <textarea name="product-detail"  class="form-control" row = "3" required > </textarea>
 
                         <h4>
                             <label for="product-price">商品價格：</label>
                         </h4>
-                        <input type="number" name="product-price" class="form-control" required value = "{{p.PPrice}}">
+                        <input type="number" name="product-price" class="form-control" required>
                         <h4>
                             <label for="product-status">商品狀態：</label>
                         </h4>
                         <select name="product-status" class="form-select" aria-label="Disabled select example" required>
-                            <option value="IN_STOCK" {% if p.PStatus == 'IN_STOCK' %}selected{% endif %} >上架</option>
-                            <option value="OUT_OF_STOCK" {% if p.PStatus == 'OUT_OF_STOCK' %}selected{% endif %} >下架</option>
-                            <option value="UNAVAILABLE" {% if p.PStatus == 'UNAVAILABLE' %}selected{% endif %} >缺貨</option>
+                            <option value="IN_STOCK">上架</option>
+                            <option value="OUT_OF_STOCK">下架</option>
+                            <option value="UNAVAILABLE">缺貨</option>
                         </select>
                         <h4>
                             <label for="product-category">商品分類：</label>
                         </h4>
                         <select name="product-category" class="form-select" aria-label="Disabled select example" required>
-                            <option value="beef" {% if p.PCategory == 'beef' %}selected{% endif %}>日本A5和牛專賣區</option>
-                            <option value="pork" {% if p.PCategory == 'pork' %}selected{% endif %}>戈登嚴選豬肉</option>
-                            <option value="seafood" {% if p.PCategory == 'seafood' %}selected{% endif %}>戈登經典海鮮</option>
+                            <option value="beef">日本A5和牛專賣區</option>
+                            <option value="pork">戈登嚴選豬肉</option>
+                            <option value="seafood">戈登經典海鮮</option>
                         </select>
                         <h4>
                             <label for="product-spec">商品規格：</label>
                         </h4>
-                        <input type="number" name="product-spec" class="form-control" required value = "{{p.Pspec}}">g+5%(8.8oz)
+                        <input type="number" name="product-spec" class="form-control" required>g+5%(8.8oz)
 
                         <h4>
                             <label for="product-quantity">商品數量：</label>
                         </h4>
-                        <input type="number" name="product-quantity" class="form-control" value="{{p.Pnum}}" min="1" step="1">
+                        <input type="number" name="product-quantity" class="form-control"min="1" step="1">
                         <br>
                         <div class="row">
                             <div class="col-lg-6">
@@ -169,7 +161,6 @@
                           </div>
                           
                         <br>
-                        <input type="hidden" name="pid" value="{{p.PID}}">
                         <input type="submit" value="修改產品資料" class="btn btn-outline-dark">
                     </div>
                 </form>
