@@ -124,7 +124,7 @@
                   <td align="left" valign="middle">{{ product.PName }}</td>
                   <td align="left" valign="middle">{{ product.PPrice }}</td>
                   <td align="left" valign="middle">
-                    <input type="number" name="num" class="form-control quantity-input" value="{{cart_item.NUM}}" min="1" step="1">
+                    <input type="number" name="num" class="form-control quantity-input" value="{{cart_item.NUM}}" min="1" step="1" >
                   </td>
                   <td class="subtotal" align="left" valign="middle">${{ subtotal }}</td>
                   
@@ -183,7 +183,11 @@
                 <td class="text-right"><strong>總計</strong></td>
                 <td id="total" align="left"><strong>$0</strong></td>
                 <td align="left">
-                  <a href="../pay/"><button class="btn btn-outline-dark">結帳</button></a>
+                  {% if yn %}
+                  <a href="../pay/"><button class="btn btn-outline-dark" >結帳</button></a>
+                  {% else %}
+                  <button class="btn btn-outline-dark" disabled>結帳</button>
+                  {% endif %}
                 </td>
               </tr>
             </tfoot>

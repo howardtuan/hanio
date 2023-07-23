@@ -141,7 +141,8 @@ def add_p_cart(request):
         PDetail = get_detail,
         Pspec = get_spec,
         PStatus = get_status,
-        PPhoto = "product_images/1_cyBXWdt_fJ05J4e.jpg",
+        PPhoto=get_photo,
+        # PPhoto = "product_images/1_cyBXWdt_fJ05J4e.jpg",
         PCategory = get_category
         )
     return redirect('/dashboard/')
@@ -550,12 +551,18 @@ def cart_view(request):
     # get_id = request.POST.get('mid', '')
     cart_items = cart.objects.filter( MID = get_id )
     cart_products = []
+    
+    
     for item in cart_items:
         pid = item.PID
         p = product.objects.get( PID = pid )
         number = item.NUM
         sub = p.PPrice * number
         cart_products.append((item, p, sub))
+    yn=True
+    if len(cart_products)==0:
+        yn=False
+    print(yn)
     
     return render(request, 'cart.html', locals())
 

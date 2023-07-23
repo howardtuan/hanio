@@ -106,7 +106,7 @@
             <h3 class="title"><strong>產品資料| <small>{{ category }}</small></strong></h3>
             <div class="row">
               <div class="col-lg-6">
-                <form action="/addproduct/" method = "POST">{% csrf_token %}
+                <form action="/addproduct/" method="POST" enctype="multipart/form-data">{% csrf_token %}
                     <div class="mb-3">
                         <h4>
                             <label for="product-name" class="form-label">商品名稱：</label>           
