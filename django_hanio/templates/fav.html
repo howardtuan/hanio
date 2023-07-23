@@ -145,7 +145,7 @@
     <div class="placeholder"></div>
     <div class="container" style="flex: 1;">
       <div class="placeholder"></div>
-      <h3 class="title" style=" margin-left: 50px;margin-top: 20px; margin-bottom: -30px;  display: flex;align-items: center;">搜尋關鍵字&nbsp;<small> &nbsp;>>{{keyword}}<<&nbsp;</small><small style="color:gray; font-size:15px;">&nbsp;&nbsp;共{{count}}件商品</small></h3>
+      <h3 class="title" style=" margin-left: 50px;margin-top: 20px; margin-bottom: -30px;  display: flex;align-items: center;">我的最愛&nbsp;<small style="color:gray; font-size:15px;">&nbsp;&nbsp;共{{count}}件商品</small></h3>
         <div class="row justify-content-center">
           <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 custom-col">
             {% comment %} <div class="col product">
@@ -159,8 +159,8 @@
                 </div>
               </div>
             </div> {% endcomment %}
-            
-            {% for i in products %}
+             
+            {% for i in fav_products %}
             <div class="col product" style="margin-bottom: -100px;">
               <div class="card small-card">
                 {% if i.PPhoto %}
@@ -175,6 +175,7 @@
                     <!-- <input type="submit" value="" class="card-title btn btn-outline-dark text-center" style="border: none; font-size: 20px; background-color: inherit; color: inherit; border-color: inherit;"> -->
                     <p class="text-center" style="font-size: 20px;">{{ i.PName }}</p>
                     <p class="card-text-detail" style="cursor: default;">{{ i.PDetail|slice:":10" }}{% if i.PDetail|length > 10 %}...{% endif %}</p>
+
                   </form>
                 </div>
               </div>
