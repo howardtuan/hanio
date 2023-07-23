@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>我的加入最愛</title>
+</head>
+<body>
+    <h1>我的加入最愛</h1>
+    {% if favorites %}
+        <ul>
+            {% for favorite in favorites %}
+                <li>{{ favorite.PID.PName }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>您尚未加入任何商品到加入最愛清單。</p>
+    {% endif %}
+</body>
+</html>

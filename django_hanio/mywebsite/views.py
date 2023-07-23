@@ -12,7 +12,7 @@ from collections import defaultdict
 from django.db.models.functions import Cast
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
-from django.http import JsonResponse
+from django.http import JsonResponse,HttpResponse
 
 # Create your views here.
 
@@ -607,3 +607,38 @@ def search_products(request):
     products = product.objects.filter(PName__icontains=keyword)
     count = products.count()
     return render(request, 'search.html', locals())
+
+def add_favorite(request):
+    if request.method == 'POST':
+        # 檢查用戶是否登入
+        if request.user.is_authenticated:
+            # 從 POST 數據中獲取產品 ID
+            product_id = request.POST.get('pid')
+            # 獲取當前登入用戶的 ID
+            member_id = request.user.id
+            
+            # 確認該產品是否已經在最愛清單中
+            if not Favorite.objects.filter(MID=member_id, PID=product_id).exists():
+                # 如果不在最愛清單中，則創建一個新的 Favorite 對象並保存到數據庫中
+                Favorite.objects.create(MID_id=member_id, PID_id=product_id)
+                
+            # 重新導向回產品詳細頁面，或任何您希望返回的頁面
+            return redirect('/detail/?pid=' + product_id)
+    
+    # 如果用戶未登入或其他情況，可以自行處理
+    return redirect('/')
+def fav_view(request):
+    if request.user.is_authenticated:
+        # 獲取當前登入用戶的 ID
+        member_id = request.user.id
+        # 查詢該用戶加入最愛的商品
+        favorites = Favorite.objects.filter(member__id=member_id)
+    else:
+        # 如果用戶未登入，則將 favorites 設置為空列表或進行其他處理
+        favorites = []
+
+    # 在這裡加入例外處理，忽略對 favicon.ico 的請求
+    if 'favicon.ico' in request.path:
+        return HttpResponse(status=204)  # 返回一個空的 HTTP 回應，表示忽略這個請求
+
+    return render(request, 'fav.html', {'favorites': favorites})

@@ -68,6 +68,11 @@ class product(models.Model):
     PStatus = models.CharField('產品狀態', max_length=13, choices=PRODUCT_STATUS_CHOICES, default='IN_STOCK')
     PPhoto = models.ImageField('產品圖片', upload_to='product_images/', blank=True, null=True)
     PCategory = models.CharField('產品分類', max_length=20) #也可以用選項
+    favorites = models.ManyToManyField('member', through='Favorite', related_name='favorite_products')
+class Favorite(models.Model):
+    FID = models.AutoField('最愛編號', primary_key=True)
+    MID = models.ForeignKey('member', on_delete=models.CASCADE)
+    PID = models.ForeignKey('product', on_delete=models.CASCADE)
 
 
 class cart(models.Model):
