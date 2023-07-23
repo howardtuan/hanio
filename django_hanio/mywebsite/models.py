@@ -82,3 +82,8 @@ class Manager(models.Model):
     password = models.CharField('密碼', max_length=100)
     name = models.CharField('姓名', max_length=100)
     created_at = models.DateTimeField('建立時間', auto_now_add=True)
+
+class fav(models.Model):
+    FID = models.AutoField(primary_key=True)
+    MID = models.CharField('會員編號', max_length=1000)
+    PID = models.CharField('產品編號', max_length=1000 )

@@ -30,7 +30,9 @@ class ManagerAdmin(admin.ModelAdmin):
     list_display = ('managerID', 'username', 'password', 'name')
     ordering = ('managerID',)
 
-
+class favAdmin(admin.ModelAdmin):
+    list_display = ('FID', 'MID', 'PID')
+    ordering = ('FID',)
 
 admin.site.register(member,MemberAdmin)
 admin.site.register(order, OrderAdmin)
@@ -38,3 +40,4 @@ admin.site.register(order_detail, OrderDetailAdmin)
 admin.site.register(product, ProductAdmin)
 admin.site.register(cart, CartAdmin)
 admin.site.register(Manager, ManagerAdmin)
+admin.site.register(fav, favAdmin)

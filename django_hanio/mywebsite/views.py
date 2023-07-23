@@ -494,6 +494,16 @@ def detail_view(request, pid=None):
     all_pids = product.objects.values_list('PID', flat=True)
     random_pids = sample(list(all_pids), 3)
     random_products = product.objects.filter(PID__in=random_pids)
+
+    isFAV = False
+    MAccount = request.session.get('MAccount')
+
+    if MAccount:
+        get_mid = member.objects.get(MAccount=MAccount).MID
+        fav_obj = fav.objects.filter(MID=get_mid, PID=get_id).count()
+        if fav_obj > 0 :
+            isFAV = True
+        
     
     return render(request, 'detail.html', locals())
 
@@ -607,3 +617,54 @@ def search_products(request):
     products = product.objects.filter(PName__icontains=keyword)
     count = products.count()
     return render(request, 'search.html', locals())
+
+def add_favorite(request):
+    MAccount = request.session.get('MAccount')
+    if not MAccount:
+        messages.error(request, "請先登入")
+        return redirect('/login')
+    get_id = member.objects.get(MAccount=MAccount).MID
+    get_pid = request.POST.get('pid', '')
+    fav.objects.create( MID = get_id, PID = get_pid)
+    redirect_url = reverse('detail', kwargs={'pid': get_pid})    
+    return redirect(redirect_url)
+
+def del_favorite(request):
+    MAccount = request.session.get('MAccount')
+    if not MAccount:
+        messages.error(request, "請先登入")
+        return redirect('/login')
+    get_id = member.objects.get(MAccount=MAccount).MID
+    get_pid = request.POST.get('pid', '')
+    fav_to_delete = fav.objects.filter(MID=get_id, PID=get_pid)
+    fav_to_delete.delete()
+
+    redirect_url = reverse('detail', kwargs={'pid': get_pid})    
+    return redirect(redirect_url)
+
+ 
+
+def fav_view(request):
+    MAccount = request.session.get('MAccount')
+    if not MAccount:
+        messages.error(request, "請先登入")
+        return redirect('/login')
+
+    # 獲取會員編號
+    get_id = member.objects.get(MAccount=MAccount).MID
+
+    # 從 fav 資料表中獲取客戶加入最愛的商品資訊
+    fav_list = fav.objects.filter(MID=get_id)
+    fav_products = []
+    count=0     
+    for fav_item in fav_list:
+        try:
+            p = product.objects.get(PID=fav_item.PID)
+            fav_products.append(p)
+            count+=1
+        except product.DoesNotExist:
+            # 在 product 資料庫中找不到對應的產品
+            pass
+    
+
+    return render(request, 'fav.html', locals())

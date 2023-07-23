@@ -42,8 +42,11 @@ urlpatterns = [
     path('or_edit/', views.or_edit),
     path('search/', views.search_products),
     path('cart/quantity/', views.cart_quantity_view, name='cart_quantity'),
-    path('<str:pid>/', views.detail_view, name='detail'),
     path('detail/', views.detail_view),
+    path('fav/', views.fav_view),
+    path('add_favorite/', views.add_favorite),
+    path('del_favorite/', views.del_favorite),
+    path('<str:pid>/', views.detail_view, name='detail'),
 
     
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
