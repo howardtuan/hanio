@@ -18,6 +18,9 @@
             crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
             crossorigin="anonymous"></script>
+        <!-- Facebook JavaScript SDK -->
+      <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v11.0" nonce="YOUR_NONCE_VALUE"></script>
+
     </head>
      <body id="page-top" style="display: flex; flex-direction: column; min-height: 100vh;">
 
@@ -161,33 +164,95 @@
                   </div>
                   
               </form>
+              <style>
+                /* 自定义样式用于让两个 div 紧靠 */
+                .flex-container {
+                    display: flex;
+                }
+                .small-box {
+                    width: 50px;
+                    height: 50px;
+                    margin: 5px;
+                    /* 可以添加其他样式，如圆角、阴影等 */
+                }
+            </style>
               
               {% if isFAV %}
-              <div class="col-md-6">
-                <form action="/del_favorite/" method="POST">{% csrf_token %}
-                    <input type="hidden" name="pid" value="{{ p.PID }}">
-                    <button type="submit" class="btn btn-black" style="display: flex; align-items: center; justify-content: center;">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16" style="margin-left: 5px;">
-                        <path d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-                      </svg>
-                      
-                    </button>                
-                </form>
-              </div>
-              {% else %}
               
-              <div class="col-md-6">
-                <form action="/add_favorite/" method="POST">{% csrf_token %}
-                    <input type="hidden" name="pid" value="{{ p.PID }}">
-                    <button type="submit" class="btn btn-black" style="display: flex; align-items: center; justify-content: center;">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16" style="margin-left: 5px;">
-                        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                      </svg>
-                    </button>                
-                </form>
-              </div>
+              <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- 使用自定义样式的 flex-container -->
+                        <div class="flex-container">
+                            <!-- 第一个小的 div -->
+                            <div class="small-box">
+                              <form action="/del_favorite/" method="POST">{% csrf_token %}
+                                <input type="hidden" name="pid" value="{{ p.PID }}">
+                                <button type="submit" class="btn btn-black" style="display: flex; align-items: center; justify-content: center;">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16" style="margin-left: 5px;">
+                                    <path d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                  </svg>
+                                </button>                
+                            </form>
+                            </div>
+                            <!-- 第二个小的 div -->
+                            <div class="small-box">
+                              <div class="fb-share-button" data-href="" data-layout="button" data-size="small">
+                                <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=" class="fb-xfbml-parse-ignore">Share</a>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+              {% else %}
+              <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- 使用自定义样式的 flex-container -->
+                        <div class="flex-container">
+                            <!-- 第一个小的 div -->
+                            <div class="small-box">
+                              <form action="/add_favorite/" method="POST">{% csrf_token %}
+                                <input type="hidden" name="pid" value="{{ p.PID }}">
+                                <button type="submit" class="btn btn-black" style="display: flex; align-items: center; justify-content: center;">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16" style="margin-left: 5px;">
+                                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                                  </svg>
+                                </button>                
+                            </form>
+                            </div>
+                            <!-- 第二个小的 div -->
+                            <div class="small-box">
+                              <div class="fb-share-button" data-href="" data-layout="button" data-size="small">
+                                <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=" class="fb-xfbml-parse-ignore">Share</a>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             
+              
               {% endif %}
-
+              
+              <div class="container">
+                <div class="row">
+                  <div>
+                    
+                  </div>
+                    <div>
+                      
+                    </div>
+                </div>
+            </div>
+            
+            <script>
+              var currentURL = window.location.href;
+              var fbShareButton = document.querySelector('.fb-share-button');
+              fbShareButton.setAttribute('data-href', currentURL);
+              fbShareButton.querySelector('a').href = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(currentURL);
+          </script>
               </div>
             </div>
           </div>
