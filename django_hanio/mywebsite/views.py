@@ -13,10 +13,131 @@ from django.db.models.functions import Cast
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
+import openai
+import json
+with open('mywebsite/secret.json', 'r') as file:
+    data = json.load(file)
+OPENAI_API_KEY = data.get("OPENAI_API_KEY")
 
+openai.api_key = OPENAI_API_KEY
 # Create your views here.
 
 now = datetime.now()
+
+def chat_view(request):
+    return render(request, 'chat.html', locals())
+from django.utils.html import escape
+
+def chat_with_ai(request):
+    if request.method == 'POST':
+        user_input = request.POST.get('user_input', '')
+
+        # 對用戶輸入進行HTML轉義，避免XSS攻擊
+        user_input = escape(user_input)
+        start="""
+        你是戈登肉鋪的小助理，要解決客人所問的問題！當客人問店家地址時，你要回答「桃園市桃園區新埔六街57號1樓」。當客人問你店家電話時，你要回答「03-358-5590」。當客人問你營業時間時，你要回答「每天11:00至20:00」。當客人問你附近有沒有停車位時，你要回答「附近有付費停車場」。當客人問你請問可以刷卡嗎?請回答可以！我們的支付方式有現金、實體卡片、Apple Pay以及Line Pay。
+        目前店內的食品有：
+        安格斯肋眼牛排，編號2，單價200
+        安格斯無骨牛小排，編號3，單價170
+        澳洲JOSDAL安格斯菲力牛排，編號5，單價180
+        澳洲JOSDALE安格斯羽下牛排，編號6，單價120
+        日本A5和牛近江肋眼牛排，編號7，單價210
+        安格斯羽下火鍋肉片，編號8，單價140
+        無骨牛小排火鍋肉片，編號9，單價200
+        安格斯霜降雪花火鍋肉片，編號10，單價210
+        美國安格斯牛五花火鍋肉片，編號11，單價190
+        美國安格斯頂級牛五花火鍋肉片，編號12，單價150
+        日本鹿兒島和牛片 一般版，編號13，單價230
+        日本鹿兒島火鍋肉片_長版，編號14，單價250
+        桐德盤克夏-豬肉黑豚五花火鍋片，編號15，單價170
+        CAB認證安格斯羽下燒烤肉片，編號16，單價190
+        CAB認證無骨牛小排燒烤肉片，編號17，單價180
+        CAB認證安格斯霜降雪花燒烤肉片，編號18，單價160
+        安格斯牛五花燒烤肉片-爆量版，編號19，單價200
+        日本鹿兒島燒烤肉片一般版，編號20，單價215
+        日本鹿兒島燒烤肉片_長版，編號21，單價240
+        黑豚五花燒烤片，編號23，單價180
+        黑蜜豬里肌火鍋片，編號24，單價180
+        黑蜜豬梅花火鍋片，編號25，單價150
+        台南無毒生態白蝦，編號26，單價200
+        宜蘭爆卵母香魚，編號27，單價200
+        台南無毒文蛤，編號28，單價250
+        日本火鍋料選用天然魚漿，編號29，單價220
+        日本進口高級火鍋料，編號30，單價300
+        伊比利黑豬梅花切片，編號31，單價260
+        桐德盤克夏二層肉，編號32，單價150
+        黑蜜豬腰內肉片，編號33，單價180
+        西班牙Bellota頂級伊比利豬梅花肉片，編號34，單價400
+        如果客人說他最近在健康飲食，請推薦他1~3份海鮮類的食品。如果客人說他想吃牛排，請推薦他1~3份牛排類的食品。
+        如果客人說他只有2000塊的預算，請幫他搭配食材，總價不得高於顧客要求的價位，產品可重複，但總金額記得要算對，單價要乘以該商品的選購數量，在列出這些商品組合時，不用顯示計算過程，只要總金額是正確的即可。
+        回應客人食材時，不需要照以上資料那麼制式化，請自然一點，但少說廢話，也不需要跟他說編號是多少。
+        """
+        # 使用OpenAI GPT-3.5 Turbo模型進行對話
+        completion = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": start},
+                {"role": "assistant", "content": "此處填入機器人訊息"},
+                {"role": "user", "content": "我有1000塊的預算 有推薦的嗎"},
+                {"role": "assistant", "content": "當然！根據您的預算，我為您搭配如下食材： 1. 安格斯羽下火鍋肉片 x 3包，單價 140 2. 安格斯無骨牛小排 x 2塊，單價 170 3. 台南無毒文蛤 x 1包，單價 250 總金額為1010，價格符合您的預算。希望這些選擇能符合您的需求！"},
+                {"role": "user", "content": user_input},
+            ]
+        )
+
+        # 獲取機器人的回答
+        ai_response = completion.choices[0].message['content']
+
+        # 定義產品資料
+        product_data = [
+            ("安格斯肋眼牛排", "2", "200"),
+            ("安格斯無骨牛小排", "3", "170"),
+            ("澳洲JOSDAL安格斯菲力牛排", "5", "180"),
+            ("澳洲JOSDALE安格斯羽下牛排", "6", "120"),
+            ("日本A5和牛近江肋眼牛排", "7", "210"),
+            ("安格斯羽下火鍋肉片", "8", "140"),
+            ("無骨牛小排火鍋肉片", "9", "200"),
+            ("安格斯霜降雪花火鍋肉片", "10", "210"),
+            ("美國安格斯牛五花火鍋肉片", "11", "190"),
+            ("美國安格斯頂級牛五花火鍋肉片", "12", "150"),
+            ("日本鹿兒島和牛片 一般版", "13", "230"),
+            ("日本鹿兒島火鍋肉片_長版", "14", "250"),
+            ("桐德盤克夏-豬肉黑豚五花火鍋片", "15", "170"),
+            ("CAB認證安格斯羽下燒烤肉片", "16", "190"),
+            ("CAB認證無骨牛小排燒烤肉片", "17", "180"),
+            ("CAB認證安格斯霜降雪花燒烤肉片", "18", "160"),
+            ("安格斯牛五花燒烤肉片-爆量版", "19", "200"),
+            ("日本鹿兒島燒烤肉片一般版", "20", "215"),
+            ("日本鹿兒島燒烤肉片_長版", "21", "240"),
+            ("黑豚五花燒烤片", "23", "180"),
+            ("黑蜜豬里肌火鍋片", "24", "180"),
+            ("黑蜜豬梅花火鍋片", "25", "150"),
+            ("台南無毒生態白蝦", "26", "200"),
+            ("宜蘭爆卵母香魚", "27", "200"),
+            ("台南無毒文蛤", "28", "250"),
+            ("日本火鍋料選用天然魚漿", "29", "220"),
+            ("日本進口高級火鍋料", "30", "300"),
+            ("伊比利黑豬梅花切片", "31", "260"),
+            ("桐德盤克夏二層肉", "32", "150"),
+            ("黑蜜豬腰內肉片", "33", "180"),
+            ("西班牙Bellota頂級伊比利豬梅花肉片", "34", "400"),
+        ]
+
+
+        # 將產品名稱替換為超連結
+        for product_name, product_num, product_price in product_data:
+            if product_name in ai_response:
+                link = f"<a href='http://127.0.0.1:8000/{product_num}/' target='_blank'>{product_name}</a>"
+                ai_response = ai_response.replace(product_name, link)
+
+        print(ai_response)
+
+
+        # 返回AI回答
+        return JsonResponse({'answer': ai_response})
+
+    return JsonResponse({'error': '無效的請求'})
+
+
 def cart_quantity_view(request):
     MAccount = request.session.get('MAccount')
     if not MAccount:
@@ -173,18 +294,52 @@ def edit(request):
     return redirect('/dashboard/')
 
 def hanio_view(request):
-    Category = product.objects.filter( PCategory = 'beef' )
+    selected_price = request.POST.get('price_filter')
+    if selected_price is not None:
+        try:
+            selected_price = int(selected_price)
+            print(selected_price)
+            Category = product.objects.filter(PCategory='beef', PPrice__lte=selected_price).order_by('PPrice')
+        except ValueError:
+            Category = product.objects.filter(PCategory='beef')
+    else:
+        Category = product.objects.filter(PCategory='beef')
+
     count = Category.count()
-    # i = product.objects.get( PID = 2 )
+
+    # 將篩選值加入到locals中
     return render(request, 'hanio.html', locals())
 
+
+
 def pork_view(request):
-    Category = product.objects.filter( PCategory = 'pork' )
+    selected_price = request.POST.get('price_filter')
+    if selected_price is not None:
+        try:
+            selected_price = int(selected_price)
+            Category = product.objects.filter(PCategory='pork', PPrice__lte=selected_price).order_by('PPrice')
+        except ValueError:
+            Category = product.objects.filter(PCategory='pork')
+    else:
+        Category = product.objects.filter(PCategory='pork')
+
     count = Category.count()
     return render(request, 'for_pork.html', locals())
 
+
 def seafood_view(request):
     Category = product.objects.filter( PCategory = 'seafood' )
+    selected_price = request.POST.get('price_filter')
+    if selected_price is not None:
+        try:
+            selected_price = int(selected_price)
+            print(selected_price)
+            Category = product.objects.filter(PCategory='seafood', PPrice__lte=selected_price).order_by('PPrice')
+        except ValueError:
+            Category = product.objects.filter(PCategory='seafood')
+    else:
+        Category = product.objects.filter(PCategory='seafood')
+
     count = Category.count()
     return render(request, 'for_seafood.html', locals())
 
@@ -372,6 +527,8 @@ def pay_view(request):
         return redirect('/login')
     get_id = member.objects.get(MAccount=MAccount).MID
     # get_id = request.POST.get('mid', '')
+    memn = member.objects.get(MAccount=MAccount)
+
     cart_items = cart.objects.filter( MID = get_id )
     cart_products = []
     total_price=0
@@ -387,7 +544,6 @@ def pay_view(request):
 
     
     return render(request, 'pay.html', locals())
-
 
 def checkout_process(request):
     if request.method == 'POST':
