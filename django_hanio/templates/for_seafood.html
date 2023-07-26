@@ -148,7 +148,81 @@
         object-fit: cover;
       }
     </style>
-    <div class="placeholder"></div>
+    <style>
+      /* 將卷軸軌道（track）的顏色設定為深灰色 */
+      input[type="range"]::-webkit-slider-runnable-track {
+          background-color: #666;
+      }
+  
+      /* 將卷軸滑塊（thumb）的顏色設定為深藍色 */
+      input[type="range"]::-webkit-slider-thumb {
+          background-color: #007bff;
+      }
+  
+    
+  </style>
+    <BR>
+      <BR>
+        <div class="placeholder" style="color: #FFFFFF;"></div>
+        <div class="container">
+          <div class="row">
+              <div class="col-lg-3 col-md-6">
+                  <form action="/seafood/" method="POST" class="mb-3 form-inline" id="priceFilterForm">
+                      {% csrf_token %}
+                      <div class="form-group d-flex align-items-center justify-content-between">
+                          <label for="customRange1" class="form-label me-2">價錢篩選：</label>
+                          <div class="col-8"> <!-- 設定 input 元素的寬度為 8 個 Bootstrap column 寬度 -->
+                              <input type="range" class="form-range w-100" id="customRange1" name="price_filter" min="0" max="500" step="5"
+                                  {% if price_filter %}value="{{ price_filter }}"{% endif %}>
+                          </div>
+                      </div>
+                      <span id="selected_price">目前價錢篩選值：{{ price_filter }}</span>
+                      <button type="submit" class="btn btn-primary mt-2" style="opacity: 0; pointer-events: none;">篩選</button>
+                  </form>
+              </div>
+          </div>
+      </div>
+      
+      
+      
+      
+  
+  <script>
+      const customRange1 = document.getElementById('customRange1');
+      const selectedPrice = document.getElementById('selected_price');
+      const priceFilterForm = document.getElementById('priceFilterForm');
+      let submitTimeout;
+  
+      // 當頁面載入完成時
+      window.onload = function() {
+          // 獲取儲存的卷軸值
+          let savedScrollValue = localStorage.getItem('scrollValue');
+          // 如果有儲存的值，則將卷軸設定為該值
+          if (savedScrollValue) {
+              customRange1.value = savedScrollValue;
+              selectedPrice.textContent = '目前價錢篩選值：' + savedScrollValue;
+          }
+  
+          // 當卷軸值改變時，立即觸發表單提交
+          customRange1.addEventListener('input', function() {
+              selectedPrice.textContent = '目前價錢篩選值：' + customRange1.value;
+              // 儲存卷軸值到localStorage
+              localStorage.setItem('scrollValue', customRange1.value);
+              // 延遲提交表單，以防用戶持續拖動卷軸
+              clearTimeout(submitTimeout);
+              submitTimeout = setTimeout(function() {
+                  priceFilterForm.submit();
+              }, 500); // 延遲 500 毫秒後提交表單
+          });
+  
+          // 監聽滑鼠放開事件
+          customRange1.addEventListener('mouseup', function() {
+              // 提交表單
+              priceFilterForm.submit();
+          });
+      };
+  </script>
+
     <div class="container content" style="flex: 1;">
       <div class="placeholder"></div>
       <h3 class="title" style=" margin-left: 50px;margin-top: 20px; margin-bottom: -30px;  display: flex;align-items: center;">戈登經典海鮮&nbsp;&nbsp;<small style="color:gray; font-size:15px;">共{{count}}件商品</small></h3>
