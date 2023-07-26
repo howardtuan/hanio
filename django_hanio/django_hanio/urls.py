@@ -46,8 +46,6 @@ urlpatterns = [
     path('fav/', views.fav_view),
     path('add_favorite/', views.add_favorite),
     path('del_favorite/', views.del_favorite),
-    
-    path('chat/', views.chat_view),
     path('chat_with_ai/', views.chat_with_ai),
     path('<str:pid>/', views.detail_view, name='detail'),
 

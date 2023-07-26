@@ -18,8 +18,7 @@
             crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
             crossorigin="anonymous"></script>
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            {% csrf_token %}
+            
     </head>
     <style>
       .decorated-title {
@@ -409,14 +408,14 @@
             cursor: pointer; /* 加入 cursor: pointer 讓它支援點擊事件 */
         }
     </style>
-    <div id="chat-toggle" onclick="toggleChat()">聊天</div>
+    <div id="chat-toggle" onclick="toggleChat()">客服</div>
     <div id="chat-container">
-        <div id="chat-header">機器人聊天室</div>
+        <div id="chat-header">AI客服聊天室</div>
         <div id="chat-body">
             <div id="chat-display"></div>
         </div>
         <div id="chat-input">
-            <input type="text" id="user-message" placeholder="請輸入問題...">
+            <input type="text" id="user-message" placeholder="請輸入問題..." onkeypress="handleKeyPress(event)">
             <!-- 修改 "送出" 按鈕的 type 屬性為 "button" -->
             <button type="button" onclick="sendMessage()">送出</button>
             <button onclick="closeChat()">關閉</button>
@@ -430,7 +429,12 @@
             newMessage.innerHTML = message;
             display.appendChild(newMessage);
         }
-
+        function handleKeyPress(event) {
+          // Check if the pressed key is the "Enter" key (key code 13)
+          if (event.keyCode === 13) {
+              sendMessage(); // Trigger the sendMessage function
+          }
+      }
         function sendMessage() {
             var userInput = document.getElementById("user-message").value;
             appendMessage("<strong>你：</strong>" + userInput);

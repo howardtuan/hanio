@@ -18,6 +18,8 @@
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
         crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            {% csrf_token %}
 </head>
     <body id="page-top" style="display: flex; flex-direction: column; min-height: 100vh;">
 
@@ -286,7 +288,114 @@
         </div>
     </footer>
         
-          
+    <style>
+      /* 聊天視窗樣式 */
+      #chat-container {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          width: 340px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          display: none; /* 預設隱藏 */
+          background-color: #fff;
+      }
+
+      #chat-header {
+          background-color: #f0f0f0;
+          padding: 10px;
+          border-bottom: 1px solid #ccc;
+      }
+
+      #chat-body {
+          padding: 10px;
+          height: 200px;
+          overflow-y: scroll;
+      }
+
+      #chat-input {
+          padding: 10px;
+          border-top: 1px solid #ccc;
+      }
+
+      #chat-toggle {
+          position: fixed;
+          bottom: 30px;
+          right: 30px;
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          background-color: #007bff;
+          color: #fff;
+          text-align: center;
+          line-height: 50px;
+          cursor: pointer; /* 加入 cursor: pointer 讓它支援點擊事件 */
+      }
+  </style>
+  <div id="chat-toggle" onclick="toggleChat()">客服</div>
+  <div id="chat-container">
+      <div id="chat-header">AI客服聊天室</div>
+      <div id="chat-body">
+          <div id="chat-display"></div>
+      </div>
+      <div id="chat-input">
+          <input type="text" id="user-message" placeholder="請輸入問題..." onkeypress="handleKeyPress(event)">
+          <!-- 修改 "送出" 按鈕的 type 屬性為 "button" -->
+          <button type="button" onclick="sendMessage()">送出</button>
+          <button onclick="closeChat()">關閉</button>
+      </div>
+  </div>
+
+  <script>
+      function appendMessage(message) {
+          var display = document.getElementById("chat-display");
+          var newMessage = document.createElement("div");
+          newMessage.innerHTML = message;
+          display.appendChild(newMessage);
+      }
+      function handleKeyPress(event) {
+        // Check if the pressed key is the "Enter" key (key code 13)
+        if (event.keyCode === 13) {
+            sendMessage(); // Trigger the sendMessage function
+        }
+    }
+      function sendMessage() {
+          var userInput = document.getElementById("user-message").value;
+          appendMessage("<strong>你：</strong>" + userInput);
+
+          // 獲取CSRF token
+          var csrftoken = $('input[name=csrfmiddlewaretoken]').val();
+
+          // 使用Ajax將用戶輸入傳遞到後端處理，包含CSRF token
+          $.ajax({
+              type: "POST",
+              url: "/chat_with_ai/",
+              data: {
+                  'user_input': userInput,
+                  'csrfmiddlewaretoken': csrftoken
+              },
+              success: function(response) {
+                  appendMessage("<strong>AI：</strong>" + response.answer);
+              },
+              error: function(xhr, status, error) {
+                  console.log(xhr.responseText);
+              }
+          });
+
+          // 清空用戶輸入
+          document.getElementById("user-message").value = "";
+      }
+
+      function toggleChat() {
+          var chatContainer = document.getElementById("chat-container");
+          chatContainer.style.display = (chatContainer.style.display === "none") ? "block" : "none";
+      }
+
+      function closeChat() {
+          var chatContainer = document.getElementById("chat-container");
+          chatContainer.style.display = "none";
+      }
+  </script>
         
     </body>
     
