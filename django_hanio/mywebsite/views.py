@@ -13,6 +13,15 @@ from django.db.models.functions import Cast
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.utils.timezone import now
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import smtplib  
+import random
+import string
 import openai
 import json
 with open('mywebsite/secret.json', 'r') as file:
@@ -545,9 +554,72 @@ def pay_view(request):
     
     return render(request, 'pay.html', locals())
 
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
+import urllib.parse
+import os
+
+def send_email(mid, mail, new_oid):
+    number_of_strings = 1
+    length_of_string = 8
+    global ranpass
+    for x in range(number_of_strings):
+        ranpass = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(length_of_string))
+    
+    mem = member.objects.get(MID=mid).MName
+    cart_items = cart.objects.filter(MID=mid)
+    
+    # 建立郵件內容
+    content = MIMEMultipart()
+    content["subject"] = "戈登肉鋪訂單通知"
+    content["from"] = "pydemo123@gmail.com"
+    content["to"] = mail
+    count = 1
+    # 建立郵件內容的文字部分
+    text_content = f"<h4>您好{mem}，已收到您的訂單，訂單將於2023/08/04，自動完成並撥款給賣家<br> 若您尚未收到，或商品不新鮮等情況，請務必儘速前往官網聯繫我們<br> 訂單編號: {new_oid}</h4><h2>訂單明細</h2>"
+    for cart_item in cart_items:
+        pid = cart_item.PID
+        price = product.objects.get(PID=pid).PPrice
+        name = product.objects.get(PID=pid).PName
+        img_filename = product.objects.get(PID=pid).PPhoto.url
+        img_path = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "media", img_filename))
+        pnum = cart_item.NUM
+        text_content += f"<b>商品名稱:</b> {name}<br><b>數量:</b> {pnum}<br><b>單價:</b> {price}<br><img src='cid:image{count}' width='200'><br><hr>"
+
+        img_path = urllib.parse.unquote(img_path)
+        pathstr=os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "media"))
+        img_path=img_path.replace("/media", "")
+        final_path=pathstr+img_path
+        print(final_path)
+        # 讀取圖片並添加為附件
+        with open(final_path, 'rb') as f:
+            image = MIMEImage(f.read())
+            image.add_header('Content-ID', f'<image{count}>')
+            content.attach(image)
+        count += 1
+    
+    # 將文字部分加入到郵件內容
+    content.attach(MIMEText(text_content, 'html', 'utf-8'))
+    
+    with smtplib.SMTP(host="smtp.gmail.com", port="587") as smtp:
+        try:
+            smtp.ehlo()
+            smtp.starttls()
+            smtp.login("pinray544513@gmail.com", 'kwwlqfrtkqdsyxls')
+            smtp.send_message(content)
+            print("Complete!")
+        except Exception as e:
+            print("Error message: ", e)
+
+
+
+
 def checkout_process(request):
+    MAccount = request.session.get('MAccount')
+    Addr = member.objects.get(MAccount=MAccount).MAddr
     if request.method == 'POST':
-        address = request.POST.get('address') 
+        address = request.POST.get('address', Addr)
         payment_method = request.POST.get('paymentMethod')
         if payment_method == 'credit':
             payment = 'COD'
@@ -571,10 +643,13 @@ def checkout_process(request):
         messages.error(request, "請先登入")
         return redirect('/login')
     get_id = member.objects.get(MAccount=MAccount).MID
+    mmail = member.objects.get(MAccount=MAccount).MEmail
+
     cart_items = cart.objects.filter(MID=get_id)
     
     for cart_item in cart_items:
         pid = cart_item.PID
+        NAME = product.objects.get( PID = pid )
         pnum = cart_item.NUM
         
         order.objects.create(
@@ -592,9 +667,18 @@ def checkout_process(request):
             OStatus='NOT_SHIPPED',
             OPayment=payment
         )
-        
+
+    # 發送郵件
+    if new_oid:
+        mid = get_id
+        # mail = mmail
+        mail=request.POST.get("email")
+        new_oid = str(new_oid)
+        send_email( mid, mail, new_oid )
+    
     cart.objects.filter(MID=get_id).delete()
     return redirect('/member')
+
 
 
 

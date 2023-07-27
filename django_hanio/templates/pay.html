@@ -19,7 +19,7 @@
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
           crossorigin="anonymous"></script>
           <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-          {% csrf_token %}
+            {% csrf_token %}
     </head>
     <style>
         .decorated-title {
@@ -184,7 +184,7 @@
                       <label for="username" class="form-label">收貨人名稱</label>
                         <div class="input-group has-validation">
                           <!-- <span class="input-group-text">@</span> -->
-                          <input type="text" class="form-control" id="username" placeholder = "{{ memn.MName }}" required>
+                          <input type="text" class="form-control" id="username" value = "{{ memn.MName }}" name = "people" required>
                           <div class="invalid-feedback">
                             該項目為必填欄位
                           </div>
@@ -193,7 +193,7 @@
         
                     <div class="col-12">
                       <label for="email" class="form-label">信箱 <span class="text-body-secondary"></span></label>
-                      <input type="email" class="form-control" id="email" name = "email" placeholder = "{{ memn.MEmail }}" required>
+                      <input type="email" class="form-control" id="email" name = "email" value = "{{ memn.MEmail }}" required>
                       <div class="invalid-feedback">
                         *必填
                       </div>
@@ -201,7 +201,7 @@
         
                     <div class="col-12">
                       <label for="address" class="form-label">地址</label>
-                      <input type="text" class="form-control" id="address" name = "address" placeholder = "{{ memn.MAddr }}" required>
+                      <input type="text" class="form-control" id="address" name = "address" value = "{{ memn.MAddr }}" required>
                       <div class="invalid-feedback">
                         *必填
                       </div>
@@ -274,7 +274,6 @@
                 <span>© 2023 戈登肉鋪. All rights reserved.</span>
             </div>
         </footer>
-        
         <style>
           /* 聊天視窗樣式 */
           #chat-container {
@@ -383,6 +382,7 @@
               chatContainer.style.display = "none";
           }
       </script>
+          
         
     </body>
     
